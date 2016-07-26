@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doctor330.dao.StnbSdMapper">
+  <resultMap id="BaseResultMap" type="com.doctor330.model.StnbSd">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hzid" jdbcType="BIGINT" property="hzid" />
+    <result column="ysid" jdbcType="BIGINT" property="ysid" />
+    <result column="datarq" jdbcType="VARCHAR" property="datarq" />
+    <result column="temp1" jdbcType="VARCHAR" property="temp1" />
+    <result column="temp2" jdbcType="VARCHAR" property="temp2" />
+    <result column="temp3" jdbcType="VARCHAR" property="temp3" />
+    <result column="temp4" jdbcType="VARCHAR" property="temp4" />
+    <result column="temp5" jdbcType="VARCHAR" property="temp5" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, hzid, ysid, datarq, temp1, temp2, temp3, temp4, temp5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_TNB_SD
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_TNB_SD
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.doctor330.model.StnbSd">
+    insert into S_TNB_SD (id, hzid, ysid, 
+      datarq, temp1, temp2, 
+      temp3, temp4, temp5
+      )
+    values (#{id,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, #{ysid,jdbcType=BIGINT}, 
+      #{datarq,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, 
+      #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, #{temp5,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.doctor330.model.StnbSd">
+    insert into S_TNB_SD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="ysid != null">
+        ysid,
+      </if>
+      <if test="datarq != null">
+        datarq,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="ysid != null">
+        #{ysid,jdbcType=BIGINT},
+      </if>
+      <if test="datarq != null">
+        #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doctor330.model.StnbSd">
+    update S_TNB_SD
+    <set>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="ysid != null">
+        ysid = #{ysid,jdbcType=BIGINT},
+      </if>
+      <if test="datarq != null">
+        datarq = #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doctor330.model.StnbSd">
+    update S_TNB_SD
+    set hzid = #{hzid,jdbcType=BIGINT},
+      ysid = #{ysid,jdbcType=BIGINT},
+      datarq = #{datarq,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doctor330.dao.SsfzsMapper">
+  <resultMap id="BaseResultMap" type="com.doctor330.model.Ssfzs">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="ksid" jdbcType="BIGINT" property="ksid" />
+    <result column="ksname" jdbcType="VARCHAR" property="ksname" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="tzdate" jdbcType="BIGINT" property="tzdate" />
+    <result column="hzid" jdbcType="BIGINT" property="hzid" />
+    <result column="hzname" jdbcType="VARCHAR" property="hzname" />
+    <result column="ysid" jdbcType="BIGINT" property="ysid" />
+    <result column="ysname" jdbcType="VARCHAR" property="ysname" />
+    <result column="temp1" jdbcType="VARCHAR" property="temp1" />
+    <result column="temp2" jdbcType="VARCHAR" property="temp2" />
+    <result column="temp3" jdbcType="VARCHAR" property="temp3" />
+    <result column="temp4" jdbcType="VARCHAR" property="temp4" />
+    <result column="temp5" jdbcType="VARCHAR" property="temp5" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, ksid, ksname, title, content, tzdate, hzid, hzname, ysid, ysname, temp1, temp2, 
+    temp3, temp4, temp5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_SFZS
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_SFZS
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.doctor330.model.Ssfzs">
+    insert into S_SFZS (id, ksid, ksname, 
+      title, content, tzdate, 
+      hzid, hzname, ysid, ysname, 
+      temp1, temp2, temp3, 
+      temp4, temp5)
+    values (#{id,jdbcType=BIGINT}, #{ksid,jdbcType=BIGINT}, #{ksname,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{tzdate,jdbcType=BIGINT}, 
+      #{hzid,jdbcType=BIGINT}, #{hzname,jdbcType=VARCHAR}, #{ysid,jdbcType=BIGINT}, #{ysname,jdbcType=VARCHAR}, 
+      #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, 
+      #{temp4,jdbcType=VARCHAR}, #{temp5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.doctor330.model.Ssfzs">
+    insert into S_SFZS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="ksid != null">
+        ksid,
+      </if>
+      <if test="ksname != null">
+        ksname,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="tzdate != null">
+        tzdate,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="hzname != null">
+        hzname,
+      </if>
+      <if test="ysid != null">
+        ysid,
+      </if>
+      <if test="ysname != null">
+        ysname,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ksid != null">
+        #{ksid,jdbcType=BIGINT},
+      </if>
+      <if test="ksname != null">
+        #{ksname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="tzdate != null">
+        #{tzdate,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="hzname != null">
+        #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        #{ysid,jdbcType=BIGINT},
+      </if>
+      <if test="ysname != null">
+        #{ysname,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doctor330.model.Ssfzs">
+    update S_SFZS
+    <set>
+      <if test="ksid != null">
+        ksid = #{ksid,jdbcType=BIGINT},
+      </if>
+      <if test="ksname != null">
+        ksname = #{ksname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="tzdate != null">
+        tzdate = #{tzdate,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="hzname != null">
+        hzname = #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        ysid = #{ysid,jdbcType=BIGINT},
+      </if>
+      <if test="ysname != null">
+        ysname = #{ysname,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doctor330.model.Ssfzs">
+    update S_SFZS
+    set ksid = #{ksid,jdbcType=BIGINT},
+      ksname = #{ksname,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      tzdate = #{tzdate,jdbcType=BIGINT},
+      hzid = #{hzid,jdbcType=BIGINT},
+      hzname = #{hzname,jdbcType=VARCHAR},
+      ysid = #{ysid,jdbcType=BIGINT},
+      ysname = #{ysname,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

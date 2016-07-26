@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.doctor330.dao.ShzsfxxMapper">
+  <resultMap id="BaseResultMap" type="com.doctor330.model.Shzsfxx">
+    <id column="ID" jdbcType="BIGINT" property="ID" />
+    <result column="HZID" jdbcType="BIGINT" property="HZID" />
+    <result column="HZNAME" jdbcType="VARCHAR" property="HZNAME" />
+    <result column="SFDATE" jdbcType="BIGINT" property="SFDATE" />
+    <result column="ITEMCODE" jdbcType="VARCHAR" property="ITEMCODE" />
+    <result column="ITEMTYPE" jdbcType="VARCHAR" property="ITEMTYPE" />
+    <result column="ITEMNAME" jdbcType="VARCHAR" property="ITEMNAME" />
+    <result column="ITEMVALUE" jdbcType="VARCHAR" property="ITEMVALUE" />
+    <result column="OTCS" jdbcType="VARCHAR" property="OTCS" />
+    <result column="OTWYS" jdbcType="VARCHAR" property="OTWYS" />
+    <result column="CONTENT" jdbcType="VARCHAR" property="CONTENT" />
+    <result column="DRFXCS" jdbcType="VARCHAR" property="DRFXCS" />
+    <result column="DRFXSJD" jdbcType="VARCHAR" property="DRFXSJD" />
+    <result column="FXXZ" jdbcType="VARCHAR" property="FXXZ" />
+    <result column="FXYS" jdbcType="VARCHAR" property="FXYS" />
+    <result column="YYTIME" jdbcType="VARCHAR" property="YYTIME" />
+    <result column="YWNAME" jdbcType="VARCHAR" property="YWNAME" />
+    <result column="YWJL" jdbcType="VARCHAR" property="YWJL" />
+    <result column="YYTJ" jdbcType="VARCHAR" property="YYTJ" />
+    <result column="FYGJ" jdbcType="VARCHAR" property="FYGJ" />
+    <result column="SSNAME" jdbcType="VARCHAR" property="SSNAME" />
+    <result column="SSFS" jdbcType="VARCHAR" property="SSFS" />
+    <result column="SSYY" jdbcType="VARCHAR" property="SSYY" />
+    <result column="SSBFZ" jdbcType="VARCHAR" property="SSBFZ" />
+    <result column="SSXJ" jdbcType="VARCHAR" property="SSXJ" />
+    <result column="SSBLBG" jdbcType="VARCHAR" property="SSBLBG" />
+    <result column="RY" jdbcType="VARCHAR" property="RY" />
+    <result column="CY" jdbcType="VARCHAR" property="CY" />
+    <result column="HLSQH" jdbcType="VARCHAR" property="HLSQH" />
+    <result column="HLDJC" jdbcType="VARCHAR" property="HLDJC" />
+    <result column="HLDJT" jdbcType="VARCHAR" property="HLDJT" />
+    <result column="HLPICC" jdbcType="VARCHAR" property="HLPICC" />
+    <result column="HLSYG" jdbcType="VARCHAR" property="HLSYG" />
+    <result column="HLFA" jdbcType="VARCHAR" property="HLFA" />
+    <result column="HLYWLX" jdbcType="VARCHAR" property="HLYWLX" />
+    <result column="HLYWMC" jdbcType="VARCHAR" property="HLYWMC" />
+    <result column="HLGYTJ" jdbcType="VARCHAR" property="HLGYTJ" />
+    <result column="HLGYJL" jdbcType="VARCHAR" property="HLGYJL" />
+    <result column="FZ" jdbcType="VARCHAR" property="FZ" />
+    <result column="MZ" jdbcType="VARCHAR" property="MZ" />
+    <result column="SZSG" jdbcType="VARCHAR" property="SZSG" />
+    <result column="SZTZ" jdbcType="VARCHAR" property="SZTZ" />
+    <result column="SZTW" jdbcType="VARCHAR" property="SZTW" />
+    <result column="SZXW" jdbcType="VARCHAR" property="SZXW" />
+    <result column="SZSBW" jdbcType="VARCHAR" property="SZSBW" />
+    <result column="SZGSTJ" jdbcType="VARCHAR" property="SZGSTJ" />
+    <result column="TEMP1" jdbcType="VARCHAR" property="TEMP1" />
+    <result column="TEMP2" jdbcType="VARCHAR" property="TEMP2" />
+    <result column="TEMP3" jdbcType="VARCHAR" property="TEMP3" />
+    <result column="TEMP4" jdbcType="VARCHAR" property="TEMP4" />
+    <result column="TEMP5" jdbcType="VARCHAR" property="TEMP5" />
+    <result column="HLYWMC2" jdbcType="VARCHAR" property="HLYWMC2" />
+    <result column="HLGYTJ2" jdbcType="VARCHAR" property="HLGYTJ2" />
+    <result column="HLGYJL2" jdbcType="VARCHAR" property="HLGYJL2" />
+    <result column="HLYWMC3" jdbcType="VARCHAR" property="HLYWMC3" />
+    <result column="HLGYTJ3" jdbcType="VARCHAR" property="HLGYTJ3" />
+    <result column="HLGYJL3" jdbcType="VARCHAR" property="HLGYJL3" />
+    <result column="HLYWMC4" jdbcType="VARCHAR" property="HLYWMC4" />
+    <result column="HLGYTJ4" jdbcType="VARCHAR" property="HLGYTJ4" />
+    <result column="HLGYJL4" jdbcType="VARCHAR" property="HLGYJL4" />
+    <result column="AFP" jdbcType="VARCHAR" property="AFP" />
+    <result column="TDB" jdbcType="VARCHAR" property="TDB" />
+    <result column="C11" jdbcType="VARCHAR" property="c11" />
+    <result column="VMA" jdbcType="VARCHAR" property="VMA" />
+    <result column="HVA" jdbcType="VARCHAR" property="HVA" />
+    <result column="NSE" jdbcType="VARCHAR" property="NSE" />
+    <result column="BNP" jdbcType="VARCHAR" property="BNP" />
+    <result column="JGDB" jdbcType="VARCHAR" property="JGDB" />
+    <result column="QT" jdbcType="VARCHAR" property="QT" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, HZID, HZNAME, SFDATE, ITEMCODE, ITEMTYPE, ITEMNAME, ITEMVALUE, OTCS, OTWYS, CONTENT, 
+    DRFXCS, DRFXSJD, FXXZ, FXYS, YYTIME, YWNAME, YWJL, YYTJ, FYGJ, SSNAME, SSFS, SSYY, 
+    SSBFZ, SSXJ, SSBLBG, RY, CY, HLSQH, HLDJC, HLDJT, HLPICC, HLSYG, HLFA, HLYWLX, HLYWMC, 
+    HLGYTJ, HLGYJL, FZ, MZ, SZSG, SZTZ, SZTW, SZXW, SZSBW, SZGSTJ, TEMP1, TEMP2, TEMP3, 
+    TEMP4, TEMP5, HLYWMC2, HLGYTJ2, HLGYJL2, HLYWMC3, HLGYTJ3, HLGYJL3, HLYWMC4, HLGYTJ4, 
+    HLGYJL4, AFP, TDB, C11, VMA, HVA, NSE, BNP, JGDB, QT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_hzsfxx
+    where ID = #{ID,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from s_hzsfxx
+    where ID = #{ID,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.doctor330.model.Shzsfxx">
+    insert into s_hzsfxx (ID, HZID, HZNAME, 
+      SFDATE, ITEMCODE, ITEMTYPE, 
+      ITEMNAME, ITEMVALUE, OTCS, 
+      OTWYS, CONTENT, DRFXCS, 
+      DRFXSJD, FXXZ, FXYS, 
+      YYTIME, YWNAME, YWJL, 
+      YYTJ, FYGJ, SSNAME, 
+      SSFS, SSYY, SSBFZ, 
+      SSXJ, SSBLBG, RY, CY, 
+      HLSQH, HLDJC, HLDJT, 
+      HLPICC, HLSYG, HLFA, 
+      HLYWLX, HLYWMC, HLGYTJ, 
+      HLGYJL, FZ, MZ, SZSG, 
+      SZTZ, SZTW, SZXW, SZSBW, 
+      SZGSTJ, TEMP1, TEMP2, 
+      TEMP3, TEMP4, TEMP5, 
+      HLYWMC2, HLGYTJ2, HLGYJL2, 
+      HLYWMC3, HLGYTJ3, HLGYJL3, 
+      HLYWMC4, HLGYTJ4, HLGYJL4, 
+      AFP, TDB, C11, VMA, 
+      HVA, NSE, BNP, JGDB, 
+      QT)
+    values (#{ID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
+      #{SFDATE,jdbcType=BIGINT}, #{ITEMCODE,jdbcType=VARCHAR}, #{ITEMTYPE,jdbcType=VARCHAR}, 
+      #{ITEMNAME,jdbcType=VARCHAR}, #{ITEMVALUE,jdbcType=VARCHAR}, #{OTCS,jdbcType=VARCHAR}, 
+      #{OTWYS,jdbcType=VARCHAR}, #{CONTENT,jdbcType=VARCHAR}, #{DRFXCS,jdbcType=VARCHAR}, 
+      #{DRFXSJD,jdbcType=VARCHAR}, #{FXXZ,jdbcType=VARCHAR}, #{FXYS,jdbcType=VARCHAR}, 
+      #{YYTIME,jdbcType=VARCHAR}, #{YWNAME,jdbcType=VARCHAR}, #{YWJL,jdbcType=VARCHAR}, 
+      #{YYTJ,jdbcType=VARCHAR}, #{FYGJ,jdbcType=VARCHAR}, #{SSNAME,jdbcType=VARCHAR}, 
+      #{SSFS,jdbcType=VARCHAR}, #{SSYY,jdbcType=VARCHAR}, #{SSBFZ,jdbcType=VARCHAR}, 
+      #{SSXJ,jdbcType=VARCHAR}, #{SSBLBG,jdbcType=VARCHAR}, #{RY,jdbcType=VARCHAR}, #{CY,jdbcType=VARCHAR}, 
+      #{HLSQH,jdbcType=VARCHAR}, #{HLDJC,jdbcType=VARCHAR}, #{HLDJT,jdbcType=VARCHAR}, 
+      #{HLPICC,jdbcType=VARCHAR}, #{HLSYG,jdbcType=VARCHAR}, #{HLFA,jdbcType=VARCHAR}, 
+      #{HLYWLX,jdbcType=VARCHAR}, #{HLYWMC,jdbcType=VARCHAR}, #{HLGYTJ,jdbcType=VARCHAR}, 
+      #{HLGYJL,jdbcType=VARCHAR}, #{FZ,jdbcType=VARCHAR}, #{MZ,jdbcType=VARCHAR}, #{SZSG,jdbcType=VARCHAR}, 
+      #{SZTZ,jdbcType=VARCHAR}, #{SZTW,jdbcType=VARCHAR}, #{SZXW,jdbcType=VARCHAR}, #{SZSBW,jdbcType=VARCHAR}, 
+      #{SZGSTJ,jdbcType=VARCHAR}, #{TEMP1,jdbcType=VARCHAR}, #{TEMP2,jdbcType=VARCHAR}, 
+      #{TEMP3,jdbcType=VARCHAR}, #{TEMP4,jdbcType=VARCHAR}, #{TEMP5,jdbcType=VARCHAR}, 
+      #{HLYWMC2,jdbcType=VARCHAR}, #{HLGYTJ2,jdbcType=VARCHAR}, #{HLGYJL2,jdbcType=VARCHAR}, 
+      #{HLYWMC3,jdbcType=VARCHAR}, #{HLGYTJ3,jdbcType=VARCHAR}, #{HLGYJL3,jdbcType=VARCHAR}, 
+      #{HLYWMC4,jdbcType=VARCHAR}, #{HLGYTJ4,jdbcType=VARCHAR}, #{HLGYJL4,jdbcType=VARCHAR}, 
+      #{AFP,jdbcType=VARCHAR}, #{TDB,jdbcType=VARCHAR}, #{c11,jdbcType=VARCHAR}, #{VMA,jdbcType=VARCHAR}, 
+      #{HVA,jdbcType=VARCHAR}, #{NSE,jdbcType=VARCHAR}, #{BNP,jdbcType=VARCHAR}, #{JGDB,jdbcType=VARCHAR}, 
+      #{QT,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.doctor330.model.Shzsfxx">
+    insert into s_hzsfxx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="HZID != null">
+        HZID,
+      </if>
+      <if test="HZNAME != null">
+        HZNAME,
+      </if>
+      <if test="SFDATE != null">
+        SFDATE,
+      </if>
+      <if test="ITEMCODE != null">
+        ITEMCODE,
+      </if>
+      <if test="ITEMTYPE != null">
+        ITEMTYPE,
+      </if>
+      <if test="ITEMNAME != null">
+        ITEMNAME,
+      </if>
+      <if test="ITEMVALUE != null">
+        ITEMVALUE,
+      </if>
+      <if test="OTCS != null">
+        OTCS,
+      </if>
+      <if test="OTWYS != null">
+        OTWYS,
+      </if>
+      <if test="CONTENT != null">
+        CONTENT,
+      </if>
+      <if test="DRFXCS != null">
+        DRFXCS,
+      </if>
+      <if test="DRFXSJD != null">
+        DRFXSJD,
+      </if>
+      <if test="FXXZ != null">
+        FXXZ,
+      </if>
+      <if test="FXYS != null">
+        FXYS,
+      </if>
+      <if test="YYTIME != null">
+        YYTIME,
+      </if>
+      <if test="YWNAME != null">
+        YWNAME,
+      </if>
+      <if test="YWJL != null">
+        YWJL,
+      </if>
+      <if test="YYTJ != null">
+        YYTJ,
+      </if>
+      <if test="FYGJ != null">
+        FYGJ,
+      </if>
+      <if test="SSNAME != null">
+        SSNAME,
+      </if>
+      <if test="SSFS != null">
+        SSFS,
+      </if>
+      <if test="SSYY != null">
+        SSYY,
+      </if>
+      <if test="SSBFZ != null">
+        SSBFZ,
+      </if>
+      <if test="SSXJ != null">
+        SSXJ,
+      </if>
+      <if test="SSBLBG != null">
+        SSBLBG,
+      </if>
+      <if test="RY != null">
+        RY,
+      </if>
+      <if test="CY != null">
+        CY,
+      </if>
+      <if test="HLSQH != null">
+        HLSQH,
+      </if>
+      <if test="HLDJC != null">
+        HLDJC,
+      </if>
+      <if test="HLDJT != null">
+        HLDJT,
+      </if>
+      <if test="HLPICC != null">
+        HLPICC,
+      </if>
+      <if test="HLSYG != null">
+        HLSYG,
+      </if>
+      <if test="HLFA != null">
+        HLFA,
+      </if>
+      <if test="HLYWLX != null">
+        HLYWLX,
+      </if>
+      <if test="HLYWMC != null">
+        HLYWMC,
+      </if>
+      <if test="HLGYTJ != null">
+        HLGYTJ,
+      </if>
+      <if test="HLGYJL != null">
+        HLGYJL,
+      </if>
+      <if test="FZ != null">
+        FZ,
+      </if>
+      <if test="MZ != null">
+        MZ,
+      </if>
+      <if test="SZSG != null">
+        SZSG,
+      </if>
+      <if test="SZTZ != null">
+        SZTZ,
+      </if>
+      <if test="SZTW != null">
+        SZTW,
+      </if>
+      <if test="SZXW != null">
+        SZXW,
+      </if>
+      <if test="SZSBW != null">
+        SZSBW,
+      </if>
+      <if test="SZGSTJ != null">
+        SZGSTJ,
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1,
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2,
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3,
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4,
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5,
+      </if>
+      <if test="HLYWMC2 != null">
+        HLYWMC2,
+      </if>
+      <if test="HLGYTJ2 != null">
+        HLGYTJ2,
+      </if>
+      <if test="HLGYJL2 != null">
+        HLGYJL2,
+      </if>
+      <if test="HLYWMC3 != null">
+        HLYWMC3,
+      </if>
+      <if test="HLGYTJ3 != null">
+        HLGYTJ3,
+      </if>
+      <if test="HLGYJL3 != null">
+        HLGYJL3,
+      </if>
+      <if test="HLYWMC4 != null">
+        HLYWMC4,
+      </if>
+      <if test="HLGYTJ4 != null">
+        HLGYTJ4,
+      </if>
+      <if test="HLGYJL4 != null">
+        HLGYJL4,
+      </if>
+      <if test="AFP != null">
+        AFP,
+      </if>
+      <if test="TDB != null">
+        TDB,
+      </if>
+      <if test="c11 != null">
+        C11,
+      </if>
+      <if test="VMA != null">
+        VMA,
+      </if>
+      <if test="HVA != null">
+        HVA,
+      </if>
+      <if test="NSE != null">
+        NSE,
+      </if>
+      <if test="BNP != null">
+        BNP,
+      </if>
+      <if test="JGDB != null">
+        JGDB,
+      </if>
+      <if test="QT != null">
+        QT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID,jdbcType=BIGINT},
+      </if>
+      <if test="HZID != null">
+        #{HZID,jdbcType=BIGINT},
+      </if>
+      <if test="HZNAME != null">
+        #{HZNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SFDATE != null">
+        #{SFDATE,jdbcType=BIGINT},
+      </if>
+      <if test="ITEMCODE != null">
+        #{ITEMCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMTYPE != null">
+        #{ITEMTYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMNAME != null">
+        #{ITEMNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMVALUE != null">
+        #{ITEMVALUE,jdbcType=VARCHAR},
+      </if>
+      <if test="OTCS != null">
+        #{OTCS,jdbcType=VARCHAR},
+      </if>
+      <if test="OTWYS != null">
+        #{OTWYS,jdbcType=VARCHAR},
+      </if>
+      <if test="CONTENT != null">
+        #{CONTENT,jdbcType=VARCHAR},
+      </if>
+      <if test="DRFXCS != null">
+        #{DRFXCS,jdbcType=VARCHAR},
+      </if>
+      <if test="DRFXSJD != null">
+        #{DRFXSJD,jdbcType=VARCHAR},
+      </if>
+      <if test="FXXZ != null">
+        #{FXXZ,jdbcType=VARCHAR},
+      </if>
+      <if test="FXYS != null">
+        #{FXYS,jdbcType=VARCHAR},
+      </if>
+      <if test="YYTIME != null">
+        #{YYTIME,jdbcType=VARCHAR},
+      </if>
+      <if test="YWNAME != null">
+        #{YWNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="YWJL != null">
+        #{YWJL,jdbcType=VARCHAR},
+      </if>
+      <if test="YYTJ != null">
+        #{YYTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="FYGJ != null">
+        #{FYGJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SSNAME != null">
+        #{SSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SSFS != null">
+        #{SSFS,jdbcType=VARCHAR},
+      </if>
+      <if test="SSYY != null">
+        #{SSYY,jdbcType=VARCHAR},
+      </if>
+      <if test="SSBFZ != null">
+        #{SSBFZ,jdbcType=VARCHAR},
+      </if>
+      <if test="SSXJ != null">
+        #{SSXJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SSBLBG != null">
+        #{SSBLBG,jdbcType=VARCHAR},
+      </if>
+      <if test="RY != null">
+        #{RY,jdbcType=VARCHAR},
+      </if>
+      <if test="CY != null">
+        #{CY,jdbcType=VARCHAR},
+      </if>
+      <if test="HLSQH != null">
+        #{HLSQH,jdbcType=VARCHAR},
+      </if>
+      <if test="HLDJC != null">
+        #{HLDJC,jdbcType=VARCHAR},
+      </if>
+      <if test="HLDJT != null">
+        #{HLDJT,jdbcType=VARCHAR},
+      </if>
+      <if test="HLPICC != null">
+        #{HLPICC,jdbcType=VARCHAR},
+      </if>
+      <if test="HLSYG != null">
+        #{HLSYG,jdbcType=VARCHAR},
+      </if>
+      <if test="HLFA != null">
+        #{HLFA,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWLX != null">
+        #{HLYWLX,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC != null">
+        #{HLYWMC,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ != null">
+        #{HLGYTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL != null">
+        #{HLGYJL,jdbcType=VARCHAR},
+      </if>
+      <if test="FZ != null">
+        #{FZ,jdbcType=VARCHAR},
+      </if>
+      <if test="MZ != null">
+        #{MZ,jdbcType=VARCHAR},
+      </if>
+      <if test="SZSG != null">
+        #{SZSG,jdbcType=VARCHAR},
+      </if>
+      <if test="SZTZ != null">
+        #{SZTZ,jdbcType=VARCHAR},
+      </if>
+      <if test="SZTW != null">
+        #{SZTW,jdbcType=VARCHAR},
+      </if>
+      <if test="SZXW != null">
+        #{SZXW,jdbcType=VARCHAR},
+      </if>
+      <if test="SZSBW != null">
+        #{SZSBW,jdbcType=VARCHAR},
+      </if>
+      <if test="SZGSTJ != null">
+        #{SZGSTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP1 != null">
+        #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        #{TEMP5,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC2 != null">
+        #{HLYWMC2,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ2 != null">
+        #{HLGYTJ2,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL2 != null">
+        #{HLGYJL2,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC3 != null">
+        #{HLYWMC3,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ3 != null">
+        #{HLGYTJ3,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL3 != null">
+        #{HLGYJL3,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC4 != null">
+        #{HLYWMC4,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ4 != null">
+        #{HLGYTJ4,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL4 != null">
+        #{HLGYJL4,jdbcType=VARCHAR},
+      </if>
+      <if test="AFP != null">
+        #{AFP,jdbcType=VARCHAR},
+      </if>
+      <if test="TDB != null">
+        #{TDB,jdbcType=VARCHAR},
+      </if>
+      <if test="c11 != null">
+        #{c11,jdbcType=VARCHAR},
+      </if>
+      <if test="VMA != null">
+        #{VMA,jdbcType=VARCHAR},
+      </if>
+      <if test="HVA != null">
+        #{HVA,jdbcType=VARCHAR},
+      </if>
+      <if test="NSE != null">
+        #{NSE,jdbcType=VARCHAR},
+      </if>
+      <if test="BNP != null">
+        #{BNP,jdbcType=VARCHAR},
+      </if>
+      <if test="JGDB != null">
+        #{JGDB,jdbcType=VARCHAR},
+      </if>
+      <if test="QT != null">
+        #{QT,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.doctor330.model.Shzsfxx">
+    update s_hzsfxx
+    <set>
+      <if test="HZID != null">
+        HZID = #{HZID,jdbcType=BIGINT},
+      </if>
+      <if test="HZNAME != null">
+        HZNAME = #{HZNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SFDATE != null">
+        SFDATE = #{SFDATE,jdbcType=BIGINT},
+      </if>
+      <if test="ITEMCODE != null">
+        ITEMCODE = #{ITEMCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMTYPE != null">
+        ITEMTYPE = #{ITEMTYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMNAME != null">
+        ITEMNAME = #{ITEMNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMVALUE != null">
+        ITEMVALUE = #{ITEMVALUE,jdbcType=VARCHAR},
+      </if>
+      <if test="OTCS != null">
+        OTCS = #{OTCS,jdbcType=VARCHAR},
+      </if>
+      <if test="OTWYS != null">
+        OTWYS = #{OTWYS,jdbcType=VARCHAR},
+      </if>
+      <if test="CONTENT != null">
+        CONTENT = #{CONTENT,jdbcType=VARCHAR},
+      </if>
+      <if test="DRFXCS != null">
+        DRFXCS = #{DRFXCS,jdbcType=VARCHAR},
+      </if>
+      <if test="DRFXSJD != null">
+        DRFXSJD = #{DRFXSJD,jdbcType=VARCHAR},
+      </if>
+      <if test="FXXZ != null">
+        FXXZ = #{FXXZ,jdbcType=VARCHAR},
+      </if>
+      <if test="FXYS != null">
+        FXYS = #{FXYS,jdbcType=VARCHAR},
+      </if>
+      <if test="YYTIME != null">
+        YYTIME = #{YYTIME,jdbcType=VARCHAR},
+      </if>
+      <if test="YWNAME != null">
+        YWNAME = #{YWNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="YWJL != null">
+        YWJL = #{YWJL,jdbcType=VARCHAR},
+      </if>
+      <if test="YYTJ != null">
+        YYTJ = #{YYTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="FYGJ != null">
+        FYGJ = #{FYGJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SSNAME != null">
+        SSNAME = #{SSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SSFS != null">
+        SSFS = #{SSFS,jdbcType=VARCHAR},
+      </if>
+      <if test="SSYY != null">
+        SSYY = #{SSYY,jdbcType=VARCHAR},
+      </if>
+      <if test="SSBFZ != null">
+        SSBFZ = #{SSBFZ,jdbcType=VARCHAR},
+      </if>
+      <if test="SSXJ != null">
+        SSXJ = #{SSXJ,jdbcType=VARCHAR},
+      </if>
+      <if test="SSBLBG != null">
+        SSBLBG = #{SSBLBG,jdbcType=VARCHAR},
+      </if>
+      <if test="RY != null">
+        RY = #{RY,jdbcType=VARCHAR},
+      </if>
+      <if test="CY != null">
+        CY = #{CY,jdbcType=VARCHAR},
+      </if>
+      <if test="HLSQH != null">
+        HLSQH = #{HLSQH,jdbcType=VARCHAR},
+      </if>
+      <if test="HLDJC != null">
+        HLDJC = #{HLDJC,jdbcType=VARCHAR},
+      </if>
+      <if test="HLDJT != null">
+        HLDJT = #{HLDJT,jdbcType=VARCHAR},
+      </if>
+      <if test="HLPICC != null">
+        HLPICC = #{HLPICC,jdbcType=VARCHAR},
+      </if>
+      <if test="HLSYG != null">
+        HLSYG = #{HLSYG,jdbcType=VARCHAR},
+      </if>
+      <if test="HLFA != null">
+        HLFA = #{HLFA,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWLX != null">
+        HLYWLX = #{HLYWLX,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC != null">
+        HLYWMC = #{HLYWMC,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ != null">
+        HLGYTJ = #{HLGYTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL != null">
+        HLGYJL = #{HLGYJL,jdbcType=VARCHAR},
+      </if>
+      <if test="FZ != null">
+        FZ = #{FZ,jdbcType=VARCHAR},
+      </if>
+      <if test="MZ != null">
+        MZ = #{MZ,jdbcType=VARCHAR},
+      </if>
+      <if test="SZSG != null">
+        SZSG = #{SZSG,jdbcType=VARCHAR},
+      </if>
+      <if test="SZTZ != null">
+        SZTZ = #{SZTZ,jdbcType=VARCHAR},
+      </if>
+      <if test="SZTW != null">
+        SZTW = #{SZTW,jdbcType=VARCHAR},
+      </if>
+      <if test="SZXW != null">
+        SZXW = #{SZXW,jdbcType=VARCHAR},
+      </if>
+      <if test="SZSBW != null">
+        SZSBW = #{SZSBW,jdbcType=VARCHAR},
+      </if>
+      <if test="SZGSTJ != null">
+        SZGSTJ = #{SZGSTJ,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5 = #{TEMP5,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC2 != null">
+        HLYWMC2 = #{HLYWMC2,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ2 != null">
+        HLGYTJ2 = #{HLGYTJ2,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL2 != null">
+        HLGYJL2 = #{HLGYJL2,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC3 != null">
+        HLYWMC3 = #{HLYWMC3,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ3 != null">
+        HLGYTJ3 = #{HLGYTJ3,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL3 != null">
+        HLGYJL3 = #{HLGYJL3,jdbcType=VARCHAR},
+      </if>
+      <if test="HLYWMC4 != null">
+        HLYWMC4 = #{HLYWMC4,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYTJ4 != null">
+        HLGYTJ4 = #{HLGYTJ4,jdbcType=VARCHAR},
+      </if>
+      <if test="HLGYJL4 != null">
+        HLGYJL4 = #{HLGYJL4,jdbcType=VARCHAR},
+      </if>
+      <if test="AFP != null">
+        AFP = #{AFP,jdbcType=VARCHAR},
+      </if>
+      <if test="TDB != null">
+        TDB = #{TDB,jdbcType=VARCHAR},
+      </if>
+      <if test="c11 != null">
+        C11 = #{c11,jdbcType=VARCHAR},
+      </if>
+      <if test="VMA != null">
+        VMA = #{VMA,jdbcType=VARCHAR},
+      </if>
+      <if test="HVA != null">
+        HVA = #{HVA,jdbcType=VARCHAR},
+      </if>
+      <if test="NSE != null">
+        NSE = #{NSE,jdbcType=VARCHAR},
+      </if>
+      <if test="BNP != null">
+        BNP = #{BNP,jdbcType=VARCHAR},
+      </if>
+      <if test="JGDB != null">
+        JGDB = #{JGDB,jdbcType=VARCHAR},
+      </if>
+      <if test="QT != null">
+        QT = #{QT,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.doctor330.model.Shzsfxx">
+    update s_hzsfxx
+    set HZID = #{HZID,jdbcType=BIGINT},
+      HZNAME = #{HZNAME,jdbcType=VARCHAR},
+      SFDATE = #{SFDATE,jdbcType=BIGINT},
+      ITEMCODE = #{ITEMCODE,jdbcType=VARCHAR},
+      ITEMTYPE = #{ITEMTYPE,jdbcType=VARCHAR},
+      ITEMNAME = #{ITEMNAME,jdbcType=VARCHAR},
+      ITEMVALUE = #{ITEMVALUE,jdbcType=VARCHAR},
+      OTCS = #{OTCS,jdbcType=VARCHAR},
+      OTWYS = #{OTWYS,jdbcType=VARCHAR},
+      CONTENT = #{CONTENT,jdbcType=VARCHAR},
+      DRFXCS = #{DRFXCS,jdbcType=VARCHAR},
+      DRFXSJD = #{DRFXSJD,jdbcType=VARCHAR},
+      FXXZ = #{FXXZ,jdbcType=VARCHAR},
+      FXYS = #{FXYS,jdbcType=VARCHAR},
+      YYTIME = #{YYTIME,jdbcType=VARCHAR},
+      YWNAME = #{YWNAME,jdbcType=VARCHAR},
+      YWJL = #{YWJL,jdbcType=VARCHAR},
+      YYTJ = #{YYTJ,jdbcType=VARCHAR},
+      FYGJ = #{FYGJ,jdbcType=VARCHAR},
+      SSNAME = #{SSNAME,jdbcType=VARCHAR},
+      SSFS = #{SSFS,jdbcType=VARCHAR},
+      SSYY = #{SSYY,jdbcType=VARCHAR},
+      SSBFZ = #{SSBFZ,jdbcType=VARCHAR},
+      SSXJ = #{SSXJ,jdbcType=VARCHAR},
+      SSBLBG = #{SSBLBG,jdbcType=VARCHAR},
+      RY = #{RY,jdbcType=VARCHAR},
+      CY = #{CY,jdbcType=VARCHAR},
+      HLSQH = #{HLSQH,jdbcType=VARCHAR},
+      HLDJC = #{HLDJC,jdbcType=VARCHAR},
+      HLDJT = #{HLDJT,jdbcType=VARCHAR},
+      HLPICC = #{HLPICC,jdbcType=VARCHAR},
+      HLSYG = #{HLSYG,jdbcType=VARCHAR},
+      HLFA = #{HLFA,jdbcType=VARCHAR},
+      HLYWLX = #{HLYWLX,jdbcType=VARCHAR},
+      HLYWMC = #{HLYWMC,jdbcType=VARCHAR},
+      HLGYTJ = #{HLGYTJ,jdbcType=VARCHAR},
+      HLGYJL = #{HLGYJL,jdbcType=VARCHAR},
+      FZ = #{FZ,jdbcType=VARCHAR},
+      MZ = #{MZ,jdbcType=VARCHAR},
+      SZSG = #{SZSG,jdbcType=VARCHAR},
+      SZTZ = #{SZTZ,jdbcType=VARCHAR},
+      SZTW = #{SZTW,jdbcType=VARCHAR},
+      SZXW = #{SZXW,jdbcType=VARCHAR},
+      SZSBW = #{SZSBW,jdbcType=VARCHAR},
+      SZGSTJ = #{SZGSTJ,jdbcType=VARCHAR},
+      TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      TEMP5 = #{TEMP5,jdbcType=VARCHAR},
+      HLYWMC2 = #{HLYWMC2,jdbcType=VARCHAR},
+      HLGYTJ2 = #{HLGYTJ2,jdbcType=VARCHAR},
+      HLGYJL2 = #{HLGYJL2,jdbcType=VARCHAR},
+      HLYWMC3 = #{HLYWMC3,jdbcType=VARCHAR},
+      HLGYTJ3 = #{HLGYTJ3,jdbcType=VARCHAR},
+      HLGYJL3 = #{HLGYJL3,jdbcType=VARCHAR},
+      HLYWMC4 = #{HLYWMC4,jdbcType=VARCHAR},
+      HLGYTJ4 = #{HLGYTJ4,jdbcType=VARCHAR},
+      HLGYJL4 = #{HLGYJL4,jdbcType=VARCHAR},
+      AFP = #{AFP,jdbcType=VARCHAR},
+      TDB = #{TDB,jdbcType=VARCHAR},
+      C11 = #{c11,jdbcType=VARCHAR},
+      VMA = #{VMA,jdbcType=VARCHAR},
+      HVA = #{HVA,jdbcType=VARCHAR},
+      NSE = #{NSE,jdbcType=VARCHAR},
+      BNP = #{BNP,jdbcType=VARCHAR},
+      JGDB = #{JGDB,jdbcType=VARCHAR},
+      QT = #{QT,jdbcType=VARCHAR}
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+</mapper>
