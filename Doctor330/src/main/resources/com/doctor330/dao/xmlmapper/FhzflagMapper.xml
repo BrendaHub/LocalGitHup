@@ -7,7 +7,7 @@
     <result column="HZID" jdbcType="BIGINT" property="HZID" />
     <result column="TEMP1" jdbcType="VARCHAR" property="TEMP1" />
     <result column="TEMP2" jdbcType="VARCHAR" property="TEMP2" />
-  </resultMap>
+  </resultMap>  
   <sql id="Base_Column_List">
     ID, YSID, HZID, TEMP1, TEMP2
   </sql>
