@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.StnboYgdjbMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.StnboYgdjb">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="csrq" jdbcType="VARCHAR" property="csrq" />
+    <result column="mz" jdbcType="VARCHAR" property="mz" />
+    <result column="sheng" jdbcType="VARCHAR" property="sheng" />
+    <result column="shi" jdbcType="VARCHAR" property="shi" />
+    <result column="xian" jdbcType="VARCHAR" property="xian" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="dzyx" jdbcType="VARCHAR" property="dzyx" />
+    <result column="hyzk" jdbcType="VARCHAR" property="hyzk" />
+    <result column="xl" jdbcType="VARCHAR" property="xl" />
+    <result column="wyyz" jdbcType="VARCHAR" property="wyyz" />
+    <result column="sfzcode" jdbcType="VARCHAR" property="sfzcode" />
+    <result column="zy" jdbcType="VARCHAR" property="zy" />
+    <result column="gzdw" jdbcType="VARCHAR" property="gzdw" />
+    <result column="datarq" jdbcType="VARCHAR" property="datarq" />
+    <result column="temp1" jdbcType="VARCHAR" property="temp1" />
+    <result column="temp2" jdbcType="VARCHAR" property="temp2" />
+    <result column="temp3" jdbcType="VARCHAR" property="temp3" />
+    <result column="temp4" jdbcType="VARCHAR" property="temp4" />
+    <result column="temp5" jdbcType="VARCHAR" property="temp5" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, sex, csrq, mz, sheng, shi, xian, phone, dzyx, hyzk, xl, wyyz, sfzcode, 
+    zy, gzdw, datarq, temp1, temp2, temp3, temp4, temp5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_TNBO_YGDJB
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_TNBO_YGDJB
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.StnboYgdjb">
+    insert into S_TNBO_YGDJB (id, name, sex, 
+      csrq, mz, sheng, shi, 
+      xian, phone, dzyx, 
+      hyzk, xl, wyyz, sfzcode, 
+      zy, gzdw, datarq, temp1, 
+      temp2, temp3, temp4, 
+      temp5)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{csrq,jdbcType=VARCHAR}, #{mz,jdbcType=VARCHAR}, #{sheng,jdbcType=VARCHAR}, #{shi,jdbcType=VARCHAR}, 
+      #{xian,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{dzyx,jdbcType=VARCHAR}, 
+      #{hyzk,jdbcType=VARCHAR}, #{xl,jdbcType=VARCHAR}, #{wyyz,jdbcType=VARCHAR}, #{sfzcode,jdbcType=VARCHAR}, 
+      #{zy,jdbcType=VARCHAR}, #{gzdw,jdbcType=VARCHAR}, #{datarq,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, 
+      #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, 
+      #{temp5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.StnboYgdjb">
+    insert into S_TNBO_YGDJB
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="csrq != null">
+        csrq,
+      </if>
+      <if test="mz != null">
+        mz,
+      </if>
+      <if test="sheng != null">
+        sheng,
+      </if>
+      <if test="shi != null">
+        shi,
+      </if>
+      <if test="xian != null">
+        xian,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="dzyx != null">
+        dzyx,
+      </if>
+      <if test="hyzk != null">
+        hyzk,
+      </if>
+      <if test="xl != null">
+        xl,
+      </if>
+      <if test="wyyz != null">
+        wyyz,
+      </if>
+      <if test="sfzcode != null">
+        sfzcode,
+      </if>
+      <if test="zy != null">
+        zy,
+      </if>
+      <if test="gzdw != null">
+        gzdw,
+      </if>
+      <if test="datarq != null">
+        datarq,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="csrq != null">
+        #{csrq,jdbcType=VARCHAR},
+      </if>
+      <if test="mz != null">
+        #{mz,jdbcType=VARCHAR},
+      </if>
+      <if test="sheng != null">
+        #{sheng,jdbcType=VARCHAR},
+      </if>
+      <if test="shi != null">
+        #{shi,jdbcType=VARCHAR},
+      </if>
+      <if test="xian != null">
+        #{xian,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="dzyx != null">
+        #{dzyx,jdbcType=VARCHAR},
+      </if>
+      <if test="hyzk != null">
+        #{hyzk,jdbcType=VARCHAR},
+      </if>
+      <if test="xl != null">
+        #{xl,jdbcType=VARCHAR},
+      </if>
+      <if test="wyyz != null">
+        #{wyyz,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzcode != null">
+        #{sfzcode,jdbcType=VARCHAR},
+      </if>
+      <if test="zy != null">
+        #{zy,jdbcType=VARCHAR},
+      </if>
+      <if test="gzdw != null">
+        #{gzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="datarq != null">
+        #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.StnboYgdjb">
+    update S_TNBO_YGDJB
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="csrq != null">
+        csrq = #{csrq,jdbcType=VARCHAR},
+      </if>
+      <if test="mz != null">
+        mz = #{mz,jdbcType=VARCHAR},
+      </if>
+      <if test="sheng != null">
+        sheng = #{sheng,jdbcType=VARCHAR},
+      </if>
+      <if test="shi != null">
+        shi = #{shi,jdbcType=VARCHAR},
+      </if>
+      <if test="xian != null">
+        xian = #{xian,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="dzyx != null">
+        dzyx = #{dzyx,jdbcType=VARCHAR},
+      </if>
+      <if test="hyzk != null">
+        hyzk = #{hyzk,jdbcType=VARCHAR},
+      </if>
+      <if test="xl != null">
+        xl = #{xl,jdbcType=VARCHAR},
+      </if>
+      <if test="wyyz != null">
+        wyyz = #{wyyz,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzcode != null">
+        sfzcode = #{sfzcode,jdbcType=VARCHAR},
+      </if>
+      <if test="zy != null">
+        zy = #{zy,jdbcType=VARCHAR},
+      </if>
+      <if test="gzdw != null">
+        gzdw = #{gzdw,jdbcType=VARCHAR},
+      </if>
+      <if test="datarq != null">
+        datarq = #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.StnboYgdjb">
+    update S_TNBO_YGDJB
+    set name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      csrq = #{csrq,jdbcType=VARCHAR},
+      mz = #{mz,jdbcType=VARCHAR},
+      sheng = #{sheng,jdbcType=VARCHAR},
+      shi = #{shi,jdbcType=VARCHAR},
+      xian = #{xian,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      dzyx = #{dzyx,jdbcType=VARCHAR},
+      hyzk = #{hyzk,jdbcType=VARCHAR},
+      xl = #{xl,jdbcType=VARCHAR},
+      wyyz = #{wyyz,jdbcType=VARCHAR},
+      sfzcode = #{sfzcode,jdbcType=VARCHAR},
+      zy = #{zy,jdbcType=VARCHAR},
+      gzdw = #{gzdw,jdbcType=VARCHAR},
+      datarq = #{datarq,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

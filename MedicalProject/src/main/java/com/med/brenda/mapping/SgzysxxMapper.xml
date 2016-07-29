@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.SgzysxxMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.Sgzysxx">
+    <id column="ID" jdbcType="BIGINT" property="ID" />
+    <result column="HZID" jdbcType="BIGINT" property="HZID" />
+    <result column="HZNAME" jdbcType="VARCHAR" property="HZNAME" />
+    <result column="KSID" jdbcType="BIGINT" property="KSID" />
+    <result column="KSNAME" jdbcType="VARCHAR" property="KSNAME" />
+    <result column="YSID" jdbcType="BIGINT" property="YSID" />
+    <result column="YSNAME" jdbcType="VARCHAR" property="YSNAME" />
+    <result column="SFJHID" jdbcType="BIGINT" property="SFJHID" />
+    <result column="SFJHNAME" jdbcType="VARCHAR" property="SFJHNAME" />
+    <result column="ZCDATE" jdbcType="BIGINT" property="ZCDATE" />
+    <result column="TEMP1" jdbcType="VARCHAR" property="TEMP1" />
+    <result column="TEMP2" jdbcType="VARCHAR" property="TEMP2" />
+    <result column="TEMP3" jdbcType="VARCHAR" property="TEMP3" />
+    <result column="TEMP4" jdbcType="VARCHAR" property="TEMP4" />
+    <result column="TEMP5" jdbcType="VARCHAR" property="TEMP5" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, HZID, HZNAME, KSID, KSNAME, YSID, YSNAME, SFJHID, SFJHNAME, ZCDATE, TEMP1, TEMP2, 
+    TEMP3, TEMP4, TEMP5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_gzysxx
+    where ID = #{ID,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from s_gzysxx
+    where ID = #{ID,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.Sgzysxx">
+    insert into s_gzysxx (ID, HZID, HZNAME, 
+      KSID, KSNAME, YSID, YSNAME, 
+      SFJHID, SFJHNAME, ZCDATE, 
+      TEMP1, TEMP2, TEMP3, 
+      TEMP4, TEMP5)
+    values (#{ID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
+      #{KSID,jdbcType=BIGINT}, #{KSNAME,jdbcType=VARCHAR}, #{YSID,jdbcType=BIGINT}, #{YSNAME,jdbcType=VARCHAR}, 
+      #{SFJHID,jdbcType=BIGINT}, #{SFJHNAME,jdbcType=VARCHAR}, #{ZCDATE,jdbcType=BIGINT}, 
+      #{TEMP1,jdbcType=VARCHAR}, #{TEMP2,jdbcType=VARCHAR}, #{TEMP3,jdbcType=VARCHAR}, 
+      #{TEMP4,jdbcType=VARCHAR}, #{TEMP5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.Sgzysxx">
+    insert into s_gzysxx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="HZID != null">
+        HZID,
+      </if>
+      <if test="HZNAME != null">
+        HZNAME,
+      </if>
+      <if test="KSID != null">
+        KSID,
+      </if>
+      <if test="KSNAME != null">
+        KSNAME,
+      </if>
+      <if test="YSID != null">
+        YSID,
+      </if>
+      <if test="YSNAME != null">
+        YSNAME,
+      </if>
+      <if test="SFJHID != null">
+        SFJHID,
+      </if>
+      <if test="SFJHNAME != null">
+        SFJHNAME,
+      </if>
+      <if test="ZCDATE != null">
+        ZCDATE,
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1,
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2,
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3,
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4,
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID,jdbcType=BIGINT},
+      </if>
+      <if test="HZID != null">
+        #{HZID,jdbcType=BIGINT},
+      </if>
+      <if test="HZNAME != null">
+        #{HZNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="KSID != null">
+        #{KSID,jdbcType=BIGINT},
+      </if>
+      <if test="KSNAME != null">
+        #{KSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="YSID != null">
+        #{YSID,jdbcType=BIGINT},
+      </if>
+      <if test="YSNAME != null">
+        #{YSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SFJHID != null">
+        #{SFJHID,jdbcType=BIGINT},
+      </if>
+      <if test="SFJHNAME != null">
+        #{SFJHNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="ZCDATE != null">
+        #{ZCDATE,jdbcType=BIGINT},
+      </if>
+      <if test="TEMP1 != null">
+        #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        #{TEMP5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.Sgzysxx">
+    update s_gzysxx
+    <set>
+      <if test="HZID != null">
+        HZID = #{HZID,jdbcType=BIGINT},
+      </if>
+      <if test="HZNAME != null">
+        HZNAME = #{HZNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="KSID != null">
+        KSID = #{KSID,jdbcType=BIGINT},
+      </if>
+      <if test="KSNAME != null">
+        KSNAME = #{KSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="YSID != null">
+        YSID = #{YSID,jdbcType=BIGINT},
+      </if>
+      <if test="YSNAME != null">
+        YSNAME = #{YSNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SFJHID != null">
+        SFJHID = #{SFJHID,jdbcType=BIGINT},
+      </if>
+      <if test="SFJHNAME != null">
+        SFJHNAME = #{SFJHNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="ZCDATE != null">
+        ZCDATE = #{ZCDATE,jdbcType=BIGINT},
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5 = #{TEMP5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.Sgzysxx">
+    update s_gzysxx
+    set HZID = #{HZID,jdbcType=BIGINT},
+      HZNAME = #{HZNAME,jdbcType=VARCHAR},
+      KSID = #{KSID,jdbcType=BIGINT},
+      KSNAME = #{KSNAME,jdbcType=VARCHAR},
+      YSID = #{YSID,jdbcType=BIGINT},
+      YSNAME = #{YSNAME,jdbcType=VARCHAR},
+      SFJHID = #{SFJHID,jdbcType=BIGINT},
+      SFJHNAME = #{SFJHNAME,jdbcType=VARCHAR},
+      ZCDATE = #{ZCDATE,jdbcType=BIGINT},
+      TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      TEMP5 = #{TEMP5,jdbcType=VARCHAR}
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+</mapper>

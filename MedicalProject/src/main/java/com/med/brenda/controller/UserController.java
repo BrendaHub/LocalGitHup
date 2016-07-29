@@ -33,6 +33,6 @@ public class UserController {
 	@RequestMapping(value = "/userinfo/{userId}", method = RequestMethod.GET)
 	public ModelAndView toUserinfo(HttpServletRequest request,@PathVariable("userId") long userId) {
 		User user = userService.getUserById(userId);
-		return new ModelAndView("userinfo").addObject("userinfo", user);
+		return new ModelAndView("index").addObject("userinfo", user);
 	}
 }

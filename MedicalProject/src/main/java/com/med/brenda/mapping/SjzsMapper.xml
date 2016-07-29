@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.SjzsMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.Sjzs">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="hzid" jdbcType="BIGINT" property="hzid" />
+    <result column="hzname" jdbcType="VARCHAR" property="hzname" />
+    <result column="zlname" jdbcType="VARCHAR" property="zlname" />
+    <result column="qsgx" jdbcType="VARCHAR" property="qsgx" />
+    <result column="jtcy" jdbcType="VARCHAR" property="jtcy" />
+    <result column="gms" jdbcType="VARCHAR" property="gms" />
+    <result column="jcgyhwz" jdbcType="VARCHAR" property="jcgyhwz" />
+    <result column="qttsqk" jdbcType="VARCHAR" property="qttsqk" />
+    <result column="temp1" jdbcType="VARCHAR" property="temp1" />
+    <result column="temp2" jdbcType="VARCHAR" property="temp2" />
+    <result column="temp3" jdbcType="VARCHAR" property="temp3" />
+    <result column="temp4" jdbcType="VARCHAR" property="temp4" />
+    <result column="temp5" jdbcType="VARCHAR" property="temp5" />
+    <result column="qs" jdbcType="VARCHAR" property="qs" />
+    <result column="sg" jdbcType="VARCHAR" property="sg" />
+    <result column="ccsj" jdbcType="VARCHAR" property="ccsj" />
+    <result column="mzsj" jdbcType="VARCHAR" property="mzsj" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, hzid, hzname, zlname, qsgx, jtcy, gms, jcgyhwz, qttsqk, temp1, temp2, temp3, 
+    temp4, temp5, qs, sg, ccsj, mzsj
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_JZS
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_JZS
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.Sjzs">
+    insert into S_JZS (id, hzid, hzname, 
+      zlname, qsgx, jtcy, 
+      gms, jcgyhwz, qttsqk, 
+      temp1, temp2, temp3, 
+      temp4, temp5, qs, sg, 
+      ccsj, mzsj)
+    values (#{id,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, #{hzname,jdbcType=VARCHAR}, 
+      #{zlname,jdbcType=VARCHAR}, #{qsgx,jdbcType=VARCHAR}, #{jtcy,jdbcType=VARCHAR}, 
+      #{gms,jdbcType=VARCHAR}, #{jcgyhwz,jdbcType=VARCHAR}, #{qttsqk,jdbcType=VARCHAR}, 
+      #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, 
+      #{temp4,jdbcType=VARCHAR}, #{temp5,jdbcType=VARCHAR}, #{qs,jdbcType=VARCHAR}, #{sg,jdbcType=VARCHAR}, 
+      #{ccsj,jdbcType=VARCHAR}, #{mzsj,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.Sjzs">
+    insert into S_JZS
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="hzname != null">
+        hzname,
+      </if>
+      <if test="zlname != null">
+        zlname,
+      </if>
+      <if test="qsgx != null">
+        qsgx,
+      </if>
+      <if test="jtcy != null">
+        jtcy,
+      </if>
+      <if test="gms != null">
+        gms,
+      </if>
+      <if test="jcgyhwz != null">
+        jcgyhwz,
+      </if>
+      <if test="qttsqk != null">
+        qttsqk,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+      <if test="qs != null">
+        qs,
+      </if>
+      <if test="sg != null">
+        sg,
+      </if>
+      <if test="ccsj != null">
+        ccsj,
+      </if>
+      <if test="mzsj != null">
+        mzsj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="hzname != null">
+        #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="zlname != null">
+        #{zlname,jdbcType=VARCHAR},
+      </if>
+      <if test="qsgx != null">
+        #{qsgx,jdbcType=VARCHAR},
+      </if>
+      <if test="jtcy != null">
+        #{jtcy,jdbcType=VARCHAR},
+      </if>
+      <if test="gms != null">
+        #{gms,jdbcType=VARCHAR},
+      </if>
+      <if test="jcgyhwz != null">
+        #{jcgyhwz,jdbcType=VARCHAR},
+      </if>
+      <if test="qttsqk != null">
+        #{qttsqk,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="qs != null">
+        #{qs,jdbcType=VARCHAR},
+      </if>
+      <if test="sg != null">
+        #{sg,jdbcType=VARCHAR},
+      </if>
+      <if test="ccsj != null">
+        #{ccsj,jdbcType=VARCHAR},
+      </if>
+      <if test="mzsj != null">
+        #{mzsj,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.Sjzs">
+    update S_JZS
+    <set>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="hzname != null">
+        hzname = #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="zlname != null">
+        zlname = #{zlname,jdbcType=VARCHAR},
+      </if>
+      <if test="qsgx != null">
+        qsgx = #{qsgx,jdbcType=VARCHAR},
+      </if>
+      <if test="jtcy != null">
+        jtcy = #{jtcy,jdbcType=VARCHAR},
+      </if>
+      <if test="gms != null">
+        gms = #{gms,jdbcType=VARCHAR},
+      </if>
+      <if test="jcgyhwz != null">
+        jcgyhwz = #{jcgyhwz,jdbcType=VARCHAR},
+      </if>
+      <if test="qttsqk != null">
+        qttsqk = #{qttsqk,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="qs != null">
+        qs = #{qs,jdbcType=VARCHAR},
+      </if>
+      <if test="sg != null">
+        sg = #{sg,jdbcType=VARCHAR},
+      </if>
+      <if test="ccsj != null">
+        ccsj = #{ccsj,jdbcType=VARCHAR},
+      </if>
+      <if test="mzsj != null">
+        mzsj = #{mzsj,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.Sjzs">
+    update S_JZS
+    set hzid = #{hzid,jdbcType=BIGINT},
+      hzname = #{hzname,jdbcType=VARCHAR},
+      zlname = #{zlname,jdbcType=VARCHAR},
+      qsgx = #{qsgx,jdbcType=VARCHAR},
+      jtcy = #{jtcy,jdbcType=VARCHAR},
+      gms = #{gms,jdbcType=VARCHAR},
+      jcgyhwz = #{jcgyhwz,jdbcType=VARCHAR},
+      qttsqk = #{qttsqk,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR},
+      qs = #{qs,jdbcType=VARCHAR},
+      sg = #{sg,jdbcType=VARCHAR},
+      ccsj = #{ccsj,jdbcType=VARCHAR},
+      mzsj = #{mzsj,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

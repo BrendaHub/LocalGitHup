@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.StnbJcbfzscMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.StnbJcbfzsc">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="fatherid" jdbcType="BIGINT" property="fatherid" />
+    <result column="hzid" jdbcType="BIGINT" property="hzid" />
+    <result column="itemcode" jdbcType="VARCHAR" property="itemcode" />
+    <result column="itemname" jdbcType="VARCHAR" property="itemname" />
+    <result column="ch2h" jdbcType="VARCHAR" property="ch2h" />
+    <result column="hbac" jdbcType="VARCHAR" property="hbac" />
+    <result column="nt" jdbcType="VARCHAR" property="nt" />
+    <result column="ntt" jdbcType="VARCHAR" property="ntt" />
+    <result column="ndb" jdbcType="VARCHAR" property="ndb" />
+    <result column="xt" jdbcType="VARCHAR" property="xt" />
+    <result column="yds" jdbcType="VARCHAR" property="yds" />
+    <result column="ct" jdbcType="VARCHAR" property="ct" />
+    <result column="rs" jdbcType="VARCHAR" property="rs" />
+    <result column="xqpzc" jdbcType="VARCHAR" property="xqpzc" />
+    <result column="cssxpzj" jdbcType="VARCHAR" property="cssxpzj" />
+    <result column="jgwx1" jdbcType="VARCHAR" property="jgwx1" />
+    <result column="jgwx2" jdbcType="VARCHAR" property="jgwx2" />
+    <result column="jgwx3" jdbcType="VARCHAR" property="jgwx3" />
+    <result column="jgwx4" jdbcType="VARCHAR" property="jgwx4" />
+    <result column="jgwx5" jdbcType="VARCHAR" property="jgwx5" />
+    <result column="szs1" jdbcType="VARCHAR" property="szs1" />
+    <result column="szs4" jdbcType="VARCHAR" property="szs4" />
+    <result column="szs5" jdbcType="VARCHAR" property="szs5" />
+    <result column="szs3" jdbcType="VARCHAR" property="szs3" />
+    <result column="szs2" jdbcType="VARCHAR" property="szs2" />
+    <result column="sgn1" jdbcType="VARCHAR" property="sgn1" />
+    <result column="sgn2" jdbcType="VARCHAR" property="sgn2" />
+    <result column="xz1" jdbcType="VARCHAR" property="xz1" />
+    <result column="xz2" jdbcType="VARCHAR" property="xz2" />
+    <result column="xz3" jdbcType="VARCHAR" property="xz3" />
+    <result column="xz4" jdbcType="VARCHAR" property="xz4" />
+    <result column="xz5" jdbcType="VARCHAR" property="xz5" />
+    <result column="datarq" jdbcType="VARCHAR" property="datarq" />
+    <result column="temp1" jdbcType="VARCHAR" property="temp1" />
+    <result column="temp2" jdbcType="VARCHAR" property="temp2" />
+    <result column="temp3" jdbcType="VARCHAR" property="temp3" />
+    <result column="temp4" jdbcType="VARCHAR" property="temp4" />
+    <result column="temp5" jdbcType="VARCHAR" property="temp5" />
+    <result column="ysid" jdbcType="VARCHAR" property="ysid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fatherid, hzid, itemcode, itemname, ch2h, hbac, nt, ntt, ndb, xt, yds, ct, rs, 
+    xqpzc, cssxpzj, jgwx1, jgwx2, jgwx3, jgwx4, jgwx5, szs1, szs4, szs5, szs3, szs2, 
+    sgn1, sgn2, xz1, xz2, xz3, xz4, xz5, datarq, temp1, temp2, temp3, temp4, temp5, ysid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_TNB_JCBFZSC
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_TNB_JCBFZSC
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.StnbJcbfzsc">
+    insert into S_TNB_JCBFZSC (id, fatherid, hzid, 
+      itemcode, itemname, ch2h, 
+      hbac, nt, ntt, ndb, 
+      xt, yds, ct, rs, 
+      xqpzc, cssxpzj, jgwx1, 
+      jgwx2, jgwx3, jgwx4, 
+      jgwx5, szs1, szs4, 
+      szs5, szs3, szs2, sgn1, 
+      sgn2, xz1, xz2, xz3, 
+      xz4, xz5, datarq, temp1, 
+      temp2, temp3, temp4, 
+      temp5, ysid)
+    values (#{id,jdbcType=BIGINT}, #{fatherid,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, 
+      #{itemcode,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{ch2h,jdbcType=VARCHAR}, 
+      #{hbac,jdbcType=VARCHAR}, #{nt,jdbcType=VARCHAR}, #{ntt,jdbcType=VARCHAR}, #{ndb,jdbcType=VARCHAR}, 
+      #{xt,jdbcType=VARCHAR}, #{yds,jdbcType=VARCHAR}, #{ct,jdbcType=VARCHAR}, #{rs,jdbcType=VARCHAR}, 
+      #{xqpzc,jdbcType=VARCHAR}, #{cssxpzj,jdbcType=VARCHAR}, #{jgwx1,jdbcType=VARCHAR}, 
+      #{jgwx2,jdbcType=VARCHAR}, #{jgwx3,jdbcType=VARCHAR}, #{jgwx4,jdbcType=VARCHAR}, 
+      #{jgwx5,jdbcType=VARCHAR}, #{szs1,jdbcType=VARCHAR}, #{szs4,jdbcType=VARCHAR}, 
+      #{szs5,jdbcType=VARCHAR}, #{szs3,jdbcType=VARCHAR}, #{szs2,jdbcType=VARCHAR}, #{sgn1,jdbcType=VARCHAR}, 
+      #{sgn2,jdbcType=VARCHAR}, #{xz1,jdbcType=VARCHAR}, #{xz2,jdbcType=VARCHAR}, #{xz3,jdbcType=VARCHAR}, 
+      #{xz4,jdbcType=VARCHAR}, #{xz5,jdbcType=VARCHAR}, #{datarq,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, 
+      #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, 
+      #{temp5,jdbcType=VARCHAR}, #{ysid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.StnbJcbfzsc">
+    insert into S_TNB_JCBFZSC
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fatherid != null">
+        fatherid,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="itemcode != null">
+        itemcode,
+      </if>
+      <if test="itemname != null">
+        itemname,
+      </if>
+      <if test="ch2h != null">
+        ch2h,
+      </if>
+      <if test="hbac != null">
+        hbac,
+      </if>
+      <if test="nt != null">
+        nt,
+      </if>
+      <if test="ntt != null">
+        ntt,
+      </if>
+      <if test="ndb != null">
+        ndb,
+      </if>
+      <if test="xt != null">
+        xt,
+      </if>
+      <if test="yds != null">
+        yds,
+      </if>
+      <if test="ct != null">
+        ct,
+      </if>
+      <if test="rs != null">
+        rs,
+      </if>
+      <if test="xqpzc != null">
+        xqpzc,
+      </if>
+      <if test="cssxpzj != null">
+        cssxpzj,
+      </if>
+      <if test="jgwx1 != null">
+        jgwx1,
+      </if>
+      <if test="jgwx2 != null">
+        jgwx2,
+      </if>
+      <if test="jgwx3 != null">
+        jgwx3,
+      </if>
+      <if test="jgwx4 != null">
+        jgwx4,
+      </if>
+      <if test="jgwx5 != null">
+        jgwx5,
+      </if>
+      <if test="szs1 != null">
+        szs1,
+      </if>
+      <if test="szs4 != null">
+        szs4,
+      </if>
+      <if test="szs5 != null">
+        szs5,
+      </if>
+      <if test="szs3 != null">
+        szs3,
+      </if>
+      <if test="szs2 != null">
+        szs2,
+      </if>
+      <if test="sgn1 != null">
+        sgn1,
+      </if>
+      <if test="sgn2 != null">
+        sgn2,
+      </if>
+      <if test="xz1 != null">
+        xz1,
+      </if>
+      <if test="xz2 != null">
+        xz2,
+      </if>
+      <if test="xz3 != null">
+        xz3,
+      </if>
+      <if test="xz4 != null">
+        xz4,
+      </if>
+      <if test="xz5 != null">
+        xz5,
+      </if>
+      <if test="datarq != null">
+        datarq,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+      <if test="ysid != null">
+        ysid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fatherid != null">
+        #{fatherid,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="itemcode != null">
+        #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null">
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="ch2h != null">
+        #{ch2h,jdbcType=VARCHAR},
+      </if>
+      <if test="hbac != null">
+        #{hbac,jdbcType=VARCHAR},
+      </if>
+      <if test="nt != null">
+        #{nt,jdbcType=VARCHAR},
+      </if>
+      <if test="ntt != null">
+        #{ntt,jdbcType=VARCHAR},
+      </if>
+      <if test="ndb != null">
+        #{ndb,jdbcType=VARCHAR},
+      </if>
+      <if test="xt != null">
+        #{xt,jdbcType=VARCHAR},
+      </if>
+      <if test="yds != null">
+        #{yds,jdbcType=VARCHAR},
+      </if>
+      <if test="ct != null">
+        #{ct,jdbcType=VARCHAR},
+      </if>
+      <if test="rs != null">
+        #{rs,jdbcType=VARCHAR},
+      </if>
+      <if test="xqpzc != null">
+        #{xqpzc,jdbcType=VARCHAR},
+      </if>
+      <if test="cssxpzj != null">
+        #{cssxpzj,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx1 != null">
+        #{jgwx1,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx2 != null">
+        #{jgwx2,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx3 != null">
+        #{jgwx3,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx4 != null">
+        #{jgwx4,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx5 != null">
+        #{jgwx5,jdbcType=VARCHAR},
+      </if>
+      <if test="szs1 != null">
+        #{szs1,jdbcType=VARCHAR},
+      </if>
+      <if test="szs4 != null">
+        #{szs4,jdbcType=VARCHAR},
+      </if>
+      <if test="szs5 != null">
+        #{szs5,jdbcType=VARCHAR},
+      </if>
+      <if test="szs3 != null">
+        #{szs3,jdbcType=VARCHAR},
+      </if>
+      <if test="szs2 != null">
+        #{szs2,jdbcType=VARCHAR},
+      </if>
+      <if test="sgn1 != null">
+        #{sgn1,jdbcType=VARCHAR},
+      </if>
+      <if test="sgn2 != null">
+        #{sgn2,jdbcType=VARCHAR},
+      </if>
+      <if test="xz1 != null">
+        #{xz1,jdbcType=VARCHAR},
+      </if>
+      <if test="xz2 != null">
+        #{xz2,jdbcType=VARCHAR},
+      </if>
+      <if test="xz3 != null">
+        #{xz3,jdbcType=VARCHAR},
+      </if>
+      <if test="xz4 != null">
+        #{xz4,jdbcType=VARCHAR},
+      </if>
+      <if test="xz5 != null">
+        #{xz5,jdbcType=VARCHAR},
+      </if>
+      <if test="datarq != null">
+        #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        #{ysid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.StnbJcbfzsc">
+    update S_TNB_JCBFZSC
+    <set>
+      <if test="fatherid != null">
+        fatherid = #{fatherid,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="itemcode != null">
+        itemcode = #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null">
+        itemname = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="ch2h != null">
+        ch2h = #{ch2h,jdbcType=VARCHAR},
+      </if>
+      <if test="hbac != null">
+        hbac = #{hbac,jdbcType=VARCHAR},
+      </if>
+      <if test="nt != null">
+        nt = #{nt,jdbcType=VARCHAR},
+      </if>
+      <if test="ntt != null">
+        ntt = #{ntt,jdbcType=VARCHAR},
+      </if>
+      <if test="ndb != null">
+        ndb = #{ndb,jdbcType=VARCHAR},
+      </if>
+      <if test="xt != null">
+        xt = #{xt,jdbcType=VARCHAR},
+      </if>
+      <if test="yds != null">
+        yds = #{yds,jdbcType=VARCHAR},
+      </if>
+      <if test="ct != null">
+        ct = #{ct,jdbcType=VARCHAR},
+      </if>
+      <if test="rs != null">
+        rs = #{rs,jdbcType=VARCHAR},
+      </if>
+      <if test="xqpzc != null">
+        xqpzc = #{xqpzc,jdbcType=VARCHAR},
+      </if>
+      <if test="cssxpzj != null">
+        cssxpzj = #{cssxpzj,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx1 != null">
+        jgwx1 = #{jgwx1,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx2 != null">
+        jgwx2 = #{jgwx2,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx3 != null">
+        jgwx3 = #{jgwx3,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx4 != null">
+        jgwx4 = #{jgwx4,jdbcType=VARCHAR},
+      </if>
+      <if test="jgwx5 != null">
+        jgwx5 = #{jgwx5,jdbcType=VARCHAR},
+      </if>
+      <if test="szs1 != null">
+        szs1 = #{szs1,jdbcType=VARCHAR},
+      </if>
+      <if test="szs4 != null">
+        szs4 = #{szs4,jdbcType=VARCHAR},
+      </if>
+      <if test="szs5 != null">
+        szs5 = #{szs5,jdbcType=VARCHAR},
+      </if>
+      <if test="szs3 != null">
+        szs3 = #{szs3,jdbcType=VARCHAR},
+      </if>
+      <if test="szs2 != null">
+        szs2 = #{szs2,jdbcType=VARCHAR},
+      </if>
+      <if test="sgn1 != null">
+        sgn1 = #{sgn1,jdbcType=VARCHAR},
+      </if>
+      <if test="sgn2 != null">
+        sgn2 = #{sgn2,jdbcType=VARCHAR},
+      </if>
+      <if test="xz1 != null">
+        xz1 = #{xz1,jdbcType=VARCHAR},
+      </if>
+      <if test="xz2 != null">
+        xz2 = #{xz2,jdbcType=VARCHAR},
+      </if>
+      <if test="xz3 != null">
+        xz3 = #{xz3,jdbcType=VARCHAR},
+      </if>
+      <if test="xz4 != null">
+        xz4 = #{xz4,jdbcType=VARCHAR},
+      </if>
+      <if test="xz5 != null">
+        xz5 = #{xz5,jdbcType=VARCHAR},
+      </if>
+      <if test="datarq != null">
+        datarq = #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        ysid = #{ysid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.StnbJcbfzsc">
+    update S_TNB_JCBFZSC
+    set fatherid = #{fatherid,jdbcType=BIGINT},
+      hzid = #{hzid,jdbcType=BIGINT},
+      itemcode = #{itemcode,jdbcType=VARCHAR},
+      itemname = #{itemname,jdbcType=VARCHAR},
+      ch2h = #{ch2h,jdbcType=VARCHAR},
+      hbac = #{hbac,jdbcType=VARCHAR},
+      nt = #{nt,jdbcType=VARCHAR},
+      ntt = #{ntt,jdbcType=VARCHAR},
+      ndb = #{ndb,jdbcType=VARCHAR},
+      xt = #{xt,jdbcType=VARCHAR},
+      yds = #{yds,jdbcType=VARCHAR},
+      ct = #{ct,jdbcType=VARCHAR},
+      rs = #{rs,jdbcType=VARCHAR},
+      xqpzc = #{xqpzc,jdbcType=VARCHAR},
+      cssxpzj = #{cssxpzj,jdbcType=VARCHAR},
+      jgwx1 = #{jgwx1,jdbcType=VARCHAR},
+      jgwx2 = #{jgwx2,jdbcType=VARCHAR},
+      jgwx3 = #{jgwx3,jdbcType=VARCHAR},
+      jgwx4 = #{jgwx4,jdbcType=VARCHAR},
+      jgwx5 = #{jgwx5,jdbcType=VARCHAR},
+      szs1 = #{szs1,jdbcType=VARCHAR},
+      szs4 = #{szs4,jdbcType=VARCHAR},
+      szs5 = #{szs5,jdbcType=VARCHAR},
+      szs3 = #{szs3,jdbcType=VARCHAR},
+      szs2 = #{szs2,jdbcType=VARCHAR},
+      sgn1 = #{sgn1,jdbcType=VARCHAR},
+      sgn2 = #{sgn2,jdbcType=VARCHAR},
+      xz1 = #{xz1,jdbcType=VARCHAR},
+      xz2 = #{xz2,jdbcType=VARCHAR},
+      xz3 = #{xz3,jdbcType=VARCHAR},
+      xz4 = #{xz4,jdbcType=VARCHAR},
+      xz5 = #{xz5,jdbcType=VARCHAR},
+      datarq = #{datarq,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR},
+      ysid = #{ysid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
