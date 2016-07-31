@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.TnbYwfaMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.TnbYwfa">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="fatherid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="hzid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="itemcode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="itemname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ywfa1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ywfa2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="zao" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="zhong" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="wan" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="shuaiqian" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="jl1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="jl2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="jy" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="datarq" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp3" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp4" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp5" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ysid" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fatherid, hzid, itemcode, itemname, ywfa1, ywfa2, zao, zhong, wan, shuaiqian, 
+    jl1, jl2, jy, datarq, temp1, temp2, temp3, temp4, temp5, ysid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_TNB_YWFA
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_TNB_YWFA
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.TnbYwfa">
+    insert into S_TNB_YWFA (id, fatherid, hzid, 
+      itemcode, itemname, ywfa1, 
+      ywfa2, zao, zhong, 
+      wan, shuaiqian, jl1, 
+      jl2, jy, datarq, temp1, 
+      temp2, temp3, temp4, 
+      temp5, ysid)
+    values (#{id,jdbcType=BIGINT}, #{fatherid,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, 
+      #{itemcode,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{ywfa1,jdbcType=VARCHAR}, 
+      #{ywfa2,jdbcType=VARCHAR}, #{zao,jdbcType=VARCHAR}, #{zhong,jdbcType=VARCHAR}, 
+      #{wan,jdbcType=VARCHAR}, #{shuaiqian,jdbcType=VARCHAR}, #{jl1,jdbcType=VARCHAR}, 
+      #{jl2,jdbcType=VARCHAR}, #{jy,jdbcType=VARCHAR}, #{datarq,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, 
+      #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, 
+      #{temp5,jdbcType=VARCHAR}, #{ysid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.TnbYwfa">
+    insert into S_TNB_YWFA
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fatherid != null">
+        fatherid,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="itemcode != null">
+        itemcode,
+      </if>
+      <if test="itemname != null">
+        itemname,
+      </if>
+      <if test="ywfa1 != null">
+        ywfa1,
+      </if>
+      <if test="ywfa2 != null">
+        ywfa2,
+      </if>
+      <if test="zao != null">
+        zao,
+      </if>
+      <if test="zhong != null">
+        zhong,
+      </if>
+      <if test="wan != null">
+        wan,
+      </if>
+      <if test="shuaiqian != null">
+        shuaiqian,
+      </if>
+      <if test="jl1 != null">
+        jl1,
+      </if>
+      <if test="jl2 != null">
+        jl2,
+      </if>
+      <if test="jy != null">
+        jy,
+      </if>
+      <if test="datarq != null">
+        datarq,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+      <if test="ysid != null">
+        ysid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fatherid != null">
+        #{fatherid,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="itemcode != null">
+        #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null">
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="ywfa1 != null">
+        #{ywfa1,jdbcType=VARCHAR},
+      </if>
+      <if test="ywfa2 != null">
+        #{ywfa2,jdbcType=VARCHAR},
+      </if>
+      <if test="zao != null">
+        #{zao,jdbcType=VARCHAR},
+      </if>
+      <if test="zhong != null">
+        #{zhong,jdbcType=VARCHAR},
+      </if>
+      <if test="wan != null">
+        #{wan,jdbcType=VARCHAR},
+      </if>
+      <if test="shuaiqian != null">
+        #{shuaiqian,jdbcType=VARCHAR},
+      </if>
+      <if test="jl1 != null">
+        #{jl1,jdbcType=VARCHAR},
+      </if>
+      <if test="jl2 != null">
+        #{jl2,jdbcType=VARCHAR},
+      </if>
+      <if test="jy != null">
+        #{jy,jdbcType=VARCHAR},
+      </if>
+      <if test="datarq != null">
+        #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        #{ysid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.TnbYwfa">
+    update S_TNB_YWFA
+    <set>
+      <if test="fatherid != null">
+        fatherid = #{fatherid,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="itemcode != null">
+        itemcode = #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null">
+        itemname = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="ywfa1 != null">
+        ywfa1 = #{ywfa1,jdbcType=VARCHAR},
+      </if>
+      <if test="ywfa2 != null">
+        ywfa2 = #{ywfa2,jdbcType=VARCHAR},
+      </if>
+      <if test="zao != null">
+        zao = #{zao,jdbcType=VARCHAR},
+      </if>
+      <if test="zhong != null">
+        zhong = #{zhong,jdbcType=VARCHAR},
+      </if>
+      <if test="wan != null">
+        wan = #{wan,jdbcType=VARCHAR},
+      </if>
+      <if test="shuaiqian != null">
+        shuaiqian = #{shuaiqian,jdbcType=VARCHAR},
+      </if>
+      <if test="jl1 != null">
+        jl1 = #{jl1,jdbcType=VARCHAR},
+      </if>
+      <if test="jl2 != null">
+        jl2 = #{jl2,jdbcType=VARCHAR},
+      </if>
+      <if test="jy != null">
+        jy = #{jy,jdbcType=VARCHAR},
+      </if>
+      <if test="datarq != null">
+        datarq = #{datarq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        ysid = #{ysid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.TnbYwfa">
+    update S_TNB_YWFA
+    set fatherid = #{fatherid,jdbcType=BIGINT},
+      hzid = #{hzid,jdbcType=BIGINT},
+      itemcode = #{itemcode,jdbcType=VARCHAR},
+      itemname = #{itemname,jdbcType=VARCHAR},
+      ywfa1 = #{ywfa1,jdbcType=VARCHAR},
+      ywfa2 = #{ywfa2,jdbcType=VARCHAR},
+      zao = #{zao,jdbcType=VARCHAR},
+      zhong = #{zhong,jdbcType=VARCHAR},
+      wan = #{wan,jdbcType=VARCHAR},
+      shuaiqian = #{shuaiqian,jdbcType=VARCHAR},
+      jl1 = #{jl1,jdbcType=VARCHAR},
+      jl2 = #{jl2,jdbcType=VARCHAR},
+      jy = #{jy,jdbcType=VARCHAR},
+      datarq = #{datarq,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR},
+      ysid = #{ysid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.HzxxMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.Hzxx">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="HZNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SEX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="AGE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SFZCODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PHONE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="JZSID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="GMSID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="JYYYID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="WDBSID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="DLH" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PASSWORD" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="MZ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CSRQ" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="XX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="RHXX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="LXRNAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="GX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="YX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="QQ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="WX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CSTZ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CSSC" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CSYZ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CSJG" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ZZYCBC" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="MQYQBCCS" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="MQRCQJB" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="MQYQYWYC" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="YQYWBT" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="BZHMS" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="CSQK" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SFYJX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="XSEZX" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP3" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP4" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP5" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SHENG" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="SHI" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="XIAN" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMMQBC1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMMQBC2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMMQBC3" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMXSEPF" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMFS" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMZUO" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NMFPA" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMZHAN" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMCYSJ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMHYSJ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMCCSJ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMJBMC" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMCZSJ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMZZ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="NFMQZSJ" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP6" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP7" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP8" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP9" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP10" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, HZNAME, SEX, AGE, SFZCODE, PHONE, JZSID, GMSID, JYYYID, WDBSID, DLH, PASSWORD, 
+    MZ, CSRQ, XX, RHXX, LXRNAME, GX, YX, QQ, WX, CSTZ, CSSC, CSYZ, CSJG, ZZYCBC, MQYQBCCS, 
+    MQRCQJB, MQYQYWYC, YQYWBT, BZHMS, CSQK, SFYJX, XSEZX, TEMP1, TEMP2, TEMP3, TEMP4, 
+    TEMP5, SHENG, SHI, XIAN, NFMMQBC1, NFMMQBC2, NFMMQBC3, NFMXSEPF, NFMFS, NFMZUO, NMFPA, 
+    NFMZHAN, NFMCYSJ, NFMHYSJ, NFMCCSJ, NFMJBMC, NFMCZSJ, NFMZZ, NFMQZSJ, TEMP6, TEMP7, 
+    TEMP8, TEMP9, TEMP10
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_hzxx
+    where ID = #{ID,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from s_hzxx
+    where ID = #{ID,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.Hzxx">
+    insert into s_hzxx (ID, HZNAME, SEX, 
+      AGE, SFZCODE, PHONE, 
+      JZSID, GMSID, JYYYID, 
+      WDBSID, DLH, PASSWORD, 
+      MZ, CSRQ, XX, RHXX, 
+      LXRNAME, GX, YX, QQ, 
+      WX, CSTZ, CSSC, CSYZ, 
+      CSJG, ZZYCBC, MQYQBCCS, 
+      MQRCQJB, MQYQYWYC, YQYWBT, 
+      BZHMS, CSQK, SFYJX, 
+      XSEZX, TEMP1, TEMP2, 
+      TEMP3, TEMP4, TEMP5, 
+      SHENG, SHI, XIAN, NFMMQBC1, 
+      NFMMQBC2, NFMMQBC3, NFMXSEPF, 
+      NFMFS, NFMZUO, NMFPA, 
+      NFMZHAN, NFMCYSJ, NFMHYSJ, 
+      NFMCCSJ, NFMJBMC, NFMCZSJ, 
+      NFMZZ, NFMQZSJ, TEMP6, 
+      TEMP7, TEMP8, TEMP9, 
+      TEMP10)
+    values (#{ID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, #{SEX,jdbcType=VARCHAR}, 
+      #{AGE,jdbcType=VARCHAR}, #{SFZCODE,jdbcType=VARCHAR}, #{PHONE,jdbcType=VARCHAR}, 
+      #{JZSID,jdbcType=BIGINT}, #{GMSID,jdbcType=BIGINT}, #{JYYYID,jdbcType=BIGINT}, 
+      #{WDBSID,jdbcType=BIGINT}, #{DLH,jdbcType=VARCHAR}, #{PASSWORD,jdbcType=VARCHAR}, 
+      #{MZ,jdbcType=VARCHAR}, #{CSRQ,jdbcType=BIGINT}, #{XX,jdbcType=VARCHAR}, #{RHXX,jdbcType=VARCHAR}, 
+      #{LXRNAME,jdbcType=VARCHAR}, #{GX,jdbcType=VARCHAR}, #{YX,jdbcType=VARCHAR}, #{QQ,jdbcType=VARCHAR}, 
+      #{WX,jdbcType=VARCHAR}, #{CSTZ,jdbcType=VARCHAR}, #{CSSC,jdbcType=VARCHAR}, #{CSYZ,jdbcType=VARCHAR}, 
+      #{CSJG,jdbcType=VARCHAR}, #{ZZYCBC,jdbcType=VARCHAR}, #{MQYQBCCS,jdbcType=VARCHAR}, 
+      #{MQRCQJB,jdbcType=VARCHAR}, #{MQYQYWYC,jdbcType=VARCHAR}, #{YQYWBT,jdbcType=VARCHAR}, 
+      #{BZHMS,jdbcType=VARCHAR}, #{CSQK,jdbcType=VARCHAR}, #{SFYJX,jdbcType=VARCHAR}, 
+      #{XSEZX,jdbcType=VARCHAR}, #{TEMP1,jdbcType=VARCHAR}, #{TEMP2,jdbcType=VARCHAR}, 
+      #{TEMP3,jdbcType=VARCHAR}, #{TEMP4,jdbcType=VARCHAR}, #{TEMP5,jdbcType=VARCHAR}, 
+      #{SHENG,jdbcType=VARCHAR}, #{SHI,jdbcType=VARCHAR}, #{XIAN,jdbcType=VARCHAR}, #{NFMMQBC1,jdbcType=VARCHAR}, 
+      #{NFMMQBC2,jdbcType=VARCHAR}, #{NFMMQBC3,jdbcType=VARCHAR}, #{NFMXSEPF,jdbcType=VARCHAR}, 
+      #{NFMFS,jdbcType=VARCHAR}, #{NFMZUO,jdbcType=VARCHAR}, #{NMFPA,jdbcType=VARCHAR}, 
+      #{NFMZHAN,jdbcType=VARCHAR}, #{NFMCYSJ,jdbcType=VARCHAR}, #{NFMHYSJ,jdbcType=VARCHAR}, 
+      #{NFMCCSJ,jdbcType=VARCHAR}, #{NFMJBMC,jdbcType=VARCHAR}, #{NFMCZSJ,jdbcType=VARCHAR}, 
+      #{NFMZZ,jdbcType=VARCHAR}, #{NFMQZSJ,jdbcType=VARCHAR}, #{TEMP6,jdbcType=VARCHAR}, 
+      #{TEMP7,jdbcType=VARCHAR}, #{TEMP8,jdbcType=VARCHAR}, #{TEMP9,jdbcType=VARCHAR}, 
+      #{TEMP10,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.Hzxx">
+    insert into s_hzxx
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="HZNAME != null">
+        HZNAME,
+      </if>
+      <if test="SEX != null">
+        SEX,
+      </if>
+      <if test="AGE != null">
+        AGE,
+      </if>
+      <if test="SFZCODE != null">
+        SFZCODE,
+      </if>
+      <if test="PHONE != null">
+        PHONE,
+      </if>
+      <if test="JZSID != null">
+        JZSID,
+      </if>
+      <if test="GMSID != null">
+        GMSID,
+      </if>
+      <if test="JYYYID != null">
+        JYYYID,
+      </if>
+      <if test="WDBSID != null">
+        WDBSID,
+      </if>
+      <if test="DLH != null">
+        DLH,
+      </if>
+      <if test="PASSWORD != null">
+        PASSWORD,
+      </if>
+      <if test="MZ != null">
+        MZ,
+      </if>
+      <if test="CSRQ != null">
+        CSRQ,
+      </if>
+      <if test="XX != null">
+        XX,
+      </if>
+      <if test="RHXX != null">
+        RHXX,
+      </if>
+      <if test="LXRNAME != null">
+        LXRNAME,
+      </if>
+      <if test="GX != null">
+        GX,
+      </if>
+      <if test="YX != null">
+        YX,
+      </if>
+      <if test="QQ != null">
+        QQ,
+      </if>
+      <if test="WX != null">
+        WX,
+      </if>
+      <if test="CSTZ != null">
+        CSTZ,
+      </if>
+      <if test="CSSC != null">
+        CSSC,
+      </if>
+      <if test="CSYZ != null">
+        CSYZ,
+      </if>
+      <if test="CSJG != null">
+        CSJG,
+      </if>
+      <if test="ZZYCBC != null">
+        ZZYCBC,
+      </if>
+      <if test="MQYQBCCS != null">
+        MQYQBCCS,
+      </if>
+      <if test="MQRCQJB != null">
+        MQRCQJB,
+      </if>
+      <if test="MQYQYWYC != null">
+        MQYQYWYC,
+      </if>
+      <if test="YQYWBT != null">
+        YQYWBT,
+      </if>
+      <if test="BZHMS != null">
+        BZHMS,
+      </if>
+      <if test="CSQK != null">
+        CSQK,
+      </if>
+      <if test="SFYJX != null">
+        SFYJX,
+      </if>
+      <if test="XSEZX != null">
+        XSEZX,
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1,
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2,
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3,
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4,
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5,
+      </if>
+      <if test="SHENG != null">
+        SHENG,
+      </if>
+      <if test="SHI != null">
+        SHI,
+      </if>
+      <if test="XIAN != null">
+        XIAN,
+      </if>
+      <if test="NFMMQBC1 != null">
+        NFMMQBC1,
+      </if>
+      <if test="NFMMQBC2 != null">
+        NFMMQBC2,
+      </if>
+      <if test="NFMMQBC3 != null">
+        NFMMQBC3,
+      </if>
+      <if test="NFMXSEPF != null">
+        NFMXSEPF,
+      </if>
+      <if test="NFMFS != null">
+        NFMFS,
+      </if>
+      <if test="NFMZUO != null">
+        NFMZUO,
+      </if>
+      <if test="NMFPA != null">
+        NMFPA,
+      </if>
+      <if test="NFMZHAN != null">
+        NFMZHAN,
+      </if>
+      <if test="NFMCYSJ != null">
+        NFMCYSJ,
+      </if>
+      <if test="NFMHYSJ != null">
+        NFMHYSJ,
+      </if>
+      <if test="NFMCCSJ != null">
+        NFMCCSJ,
+      </if>
+      <if test="NFMJBMC != null">
+        NFMJBMC,
+      </if>
+      <if test="NFMCZSJ != null">
+        NFMCZSJ,
+      </if>
+      <if test="NFMZZ != null">
+        NFMZZ,
+      </if>
+      <if test="NFMQZSJ != null">
+        NFMQZSJ,
+      </if>
+      <if test="TEMP6 != null">
+        TEMP6,
+      </if>
+      <if test="TEMP7 != null">
+        TEMP7,
+      </if>
+      <if test="TEMP8 != null">
+        TEMP8,
+      </if>
+      <if test="TEMP9 != null">
+        TEMP9,
+      </if>
+      <if test="TEMP10 != null">
+        TEMP10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID,jdbcType=BIGINT},
+      </if>
+      <if test="HZNAME != null">
+        #{HZNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SEX != null">
+        #{SEX,jdbcType=VARCHAR},
+      </if>
+      <if test="AGE != null">
+        #{AGE,jdbcType=VARCHAR},
+      </if>
+      <if test="SFZCODE != null">
+        #{SFZCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="PHONE != null">
+        #{PHONE,jdbcType=VARCHAR},
+      </if>
+      <if test="JZSID != null">
+        #{JZSID,jdbcType=BIGINT},
+      </if>
+      <if test="GMSID != null">
+        #{GMSID,jdbcType=BIGINT},
+      </if>
+      <if test="JYYYID != null">
+        #{JYYYID,jdbcType=BIGINT},
+      </if>
+      <if test="WDBSID != null">
+        #{WDBSID,jdbcType=BIGINT},
+      </if>
+      <if test="DLH != null">
+        #{DLH,jdbcType=VARCHAR},
+      </if>
+      <if test="PASSWORD != null">
+        #{PASSWORD,jdbcType=VARCHAR},
+      </if>
+      <if test="MZ != null">
+        #{MZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSRQ != null">
+        #{CSRQ,jdbcType=BIGINT},
+      </if>
+      <if test="XX != null">
+        #{XX,jdbcType=VARCHAR},
+      </if>
+      <if test="RHXX != null">
+        #{RHXX,jdbcType=VARCHAR},
+      </if>
+      <if test="LXRNAME != null">
+        #{LXRNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="GX != null">
+        #{GX,jdbcType=VARCHAR},
+      </if>
+      <if test="YX != null">
+        #{YX,jdbcType=VARCHAR},
+      </if>
+      <if test="QQ != null">
+        #{QQ,jdbcType=VARCHAR},
+      </if>
+      <if test="WX != null">
+        #{WX,jdbcType=VARCHAR},
+      </if>
+      <if test="CSTZ != null">
+        #{CSTZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSSC != null">
+        #{CSSC,jdbcType=VARCHAR},
+      </if>
+      <if test="CSYZ != null">
+        #{CSYZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSJG != null">
+        #{CSJG,jdbcType=VARCHAR},
+      </if>
+      <if test="ZZYCBC != null">
+        #{ZZYCBC,jdbcType=VARCHAR},
+      </if>
+      <if test="MQYQBCCS != null">
+        #{MQYQBCCS,jdbcType=VARCHAR},
+      </if>
+      <if test="MQRCQJB != null">
+        #{MQRCQJB,jdbcType=VARCHAR},
+      </if>
+      <if test="MQYQYWYC != null">
+        #{MQYQYWYC,jdbcType=VARCHAR},
+      </if>
+      <if test="YQYWBT != null">
+        #{YQYWBT,jdbcType=VARCHAR},
+      </if>
+      <if test="BZHMS != null">
+        #{BZHMS,jdbcType=VARCHAR},
+      </if>
+      <if test="CSQK != null">
+        #{CSQK,jdbcType=VARCHAR},
+      </if>
+      <if test="SFYJX != null">
+        #{SFYJX,jdbcType=VARCHAR},
+      </if>
+      <if test="XSEZX != null">
+        #{XSEZX,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP1 != null">
+        #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        #{TEMP5,jdbcType=VARCHAR},
+      </if>
+      <if test="SHENG != null">
+        #{SHENG,jdbcType=VARCHAR},
+      </if>
+      <if test="SHI != null">
+        #{SHI,jdbcType=VARCHAR},
+      </if>
+      <if test="XIAN != null">
+        #{XIAN,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMMQBC1 != null">
+        #{NFMMQBC1,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMMQBC2 != null">
+        #{NFMMQBC2,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMMQBC3 != null">
+        #{NFMMQBC3,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMXSEPF != null">
+        #{NFMXSEPF,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMFS != null">
+        #{NFMFS,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMZUO != null">
+        #{NFMZUO,jdbcType=VARCHAR},
+      </if>
+      <if test="NMFPA != null">
+        #{NMFPA,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMZHAN != null">
+        #{NFMZHAN,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMCYSJ != null">
+        #{NFMCYSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMHYSJ != null">
+        #{NFMHYSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMCCSJ != null">
+        #{NFMCCSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMJBMC != null">
+        #{NFMJBMC,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMCZSJ != null">
+        #{NFMCZSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMZZ != null">
+        #{NFMZZ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMQZSJ != null">
+        #{NFMQZSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP6 != null">
+        #{TEMP6,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP7 != null">
+        #{TEMP7,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP8 != null">
+        #{TEMP8,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP9 != null">
+        #{TEMP9,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP10 != null">
+        #{TEMP10,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.Hzxx">
+    update s_hzxx
+    <set>
+      <if test="HZNAME != null">
+        HZNAME = #{HZNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="SEX != null">
+        SEX = #{SEX,jdbcType=VARCHAR},
+      </if>
+      <if test="AGE != null">
+        AGE = #{AGE,jdbcType=VARCHAR},
+      </if>
+      <if test="SFZCODE != null">
+        SFZCODE = #{SFZCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="PHONE != null">
+        PHONE = #{PHONE,jdbcType=VARCHAR},
+      </if>
+      <if test="JZSID != null">
+        JZSID = #{JZSID,jdbcType=BIGINT},
+      </if>
+      <if test="GMSID != null">
+        GMSID = #{GMSID,jdbcType=BIGINT},
+      </if>
+      <if test="JYYYID != null">
+        JYYYID = #{JYYYID,jdbcType=BIGINT},
+      </if>
+      <if test="WDBSID != null">
+        WDBSID = #{WDBSID,jdbcType=BIGINT},
+      </if>
+      <if test="DLH != null">
+        DLH = #{DLH,jdbcType=VARCHAR},
+      </if>
+      <if test="PASSWORD != null">
+        PASSWORD = #{PASSWORD,jdbcType=VARCHAR},
+      </if>
+      <if test="MZ != null">
+        MZ = #{MZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSRQ != null">
+        CSRQ = #{CSRQ,jdbcType=BIGINT},
+      </if>
+      <if test="XX != null">
+        XX = #{XX,jdbcType=VARCHAR},
+      </if>
+      <if test="RHXX != null">
+        RHXX = #{RHXX,jdbcType=VARCHAR},
+      </if>
+      <if test="LXRNAME != null">
+        LXRNAME = #{LXRNAME,jdbcType=VARCHAR},
+      </if>
+      <if test="GX != null">
+        GX = #{GX,jdbcType=VARCHAR},
+      </if>
+      <if test="YX != null">
+        YX = #{YX,jdbcType=VARCHAR},
+      </if>
+      <if test="QQ != null">
+        QQ = #{QQ,jdbcType=VARCHAR},
+      </if>
+      <if test="WX != null">
+        WX = #{WX,jdbcType=VARCHAR},
+      </if>
+      <if test="CSTZ != null">
+        CSTZ = #{CSTZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSSC != null">
+        CSSC = #{CSSC,jdbcType=VARCHAR},
+      </if>
+      <if test="CSYZ != null">
+        CSYZ = #{CSYZ,jdbcType=VARCHAR},
+      </if>
+      <if test="CSJG != null">
+        CSJG = #{CSJG,jdbcType=VARCHAR},
+      </if>
+      <if test="ZZYCBC != null">
+        ZZYCBC = #{ZZYCBC,jdbcType=VARCHAR},
+      </if>
+      <if test="MQYQBCCS != null">
+        MQYQBCCS = #{MQYQBCCS,jdbcType=VARCHAR},
+      </if>
+      <if test="MQRCQJB != null">
+        MQRCQJB = #{MQRCQJB,jdbcType=VARCHAR},
+      </if>
+      <if test="MQYQYWYC != null">
+        MQYQYWYC = #{MQYQYWYC,jdbcType=VARCHAR},
+      </if>
+      <if test="YQYWBT != null">
+        YQYWBT = #{YQYWBT,jdbcType=VARCHAR},
+      </if>
+      <if test="BZHMS != null">
+        BZHMS = #{BZHMS,jdbcType=VARCHAR},
+      </if>
+      <if test="CSQK != null">
+        CSQK = #{CSQK,jdbcType=VARCHAR},
+      </if>
+      <if test="SFYJX != null">
+        SFYJX = #{SFYJX,jdbcType=VARCHAR},
+      </if>
+      <if test="XSEZX != null">
+        XSEZX = #{XSEZX,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5 = #{TEMP5,jdbcType=VARCHAR},
+      </if>
+      <if test="SHENG != null">
+        SHENG = #{SHENG,jdbcType=VARCHAR},
+      </if>
+      <if test="SHI != null">
+        SHI = #{SHI,jdbcType=VARCHAR},
+      </if>
+      <if test="XIAN != null">
+        XIAN = #{XIAN,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMMQBC1 != null">
+        NFMMQBC1 = #{NFMMQBC1,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMMQBC2 != null">
+        NFMMQBC2 = #{NFMMQBC2,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMMQBC3 != null">
+        NFMMQBC3 = #{NFMMQBC3,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMXSEPF != null">
+        NFMXSEPF = #{NFMXSEPF,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMFS != null">
+        NFMFS = #{NFMFS,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMZUO != null">
+        NFMZUO = #{NFMZUO,jdbcType=VARCHAR},
+      </if>
+      <if test="NMFPA != null">
+        NMFPA = #{NMFPA,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMZHAN != null">
+        NFMZHAN = #{NFMZHAN,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMCYSJ != null">
+        NFMCYSJ = #{NFMCYSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMHYSJ != null">
+        NFMHYSJ = #{NFMHYSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMCCSJ != null">
+        NFMCCSJ = #{NFMCCSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMJBMC != null">
+        NFMJBMC = #{NFMJBMC,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMCZSJ != null">
+        NFMCZSJ = #{NFMCZSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMZZ != null">
+        NFMZZ = #{NFMZZ,jdbcType=VARCHAR},
+      </if>
+      <if test="NFMQZSJ != null">
+        NFMQZSJ = #{NFMQZSJ,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP6 != null">
+        TEMP6 = #{TEMP6,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP7 != null">
+        TEMP7 = #{TEMP7,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP8 != null">
+        TEMP8 = #{TEMP8,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP9 != null">
+        TEMP9 = #{TEMP9,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP10 != null">
+        TEMP10 = #{TEMP10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.Hzxx">
+    update s_hzxx
+    set HZNAME = #{HZNAME,jdbcType=VARCHAR},
+      SEX = #{SEX,jdbcType=VARCHAR},
+      AGE = #{AGE,jdbcType=VARCHAR},
+      SFZCODE = #{SFZCODE,jdbcType=VARCHAR},
+      PHONE = #{PHONE,jdbcType=VARCHAR},
+      JZSID = #{JZSID,jdbcType=BIGINT},
+      GMSID = #{GMSID,jdbcType=BIGINT},
+      JYYYID = #{JYYYID,jdbcType=BIGINT},
+      WDBSID = #{WDBSID,jdbcType=BIGINT},
+      DLH = #{DLH,jdbcType=VARCHAR},
+      PASSWORD = #{PASSWORD,jdbcType=VARCHAR},
+      MZ = #{MZ,jdbcType=VARCHAR},
+      CSRQ = #{CSRQ,jdbcType=BIGINT},
+      XX = #{XX,jdbcType=VARCHAR},
+      RHXX = #{RHXX,jdbcType=VARCHAR},
+      LXRNAME = #{LXRNAME,jdbcType=VARCHAR},
+      GX = #{GX,jdbcType=VARCHAR},
+      YX = #{YX,jdbcType=VARCHAR},
+      QQ = #{QQ,jdbcType=VARCHAR},
+      WX = #{WX,jdbcType=VARCHAR},
+      CSTZ = #{CSTZ,jdbcType=VARCHAR},
+      CSSC = #{CSSC,jdbcType=VARCHAR},
+      CSYZ = #{CSYZ,jdbcType=VARCHAR},
+      CSJG = #{CSJG,jdbcType=VARCHAR},
+      ZZYCBC = #{ZZYCBC,jdbcType=VARCHAR},
+      MQYQBCCS = #{MQYQBCCS,jdbcType=VARCHAR},
+      MQRCQJB = #{MQRCQJB,jdbcType=VARCHAR},
+      MQYQYWYC = #{MQYQYWYC,jdbcType=VARCHAR},
+      YQYWBT = #{YQYWBT,jdbcType=VARCHAR},
+      BZHMS = #{BZHMS,jdbcType=VARCHAR},
+      CSQK = #{CSQK,jdbcType=VARCHAR},
+      SFYJX = #{SFYJX,jdbcType=VARCHAR},
+      XSEZX = #{XSEZX,jdbcType=VARCHAR},
+      TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      TEMP5 = #{TEMP5,jdbcType=VARCHAR},
+      SHENG = #{SHENG,jdbcType=VARCHAR},
+      SHI = #{SHI,jdbcType=VARCHAR},
+      XIAN = #{XIAN,jdbcType=VARCHAR},
+      NFMMQBC1 = #{NFMMQBC1,jdbcType=VARCHAR},
+      NFMMQBC2 = #{NFMMQBC2,jdbcType=VARCHAR},
+      NFMMQBC3 = #{NFMMQBC3,jdbcType=VARCHAR},
+      NFMXSEPF = #{NFMXSEPF,jdbcType=VARCHAR},
+      NFMFS = #{NFMFS,jdbcType=VARCHAR},
+      NFMZUO = #{NFMZUO,jdbcType=VARCHAR},
+      NMFPA = #{NMFPA,jdbcType=VARCHAR},
+      NFMZHAN = #{NFMZHAN,jdbcType=VARCHAR},
+      NFMCYSJ = #{NFMCYSJ,jdbcType=VARCHAR},
+      NFMHYSJ = #{NFMHYSJ,jdbcType=VARCHAR},
+      NFMCCSJ = #{NFMCCSJ,jdbcType=VARCHAR},
+      NFMJBMC = #{NFMJBMC,jdbcType=VARCHAR},
+      NFMCZSJ = #{NFMCZSJ,jdbcType=VARCHAR},
+      NFMZZ = #{NFMZZ,jdbcType=VARCHAR},
+      NFMQZSJ = #{NFMQZSJ,jdbcType=VARCHAR},
+      TEMP6 = #{TEMP6,jdbcType=VARCHAR},
+      TEMP7 = #{TEMP7,jdbcType=VARCHAR},
+      TEMP8 = #{TEMP8,jdbcType=VARCHAR},
+      TEMP9 = #{TEMP9,jdbcType=VARCHAR},
+      TEMP10 = #{TEMP10,jdbcType=VARCHAR}
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+</mapper>

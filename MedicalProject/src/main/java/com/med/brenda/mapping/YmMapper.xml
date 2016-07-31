@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.YmMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.Ym">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="hzid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="hzname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="nlbh" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="nl" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="savedate" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="temp1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp3" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp4" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp5" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, hzid, hzname, nlbh, nl, savedate, temp1, temp2, temp3, temp4, temp5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_YM
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_YM
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.Ym">
+    insert into S_YM (id, hzid, hzname, 
+      nlbh, nl, savedate, 
+      temp1, temp2, temp3, 
+      temp4, temp5)
+    values (#{id,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, #{hzname,jdbcType=VARCHAR}, 
+      #{nlbh,jdbcType=VARCHAR}, #{nl,jdbcType=VARCHAR}, #{savedate,jdbcType=BIGINT}, 
+      #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, 
+      #{temp4,jdbcType=VARCHAR}, #{temp5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.Ym">
+    insert into S_YM
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="hzname != null">
+        hzname,
+      </if>
+      <if test="nlbh != null">
+        nlbh,
+      </if>
+      <if test="nl != null">
+        nl,
+      </if>
+      <if test="savedate != null">
+        savedate,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="hzname != null">
+        #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="nlbh != null">
+        #{nlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="nl != null">
+        #{nl,jdbcType=VARCHAR},
+      </if>
+      <if test="savedate != null">
+        #{savedate,jdbcType=BIGINT},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.Ym">
+    update S_YM
+    <set>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="hzname != null">
+        hzname = #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="nlbh != null">
+        nlbh = #{nlbh,jdbcType=VARCHAR},
+      </if>
+      <if test="nl != null">
+        nl = #{nl,jdbcType=VARCHAR},
+      </if>
+      <if test="savedate != null">
+        savedate = #{savedate,jdbcType=BIGINT},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.Ym">
+    update S_YM
+    set hzid = #{hzid,jdbcType=BIGINT},
+      hzname = #{hzname,jdbcType=VARCHAR},
+      nlbh = #{nlbh,jdbcType=VARCHAR},
+      nl = #{nl,jdbcType=VARCHAR},
+      savedate = #{savedate,jdbcType=BIGINT},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

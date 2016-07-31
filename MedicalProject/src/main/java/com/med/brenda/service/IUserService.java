@@ -5,4 +5,5 @@ import com.med.brenda.model.User;
 
 public interface IUserService {
 	public User getUserById(long userId);
+	public User getUserByUserNamePwd(User user);
 }

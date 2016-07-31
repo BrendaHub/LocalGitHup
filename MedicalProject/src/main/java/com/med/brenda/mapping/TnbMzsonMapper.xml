@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.TnbMzsonMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.TnbMzson">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="fatherid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="hzid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="itemcode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="itemname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzsg" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzjkjy" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mztz" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzbmi" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzxy" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mztw" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzyw" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzpf" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzgm" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzzfws" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzzfzs" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzgjyc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzjzx" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzgz" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzgj" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzrf" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzgw" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzym" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mzqt" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mztjrq" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp3" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp4" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="temp5" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ysid" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, fatherid, hzid, itemcode, itemname, mzsg, mzjkjy, mztz, mzbmi, mzxy, mztw, mzyw, 
+    mzpf, mzgm, mzzfws, mzzfzs, mzgjyc, mzjzx, mzgz, mzgj, mzrf, mzgw, mzym, mzqt, mztjrq, 
+    temp1, temp2, temp3, temp4, temp5, ysid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_TNB_MZSON
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from S_TNB_MZSON
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.TnbMzson">
+    insert into S_TNB_MZSON (id, fatherid, hzid, 
+      itemcode, itemname, mzsg, 
+      mzjkjy, mztz, mzbmi, 
+      mzxy, mztw, mzyw, mzpf, 
+      mzgm, mzzfws, mzzfzs, 
+      mzgjyc, mzjzx, mzgz, 
+      mzgj, mzrf, mzgw, mzym, 
+      mzqt, mztjrq, temp1, 
+      temp2, temp3, temp4, 
+      temp5, ysid)
+    values (#{id,jdbcType=BIGINT}, #{fatherid,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, 
+      #{itemcode,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{mzsg,jdbcType=VARCHAR}, 
+      #{mzjkjy,jdbcType=VARCHAR}, #{mztz,jdbcType=VARCHAR}, #{mzbmi,jdbcType=VARCHAR}, 
+      #{mzxy,jdbcType=VARCHAR}, #{mztw,jdbcType=VARCHAR}, #{mzyw,jdbcType=VARCHAR}, #{mzpf,jdbcType=VARCHAR}, 
+      #{mzgm,jdbcType=VARCHAR}, #{mzzfws,jdbcType=VARCHAR}, #{mzzfzs,jdbcType=VARCHAR}, 
+      #{mzgjyc,jdbcType=VARCHAR}, #{mzjzx,jdbcType=VARCHAR}, #{mzgz,jdbcType=VARCHAR}, 
+      #{mzgj,jdbcType=VARCHAR}, #{mzrf,jdbcType=VARCHAR}, #{mzgw,jdbcType=VARCHAR}, #{mzym,jdbcType=VARCHAR}, 
+      #{mzqt,jdbcType=VARCHAR}, #{mztjrq,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, 
+      #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, 
+      #{temp5,jdbcType=VARCHAR}, #{ysid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.TnbMzson">
+    insert into S_TNB_MZSON
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fatherid != null">
+        fatherid,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="itemcode != null">
+        itemcode,
+      </if>
+      <if test="itemname != null">
+        itemname,
+      </if>
+      <if test="mzsg != null">
+        mzsg,
+      </if>
+      <if test="mzjkjy != null">
+        mzjkjy,
+      </if>
+      <if test="mztz != null">
+        mztz,
+      </if>
+      <if test="mzbmi != null">
+        mzbmi,
+      </if>
+      <if test="mzxy != null">
+        mzxy,
+      </if>
+      <if test="mztw != null">
+        mztw,
+      </if>
+      <if test="mzyw != null">
+        mzyw,
+      </if>
+      <if test="mzpf != null">
+        mzpf,
+      </if>
+      <if test="mzgm != null">
+        mzgm,
+      </if>
+      <if test="mzzfws != null">
+        mzzfws,
+      </if>
+      <if test="mzzfzs != null">
+        mzzfzs,
+      </if>
+      <if test="mzgjyc != null">
+        mzgjyc,
+      </if>
+      <if test="mzjzx != null">
+        mzjzx,
+      </if>
+      <if test="mzgz != null">
+        mzgz,
+      </if>
+      <if test="mzgj != null">
+        mzgj,
+      </if>
+      <if test="mzrf != null">
+        mzrf,
+      </if>
+      <if test="mzgw != null">
+        mzgw,
+      </if>
+      <if test="mzym != null">
+        mzym,
+      </if>
+      <if test="mzqt != null">
+        mzqt,
+      </if>
+      <if test="mztjrq != null">
+        mztjrq,
+      </if>
+      <if test="temp1 != null">
+        temp1,
+      </if>
+      <if test="temp2 != null">
+        temp2,
+      </if>
+      <if test="temp3 != null">
+        temp3,
+      </if>
+      <if test="temp4 != null">
+        temp4,
+      </if>
+      <if test="temp5 != null">
+        temp5,
+      </if>
+      <if test="ysid != null">
+        ysid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fatherid != null">
+        #{fatherid,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="itemcode != null">
+        #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null">
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="mzsg != null">
+        #{mzsg,jdbcType=VARCHAR},
+      </if>
+      <if test="mzjkjy != null">
+        #{mzjkjy,jdbcType=VARCHAR},
+      </if>
+      <if test="mztz != null">
+        #{mztz,jdbcType=VARCHAR},
+      </if>
+      <if test="mzbmi != null">
+        #{mzbmi,jdbcType=VARCHAR},
+      </if>
+      <if test="mzxy != null">
+        #{mzxy,jdbcType=VARCHAR},
+      </if>
+      <if test="mztw != null">
+        #{mztw,jdbcType=VARCHAR},
+      </if>
+      <if test="mzyw != null">
+        #{mzyw,jdbcType=VARCHAR},
+      </if>
+      <if test="mzpf != null">
+        #{mzpf,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgm != null">
+        #{mzgm,jdbcType=VARCHAR},
+      </if>
+      <if test="mzzfws != null">
+        #{mzzfws,jdbcType=VARCHAR},
+      </if>
+      <if test="mzzfzs != null">
+        #{mzzfzs,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgjyc != null">
+        #{mzgjyc,jdbcType=VARCHAR},
+      </if>
+      <if test="mzjzx != null">
+        #{mzjzx,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgz != null">
+        #{mzgz,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgj != null">
+        #{mzgj,jdbcType=VARCHAR},
+      </if>
+      <if test="mzrf != null">
+        #{mzrf,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgw != null">
+        #{mzgw,jdbcType=VARCHAR},
+      </if>
+      <if test="mzym != null">
+        #{mzym,jdbcType=VARCHAR},
+      </if>
+      <if test="mzqt != null">
+        #{mzqt,jdbcType=VARCHAR},
+      </if>
+      <if test="mztjrq != null">
+        #{mztjrq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        #{ysid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.TnbMzson">
+    update S_TNB_MZSON
+    <set>
+      <if test="fatherid != null">
+        fatherid = #{fatherid,jdbcType=BIGINT},
+      </if>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=BIGINT},
+      </if>
+      <if test="itemcode != null">
+        itemcode = #{itemcode,jdbcType=VARCHAR},
+      </if>
+      <if test="itemname != null">
+        itemname = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="mzsg != null">
+        mzsg = #{mzsg,jdbcType=VARCHAR},
+      </if>
+      <if test="mzjkjy != null">
+        mzjkjy = #{mzjkjy,jdbcType=VARCHAR},
+      </if>
+      <if test="mztz != null">
+        mztz = #{mztz,jdbcType=VARCHAR},
+      </if>
+      <if test="mzbmi != null">
+        mzbmi = #{mzbmi,jdbcType=VARCHAR},
+      </if>
+      <if test="mzxy != null">
+        mzxy = #{mzxy,jdbcType=VARCHAR},
+      </if>
+      <if test="mztw != null">
+        mztw = #{mztw,jdbcType=VARCHAR},
+      </if>
+      <if test="mzyw != null">
+        mzyw = #{mzyw,jdbcType=VARCHAR},
+      </if>
+      <if test="mzpf != null">
+        mzpf = #{mzpf,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgm != null">
+        mzgm = #{mzgm,jdbcType=VARCHAR},
+      </if>
+      <if test="mzzfws != null">
+        mzzfws = #{mzzfws,jdbcType=VARCHAR},
+      </if>
+      <if test="mzzfzs != null">
+        mzzfzs = #{mzzfzs,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgjyc != null">
+        mzgjyc = #{mzgjyc,jdbcType=VARCHAR},
+      </if>
+      <if test="mzjzx != null">
+        mzjzx = #{mzjzx,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgz != null">
+        mzgz = #{mzgz,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgj != null">
+        mzgj = #{mzgj,jdbcType=VARCHAR},
+      </if>
+      <if test="mzrf != null">
+        mzrf = #{mzrf,jdbcType=VARCHAR},
+      </if>
+      <if test="mzgw != null">
+        mzgw = #{mzgw,jdbcType=VARCHAR},
+      </if>
+      <if test="mzym != null">
+        mzym = #{mzym,jdbcType=VARCHAR},
+      </if>
+      <if test="mzqt != null">
+        mzqt = #{mzqt,jdbcType=VARCHAR},
+      </if>
+      <if test="mztjrq != null">
+        mztjrq = #{mztjrq,jdbcType=VARCHAR},
+      </if>
+      <if test="temp1 != null">
+        temp1 = #{temp1,jdbcType=VARCHAR},
+      </if>
+      <if test="temp2 != null">
+        temp2 = #{temp2,jdbcType=VARCHAR},
+      </if>
+      <if test="temp3 != null">
+        temp3 = #{temp3,jdbcType=VARCHAR},
+      </if>
+      <if test="temp4 != null">
+        temp4 = #{temp4,jdbcType=VARCHAR},
+      </if>
+      <if test="temp5 != null">
+        temp5 = #{temp5,jdbcType=VARCHAR},
+      </if>
+      <if test="ysid != null">
+        ysid = #{ysid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.TnbMzson">
+    update S_TNB_MZSON
+    set fatherid = #{fatherid,jdbcType=BIGINT},
+      hzid = #{hzid,jdbcType=BIGINT},
+      itemcode = #{itemcode,jdbcType=VARCHAR},
+      itemname = #{itemname,jdbcType=VARCHAR},
+      mzsg = #{mzsg,jdbcType=VARCHAR},
+      mzjkjy = #{mzjkjy,jdbcType=VARCHAR},
+      mztz = #{mztz,jdbcType=VARCHAR},
+      mzbmi = #{mzbmi,jdbcType=VARCHAR},
+      mzxy = #{mzxy,jdbcType=VARCHAR},
+      mztw = #{mztw,jdbcType=VARCHAR},
+      mzyw = #{mzyw,jdbcType=VARCHAR},
+      mzpf = #{mzpf,jdbcType=VARCHAR},
+      mzgm = #{mzgm,jdbcType=VARCHAR},
+      mzzfws = #{mzzfws,jdbcType=VARCHAR},
+      mzzfzs = #{mzzfzs,jdbcType=VARCHAR},
+      mzgjyc = #{mzgjyc,jdbcType=VARCHAR},
+      mzjzx = #{mzjzx,jdbcType=VARCHAR},
+      mzgz = #{mzgz,jdbcType=VARCHAR},
+      mzgj = #{mzgj,jdbcType=VARCHAR},
+      mzrf = #{mzrf,jdbcType=VARCHAR},
+      mzgw = #{mzgw,jdbcType=VARCHAR},
+      mzym = #{mzym,jdbcType=VARCHAR},
+      mzqt = #{mzqt,jdbcType=VARCHAR},
+      mztjrq = #{mztjrq,jdbcType=VARCHAR},
+      temp1 = #{temp1,jdbcType=VARCHAR},
+      temp2 = #{temp2,jdbcType=VARCHAR},
+      temp3 = #{temp3,jdbcType=VARCHAR},
+      temp4 = #{temp4,jdbcType=VARCHAR},
+      temp5 = #{temp5,jdbcType=VARCHAR},
+      ysid = #{ysid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

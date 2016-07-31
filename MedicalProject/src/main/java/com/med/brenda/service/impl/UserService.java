@@ -14,11 +14,16 @@ import com.med.brenda.service.IUserService;
 @Repository
 public class UserService implements IUserService {
 	
-	@Autowired
+	@Resource
 	private UserMapper userDao;
 
 	public User getUserById(long userId) {
 		return userDao.selectByPrimaryKey(userId);
+	}
+
+	@Override
+	public User getUserByUserNamePwd(User tmpUser) {
+		return userDao.getUserByUserNamePwd(tmpUser);
 	}
 
 }

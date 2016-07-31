@@ -7,7 +7,8 @@
 	<classPathEntry 
 		location="I:\download\generator\mysql-connector-java-5.1.26-bin.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3">
-		<commentGenerator>
+		<property name="mergeable" value="false"></property>
+		<commentGenerator> 
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -15,222 +16,232 @@
 			userId="root" password="doctor330_Brenda123">
 		</jdbcConnection>
 		<javaTypeResolver>
-			<property name="forceBigDecimals" value="false" />
+			<property name="forceBigDecimals" value="true" />
+			<property name="suppressDate" value="true" />
 		</javaTypeResolver>
 
 		<javaModelGenerator targetPackage="com.med.brenda.model"
 			targetProject="src/main/java">
-			<property name="enableSubPackages" value="true" />
+			<property name="constructorBased" value="true"/>
+			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
 
 		<sqlMapGenerator targetPackage="com.med.brenda.mapping" targetProject="src/main/java">
-			<property name="enableSubPackages" value="true" />
+			<property name="enableSubPackages" value="false" />
 		</sqlMapGenerator>
 
 		<javaClientGenerator type="XMLMAPPER"
 			targetPackage="com.med.brenda.dao" targetProject="src/main/java">
-			<property name="enableSubPackages" value="true" />
+			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		
 		<table tableName="t_user" domainObjectName="User"
 			enableCountByExample="false" enableSelectByExample="false"
-			enableUpdateByExample="false" enableDeleteByExample="false">
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_ZBK" domainObjectName="Szbk"
+		<table tableName="t_roles" domainObjectName="Roles"
+			enableCountByExample="false" enableSelectByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false" 
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="true" />
+		</table>
+		<table tableName="S_ZBK" domainObjectName="Zbk"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_YSZDMS"
-			domainObjectName="Syszdms" enableCountByExample="false"
+		<table tableName="S_YSZDMS"
+			domainObjectName="Yszdms" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_YSXX"
-			domainObjectName="Sysxx" enableCountByExample="false"
+		<table tableName="S_YSXX"
+			domainObjectName="Ysxx" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_YM" domainObjectName="Sym"
+		<table tableName="S_YM" domainObjectName="Ym"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_YCQK"
-			domainObjectName="Sycqk" enableCountByExample="false"
+		<table tableName="S_YCQK"
+			domainObjectName="Ycqk" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_WDBS"
-			domainObjectName="Swdbs" enableCountByExample="false"
+		<table tableName="S_WDBS"
+			domainObjectName="Wdbs" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNBO_YGDJB"
-			domainObjectName="StnboYgdjb" enableCountByExample="false"
+		<table tableName="S_TNBO_YGDJB"
+			domainObjectName="TnboYgdjb" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNBO_TANGYOU"
-			domainObjectName="StnboTangyou" enableCountByExample="false"
+		<table tableName="S_TNBO_TANGYOU"
+			domainObjectName="TnboTangyou" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNB_YWFA"
-			domainObjectName="StnbYwfa" enableCountByExample="false"
+		<table tableName="S_TNB_YWFA"
+			domainObjectName="TnbYwfa" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNB_YINSHI"
-			domainObjectName="StnbYinshi" enableCountByExample="false"
+		<table tableName="S_TNB_YINSHI"
+			domainObjectName="TnbYinshi" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNB_TNBSON"
-			domainObjectName="StnbTnbson" enableCountByExample="false"
+		<table tableName="S_TNB_TNBSON"
+			domainObjectName="TnbTnbson" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNB_SD"
-			domainObjectName="StnbSd" enableCountByExample="false"
+		<table tableName="S_TNB_SD"
+			domainObjectName="TnbSd" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNB_PJ"
-			domainObjectName="StnbPj" enableCountByExample="false"
+		<table tableName="S_TNB_PJ"
+			domainObjectName="TnbPj" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNB_MZSON"
-			domainObjectName="StnbMzson" enableCountByExample="false"
+		<table tableName="S_TNB_MZSON"
+			domainObjectName="TnbMzson" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_TNB_JCBFZSC"
-			domainObjectName="StnbJcbfzsc" enableCountByExample="false"
+		<table tableName="S_TNB_JCBFZSC"
+			domainObjectName="TnbJcbfzsc" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_SFZS"
-			domainObjectName="Ssfzs" enableCountByExample="false"
+		<table tableName="S_SFZS"
+			domainObjectName="Sfzs" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_SFJHMB"
-			domainObjectName="Ssfjhmb" enableCountByExample="false"
+		<table tableName="S_SFJHMB"
+			domainObjectName="Sfjhmb" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_MZ" domainObjectName="Smz"
+		<table tableName="S_MZ" domainObjectName="Mz"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_KS" domainObjectName="Sks"
+		<table tableName="S_KS" domainObjectName="Ks"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_JZS" domainObjectName="Sjzs"
+		<table tableName="S_JZS" domainObjectName="Jzs"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_JYYY"
-			domainObjectName="Sjyyy" enableCountByExample="false"
+		<table tableName="S_JYYY"
+			domainObjectName="Jyyy" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_JKXJ"
-			domainObjectName="Sjkxj" enableCountByExample="false"
+		<table tableName="S_JKXJ"
+			domainObjectName="Jkxj" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="S_IM" domainObjectName="Sim"
+		<table tableName="S_IM" domainObjectName="Im"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_hzxx"
-			domainObjectName="Shzxx" enableCountByExample="false"
+		<table tableName="s_hzxx"
+			domainObjectName="Hzxx" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_hzxiaoxi"
-			domainObjectName="Shzxiaoxi" enableCountByExample="false"
+		<table tableName="s_hzxiaoxi"
+			domainObjectName="Hzxiaoxi" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_hzsssfjh"
-			domainObjectName="Shzsssfjh" enableCountByExample="false"
+		<table tableName="s_hzsssfjh"
+			domainObjectName="Hzsssfjh" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_hzsfxxson"
-			domainObjectName="Shzsfxxson" enableCountByExample="false"
+		<table tableName="s_hzsfxxson"
+			domainObjectName="Hzsfxxson" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_hzsfxx"
-			domainObjectName="Shzsfxx" enableCountByExample="false"
+		<table tableName="s_hzsfxx"
+			domainObjectName="Hzsfxx" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_gzysxx"
-			domainObjectName="Sgzysxx" enableCountByExample="false"
+		<table tableName="s_gzysxx"
+			domainObjectName="Gzysxx" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_gms" domainObjectName="Sgms"
+		<table tableName="s_gms" domainObjectName="Gms"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="s_eventlb"
-			domainObjectName="Seventlb" enableCountByExample="false"
+		<table tableName="s_eventlb"
+			domainObjectName="Eventlb" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="f_ysflag"
-			domainObjectName="Fysflag" enableCountByExample="false"
+		<table tableName="f_ysflag"
+			domainObjectName="Ysflag" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
-		<table schema="db_doctor330" tableName="f_hzflag"
-			domainObjectName="Fhzflag" enableCountByExample="false"
+		<table tableName="f_hzflag"
+			domainObjectName="Hzflag" enableCountByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />

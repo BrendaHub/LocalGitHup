@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.HzsfxxsonMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.Hzsfxxson">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="FATHERID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="ITEMCODE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ITEMTYPE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="IMAGEURL" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP2" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP3" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP4" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP5" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, FATHERID, ITEMCODE, ITEMTYPE, IMAGEURL, TEMP1, TEMP2, TEMP3, TEMP4, TEMP5
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from s_hzsfxxson
+    where ID = #{ID,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from s_hzsfxxson
+    where ID = #{ID,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.Hzsfxxson">
+    insert into s_hzsfxxson (ID, FATHERID, ITEMCODE, 
+      ITEMTYPE, IMAGEURL, TEMP1, 
+      TEMP2, TEMP3, TEMP4, 
+      TEMP5)
+    values (#{ID,jdbcType=BIGINT}, #{FATHERID,jdbcType=BIGINT}, #{ITEMCODE,jdbcType=VARCHAR}, 
+      #{ITEMTYPE,jdbcType=VARCHAR}, #{IMAGEURL,jdbcType=VARCHAR}, #{TEMP1,jdbcType=VARCHAR}, 
+      #{TEMP2,jdbcType=VARCHAR}, #{TEMP3,jdbcType=VARCHAR}, #{TEMP4,jdbcType=VARCHAR}, 
+      #{TEMP5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.Hzsfxxson">
+    insert into s_hzsfxxson
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="FATHERID != null">
+        FATHERID,
+      </if>
+      <if test="ITEMCODE != null">
+        ITEMCODE,
+      </if>
+      <if test="ITEMTYPE != null">
+        ITEMTYPE,
+      </if>
+      <if test="IMAGEURL != null">
+        IMAGEURL,
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1,
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2,
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3,
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4,
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID,jdbcType=BIGINT},
+      </if>
+      <if test="FATHERID != null">
+        #{FATHERID,jdbcType=BIGINT},
+      </if>
+      <if test="ITEMCODE != null">
+        #{ITEMCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMTYPE != null">
+        #{ITEMTYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="IMAGEURL != null">
+        #{IMAGEURL,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP1 != null">
+        #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        #{TEMP5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.Hzsfxxson">
+    update s_hzsfxxson
+    <set>
+      <if test="FATHERID != null">
+        FATHERID = #{FATHERID,jdbcType=BIGINT},
+      </if>
+      <if test="ITEMCODE != null">
+        ITEMCODE = #{ITEMCODE,jdbcType=VARCHAR},
+      </if>
+      <if test="ITEMTYPE != null">
+        ITEMTYPE = #{ITEMTYPE,jdbcType=VARCHAR},
+      </if>
+      <if test="IMAGEURL != null">
+        IMAGEURL = #{IMAGEURL,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP3 != null">
+        TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP4 != null">
+        TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP5 != null">
+        TEMP5 = #{TEMP5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.Hzsfxxson">
+    update s_hzsfxxson
+    set FATHERID = #{FATHERID,jdbcType=BIGINT},
+      ITEMCODE = #{ITEMCODE,jdbcType=VARCHAR},
+      ITEMTYPE = #{ITEMTYPE,jdbcType=VARCHAR},
+      IMAGEURL = #{IMAGEURL,jdbcType=VARCHAR},
+      TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      TEMP3 = #{TEMP3,jdbcType=VARCHAR},
+      TEMP4 = #{TEMP4,jdbcType=VARCHAR},
+      TEMP5 = #{TEMP5,jdbcType=VARCHAR}
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+</mapper>

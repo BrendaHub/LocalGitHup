@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.HzflagMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.Hzflag">
+    <constructor>
+      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="YSID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="HZID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="TEMP1" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="TEMP2" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, YSID, HZID, TEMP1, TEMP2
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from f_hzflag
+    where ID = #{ID,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from f_hzflag
+    where ID = #{ID,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.Hzflag">
+    insert into f_hzflag (ID, YSID, HZID, 
+      TEMP1, TEMP2)
+    values (#{ID,jdbcType=BIGINT}, #{YSID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, 
+      #{TEMP1,jdbcType=VARCHAR}, #{TEMP2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.Hzflag">
+    insert into f_hzflag
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="YSID != null">
+        YSID,
+      </if>
+      <if test="HZID != null">
+        HZID,
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1,
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID,jdbcType=BIGINT},
+      </if>
+      <if test="YSID != null">
+        #{YSID,jdbcType=BIGINT},
+      </if>
+      <if test="HZID != null">
+        #{HZID,jdbcType=BIGINT},
+      </if>
+      <if test="TEMP1 != null">
+        #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        #{TEMP2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.Hzflag">
+    update f_hzflag
+    <set>
+      <if test="YSID != null">
+        YSID = #{YSID,jdbcType=BIGINT},
+      </if>
+      <if test="HZID != null">
+        HZID = #{HZID,jdbcType=BIGINT},
+      </if>
+      <if test="TEMP1 != null">
+        TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      </if>
+      <if test="TEMP2 != null">
+        TEMP2 = #{TEMP2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.Hzflag">
+    update f_hzflag
+    set YSID = #{YSID,jdbcType=BIGINT},
+      HZID = #{HZID,jdbcType=BIGINT},
+      TEMP1 = #{TEMP1,jdbcType=VARCHAR},
+      TEMP2 = #{TEMP2,jdbcType=VARCHAR}
+    where ID = #{ID,jdbcType=BIGINT}
+  </update>
+</mapper>
