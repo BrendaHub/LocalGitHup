@@ -11,6 +11,5 @@ public class SessionTimeoutException extends Exception {
 	        super(msg);  
 	    }  
 	 public SessionTimeoutException(){
-		 logger.log(Priority.INFO, "抱出了 sessiontimeoutException");
 	 }
 }

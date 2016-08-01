@@ -21,9 +21,9 @@ public class UserService implements IUserService {
 		return userDao.selectByPrimaryKey(userId);
 	}
 
-	@Override
-	public User getUserByUserNamePwd(User tmpUser) {
-		return userDao.getUserByUserNamePwd(tmpUser);
+	public User getUserByUserNamePwd(User user) {
+		return userDao.getUserByUserNamePwd(user);
 	}
+
 
 }

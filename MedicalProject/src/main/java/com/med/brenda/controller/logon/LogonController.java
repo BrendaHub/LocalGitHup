@@ -5,8 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.jsoup.helper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,10 +47,10 @@ public class LogonController {
 	
 	@RequestMapping(value="/logon", method=RequestMethod.POST)
 	public ModelAndView Logon(HttpServletRequest request, User user){
-		Map<String, Object> resultMap = new HashMap<>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		//获取到的验证码
 		String verifyCode = request.getParameter("verifycode");
-		verifyCode = StringUtil.isBlank(verifyCode)?"":verifyCode;
+		verifyCode = StringUtils.isBlank(verifyCode)?"":verifyCode;
 //		if(logger.isDebugEnabled()){
 		logger.debug("verifyCode = " + verifyCode);
 		logger.debug("username  = " + user.getUsername());
@@ -58,7 +58,7 @@ public class LogonController {
 		logger.debug("verifyCode session  = " + request.getSession().getAttribute("verify_code"));
 //		}
 		String sessionVerify = (String)request.getSession().getAttribute("verify_code");
-		sessionVerify = StringUtil.isBlank(sessionVerify)?"":sessionVerify.trim();
+		sessionVerify = StringUtils.isBlank(sessionVerify)?"":sessionVerify.trim();
 		if(!sessionVerify.equals(verifyCode)){
 			resultMap.put("_st", Integer.parseInt("1003"));
 			resultMap.put("_msg", "验证码错误");

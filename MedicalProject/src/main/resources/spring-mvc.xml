@@ -10,7 +10,7 @@
                             http://www.springframework.org/schema/mvc  
                             http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	
-	
+	<bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
@@ -37,6 +37,7 @@
 	<!-- 对静态资源的访问 -->
 	<!-- <mvc:resources mapping="/js/**" location="/js/" /> <mvc:resources mapping="/css/**" 
 		location="/css/" /> -->
+	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
 	<!-- 拦截器配置 -->
 	<mvc:interceptors>
 		<!-- session超时 -->
@@ -52,6 +53,9 @@
 						<value>/Css</value>
 						<value>/Images</value>
 						<value>/verifycode</value>
+						<value>/swagger</value>
+						<value>/api-docs</value>
+						<value>/api/patient</value>
 					</list>
 				</property>
 			</bean>
