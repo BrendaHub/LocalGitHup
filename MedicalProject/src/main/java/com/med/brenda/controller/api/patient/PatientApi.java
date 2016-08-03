@@ -1,5 +1,6 @@
 package com.med.brenda.controller.api.patient;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.exception.BusinessException;
 import com.med.brenda.model.Hzxx;
 import com.med.brenda.model.User;
@@ -75,5 +77,45 @@ public class PatientApi {
 	    } else {
 	        throw new BusinessException("根据{name=" + username + ", password="+ password +"}获取不到User对象");
 	    }
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/LOGON/{SFZCODE}/{PASSWORD}", method = RequestMethod.POST)
+	@ApiOperation(value = "患者登录（身份证号 + 密码）", httpMethod = "POST", response = JSON.class, notes = "患者登录（身份证号 + 密码）")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	public String patientLogon(@ApiParam(required = true, name = "SFZCODE", value = "患者身份证号") @PathVariable String SFZCODE,
+			@ApiParam(required = true, name = "PASSWORD", value = "患者登录密码MD5大写") @PathVariable String PASSWORD){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(SFZCODE)){
+			result.put("_st", 2);//
+			result.put("_msg", "身份证号不正确");
+			return result.toJSONString();
+		}
+		if(StringUtils.isBlank(PASSWORD)){
+			result.put("_st", 3);//
+			result.put("_msg", "密码不正确");
+			return result.toJSONString();
+		}
+		Hzxx hz = hzxxService.hzLogon(SFZCODE, PASSWORD);
+		if(hz != null){
+			result.put("_st", 1);//
+			result.put("_msg", "登录成功");
+			JSONObject body = new JSONObject();
+			JSONObject subbody = new JSONObject();
+			subbody.put("Id", hz.getID());
+			subbody.put("Name", hz.getHZNAME());
+			subbody.put("Sex", hz.getSEX());
+			subbody.put("Date", hz.getCSRQ());
+			subbody.put("Headurl", hz.getDLH());
+			subbody.put("Bjflag", "对应不上什么值");
+			body.put("_data", subbody);
+			result.put("_body", body);
+			return result.toJSONString();
+		}else{
+			result.put("_st", 0);//
+			result.put("_msg", "身份证号OR密码错误");
+			return result.toJSONString();
+		}
+		
 	}
 }

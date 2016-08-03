@@ -81,6 +81,18 @@
     from s_hzxx
     where ID = #{ID,jdbcType=BIGINT}
   </select>
+  <select id="hzLogon" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from s_hzxx
+    where 1=1
+    <if test="sfzh != null">
+    	and SFZCODE = #{sfzh,jdbcType=VARCHAR}
+    </if>
+    <if test="password != null">
+    	and PASSWORD = #{password,jdbcType=VARCHAR}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from s_hzxx
     where ID = #{ID,jdbcType=BIGINT}

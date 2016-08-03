@@ -50,8 +50,8 @@ public class SwaggerConfig {
 	    private ApiInfo apiInfo()
 	    {
 	        ApiInfo apiInfo = new ApiInfo(
-	                "My Apps API Title",
-	                "My Apps API Description",
+	                "Doctor330 App Restfull API",
+	                "实时接口描述文档 - Spring MVC Restfull API",
 	                "My Apps API terms of service",
 	                "My Apps API Contact Email",
 	                "My Apps API Licence Type",

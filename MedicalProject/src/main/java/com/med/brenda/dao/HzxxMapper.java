@@ -1,5 +1,7 @@
 package com.med.brenda.dao;
 
+import java.util.Map;
+
 import com.med.brenda.model.Hzxx;
 
 public interface HzxxMapper {
@@ -14,4 +16,6 @@ public interface HzxxMapper {
     int updateByPrimaryKeySelective(Hzxx record);
 
     int updateByPrimaryKey(Hzxx record);
+    
+    Hzxx hzLogon(Map<String,String> map);
 }
