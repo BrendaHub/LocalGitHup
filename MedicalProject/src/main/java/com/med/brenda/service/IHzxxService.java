@@ -18,4 +18,6 @@ public interface IHzxxService {
 	Hzxx findHzByHzID(Long id); 
 	
 	Hzxx hzLogon(String sfzh, String password);
+	
+	long addHz(Hzxx hz);
 }

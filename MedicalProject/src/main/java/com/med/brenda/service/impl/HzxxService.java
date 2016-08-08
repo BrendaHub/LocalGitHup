@@ -25,5 +25,9 @@ public class HzxxService implements IHzxxService {
 		param.put("password", password);
 		return hzxxDao.hzLogon(param);
 	}
+	@Override
+	public long addHz(Hzxx hz) {
+		return hzxxDao.insert(hz);
+	}
 
 }

@@ -28,8 +28,20 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from S_YSXX
+    from S_YSXX 
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="ysLogon" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from S_YSXX
+    where 1=1
+    <if test="dlh != null">
+    	and dlh = #{dlh,jdbcType=VARCHAR}
+    </if>
+    <if test="password != null">
+    	and password = #{password,jdbcType=VARCHAR}
+    </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from S_YSXX
