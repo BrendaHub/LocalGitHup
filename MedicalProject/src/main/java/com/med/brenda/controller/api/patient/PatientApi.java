@@ -1,5 +1,8 @@
 package com.med.brenda.controller.api.patient;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,8 +49,9 @@ public class PatientApi {
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ApiOperation(value = "根据用户患者ID获取患者对象", httpMethod = "GET", response = Hzxx.class, notes = "根据用户患者ID获取患者对象")
-	public String getHzById(@ApiParam(required = true, name = "id", value = "患者主键(long类型)") @PathVariable long id) throws Exception{
-		
+	public String getHzById(HttpServletResponse response,@ApiParam(required = true, name = "id", value = "患者主键(long类型)") @PathVariable long id) throws Exception{
+		response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
+		response.setCharacterEncoding("UTF-8");
 		Hzxx hz = hzxxService.findHzByHzID(id);
 
 	    if(hz != null) {
@@ -65,8 +69,9 @@ public class PatientApi {
 	@RequestMapping(value="/{username}/{password}", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "根据用户名+密码获取用户对象", httpMethod = "POST", response = User.class, notes = "根据用户名+密码获取用户对象")
-	public String getUser(@ApiParam(required = true, name = "username", value = "用户名称") @PathVariable String username, 
+	public String getUser(HttpServletResponse response,@ApiParam(required = true, name = "username", value = "用户名称") @PathVariable String username, 
 			@ApiParam(required = true, name = "password", value = "用户密码MD5转大写") @PathVariable String password) throws Exception{
+		response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
 		User puser = new User();
 		puser.setUsername(username);
 		puser.setPassword(password);
@@ -80,11 +85,12 @@ public class PatientApi {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/LOGON/{SFZCODE}/{PASSWORD}", method = RequestMethod.POST)
+	@RequestMapping(value="/LOGON/{SFZCODE}/{PASSWORD}",produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ApiOperation(value = "患者登录（身份证号 + 密码）", httpMethod = "POST", response = JSON.class, notes = "患者登录（身份证号 + 密码）")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	public String patientLogon(@ApiParam(required = true, name = "SFZCODE", value = "患者身份证号") @PathVariable String SFZCODE,
+	public String patientLogon(HttpServletRequest request,HttpServletResponse response,@ApiParam(required = true, name = "SFZCODE", value = "患者身份证号") @PathVariable String SFZCODE,
 			@ApiParam(required = true, name = "PASSWORD", value = "患者登录密码MD5大写") @PathVariable String PASSWORD){
+		response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(SFZCODE)){
 			result.put("_st", 2);//
@@ -116,6 +122,7 @@ public class PatientApi {
 			result.put("_msg", "身份证号OR密码错误");
 			return result.toJSONString();
 		}
-		
 	}
+	
+	public String 
 }
