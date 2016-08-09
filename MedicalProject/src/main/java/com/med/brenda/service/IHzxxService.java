@@ -20,4 +20,6 @@ public interface IHzxxService {
 	Hzxx hzLogon(String sfzh, String password);
 	
 	long addHz(Hzxx hz);
+	
+	int updateByPrimaryKeySelective(Hzxx record);
 }

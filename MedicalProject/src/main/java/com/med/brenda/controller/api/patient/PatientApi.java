@@ -1,5 +1,8 @@
 package com.med.brenda.controller.api.patient;
 
+import java.io.File;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -124,5 +129,127 @@ public class PatientApi {
 		}
 	}
 	
-	public String 
+	 @RequestMapping(value="/uploadHzHeader",produces = "application/json; charset=utf-8",method=RequestMethod.POST)  
+	 @ResponseBody
+	 @ApiOperation(value = "上传用户头像 ｜  发布时间： 2016-08-09 22:27", httpMethod = "POST", response = String.class, notes = "上传用户头像  2016-08-09 22:27")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+    private String uploadHzHeader(@ApiParam(required = true, name = "hzid", value = "患者ID")@RequestParam(value="hzid",required=true) String hzid ,
+    		@ApiParam(required = true, name = "MultipartFile file", value = "上传的头像文件")@RequestParam(value="file",required=false) MultipartFile file,  
+            HttpServletRequest request)throws Exception{  
+		 JSONObject result = new JSONObject();
+		 if(StringUtils.isBlank(hzid)){
+			result.put("_st", 0);//
+			result.put("_msg", "患者ID无效");
+			return result.toJSONString();
+		 }
+		 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+        //获得物理路径webapp所在路径  
+        String pathRoot = request.getSession().getServletContext().getRealPath("");  
+        
+        StringBuilder path= new StringBuilder("/upload/");
+        path.append(hzid);
+        path.append("/");
+        if(!file.isEmpty()){  
+            //生成uuid作为文件名称  
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");  
+            //获得文件类型（可以判断如果不是图片，禁止上传）  
+            String contentType=file.getContentType();  
+            //获得文件后缀名称  
+            String imageName=contentType.substring(contentType.indexOf("/")+1);  
+            path.append(uuid);
+            path.append(".");
+            path.append(imageName);
+            file.transferTo(new File(pathRoot+path.toString())); 
+            //将头像写入用户
+            hzxx.setTEMP2(pathRoot+path.toString());
+            hzxxService.updateByPrimaryKeySelective(hzxx);
+        }  
+        System.out.println(path.toString());  
+        //request.setAttribute("imagesPath", path); 
+        result.put("_st", 1);//
+		result.put("_msg", "上传用户头像成功");
+		result.put("hzxx", JSON.toJSONString(hzxx));
+		return result.toJSONString();
+    }
+	 
+	 @ResponseBody
+	 @ApiOperation(value = "检查当前用户是否完善了信息 ｜  发布时间： 2016-08-09 22:33", httpMethod = "GET", response = String.class, notes = "检查当前用户是否完善了信息")
+	 @ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	 @RequestMapping(value="/perfectHZXX/{hzid}/{pushtoken}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String checkAboutPerfect(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid,
+			@ApiParam(required = false, name = "pushtoken", value = "手机用于推送的pushtoken") @PathVariable String pushtoken,
+			@ApiParam(required = false, name = "mobileversion", value = "手机品牌&型号") @PathVariable String mobileversion){
+		 JSONObject result = new JSONObject();
+		 if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+		 
+		 if(hzxx != null){
+			 if(StringUtils.isNoneBlank(pushtoken)){
+				 //更新pushToken,到temp9
+				 hzxx.setTEMP9(pushtoken);
+				 hzxx.setTEMP8(mobileversion);
+				 hzxxService.updateByPrimaryKeySelective(hzxx);
+			 }
+			 String flag = hzxx.getTEMP10();
+			 if(StringUtils.isEmpty(flag)){
+				 result.put("_st", 2);//
+				 result.put("_msg", "需要完善信息");
+				 return result.toJSONString();
+			 }else{
+				 result.put("_st", 1);//
+				 result.put("_msg", "信息已完善");
+				 return result.toJSONString(); 
+			 }
+		 }else{
+			 result.put("_st", 3);//
+			 result.put("_msg", "患者ID不存在");
+			 return result.toJSONString(); 
+		 }
+	}
+	 
+	@ResponseBody
+	@ApiOperation(value = "完善患者主要信息,用户信息以JSON格式串上传,本接口不步完善，第一步就只填写:1、名族,2、生日,3、确诊日期,4、性别; 格式为：{\"nation\":\"汉\",\"sex\":\"男\",\"birthday\":\"生日毫秒数（long）\",\"diagnosisdate\":\"确诊日期对应毫秒数（long）\"}｜发布时间：  2016-08-09 23:03", httpMethod = "POST", response = String.class, notes = "完善患者主要信息,用户信息以JSON格式串上传,本接口不步完善，第一步就只填写:1、名族,2、生日,3、确诊日期4、性别; 格式为：{\"nation\":\"汉\",\"sex\":\"男\",\"birthday\":\"生日毫秒数（long）\",\"diagnosisdate\":\"确诊日期对应毫秒数（long）\"}")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/perfectHZXX",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String perfectHzxx(@ApiParam(required = true, name = "hzid", value = "患者ID") @RequestParam(value="hzid",required=true) String hzid,
+			@ApiParam(required = true, name = "perfectinfo", value = "患者完善信息JSON串,方便以后添加") @RequestParam(value="perfectinfo",required=true) String perfectinfo){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		try{
+			 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+			if(StringUtils.isNoneBlank(perfectinfo)){
+				JSONObject perfectJsoninfo = JSON.parseObject(perfectinfo);
+				if(perfectJsoninfo != null && hzxx != null){
+					String _nation = perfectJsoninfo.getString("nation");
+					Long _birthday =  perfectJsoninfo.getLong("birthday");
+					Long _diagnosisdate = perfectJsoninfo.getLong("perfectJsoninfo");
+					String _sex = perfectJsoninfo.getString("sex");
+					hzxx.setCSRQ(_birthday);
+					hzxx.setNFMQZSJ(String.valueOf(_diagnosisdate));
+					hzxx.setMZ(_nation);
+					hzxx.setSEX(_sex);
+					//设备完善信息的标记，即temp10  = 2;
+					hzxx.setTEMP10("2");
+					hzxxService.updateByPrimaryKeySelective(hzxx);
+				}
+			}
+			result.put("_st", 1);//
+			 result.put("_msg", "完善患者信息成功");
+			 return result.toJSONString();
+		}catch(Exception e){
+			e.printStackTrace();
+			result.put("_st", 2);//
+			 result.put("_msg", "完善患者信息失败");
+			 return result.toJSONString();
+		}
+		
+	}
 }

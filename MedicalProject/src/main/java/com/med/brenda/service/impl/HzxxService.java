@@ -29,5 +29,9 @@ public class HzxxService implements IHzxxService {
 	public long addHz(Hzxx hz) {
 		return hzxxDao.insert(hz);
 	}
+	@Override
+	public int updateByPrimaryKeySelective(Hzxx record) {
+		return hzxxDao.updateByPrimaryKeySelective(record);
+	}
 
 }
