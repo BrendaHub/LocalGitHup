@@ -82,6 +82,18 @@
     TEMP4, TEMP5, HLYWMC2, HLGYTJ2, HLGYJL2, HLYWMC3, HLGYTJ3, HLGYJL3, HLYWMC4, HLGYTJ4, 
     HLGYJL4, AFP, TDB, C11, VMA, HVA, NSE, BNP, JGDB, QT
   </sql>
+  <select id="findHzxfxxByDate_Hzid" parameterType="java.util.Map"  resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from s_hzsfxx 
+    where 1=1 
+    <if test="sfzh != null">
+    	and SFDATE = #{sfdate,jdbcType=BIGINT}
+    </if>
+    <if test="password != null">
+    	and HZID = #{hzid,jdbcType=BIGINT}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -92,6 +104,55 @@
     delete from s_hzsfxx
     where ID = #{ID,jdbcType=BIGINT}
   </delete>
+  <insert id="batchInsert" parameterType="java.util.List">
+  	insert into s_hzsfxx (HZID, HZNAME, 
+      SFDATE, ITEMCODE, ITEMTYPE, 
+      ITEMNAME, ITEMVALUE, OTCS, 
+      OTWYS, CONTENT, DRFXCS, 
+      DRFXSJD, FXXZ, FXYS, 
+      YYTIME, YWNAME, YWJL, 
+      YYTJ, FYGJ, SSNAME, 
+      SSFS, SSYY, SSBFZ, 
+      SSXJ, SSBLBG, RY, CY, 
+      HLSQH, HLDJC, HLDJT, 
+      HLPICC, HLSYG, HLFA, 
+      HLYWLX, HLYWMC, HLGYTJ, 
+      HLGYJL, FZ, MZ, SZSG, 
+      SZTZ, SZTW, SZXW, SZSBW, 
+      SZGSTJ, TEMP1, TEMP2, 
+      TEMP3, TEMP4, TEMP5, 
+      HLYWMC2, HLGYTJ2, HLGYJL2, 
+      HLYWMC3, HLGYTJ3, HLGYJL3, 
+      HLYWMC4, HLGYTJ4, HLGYJL4, 
+      AFP, TDB, C11, VMA, 
+      HVA, NSE, BNP, JGDB, 
+      QT)
+    values 
+    	<foreach collection="list" item="item" index="index" separator="," >
+		        ( #{item.HZID,jdbcType=BIGINT}, #{item.HZNAME,jdbcType=VARCHAR}, 
+		      #{item.SFDATE,jdbcType=BIGINT}, #{item.ITEMCODE,jdbcType=VARCHAR}, #{item.ITEMTYPE,jdbcType=VARCHAR}, 
+		      #{item.ITEMNAME,jdbcType=VARCHAR}, #{item.ITEMVALUE,jdbcType=VARCHAR}, #{item.OTCS,jdbcType=VARCHAR}, 
+		      #{item.OTWYS,jdbcType=VARCHAR}, #{item.CONTENT,jdbcType=VARCHAR}, #{item.DRFXCS,jdbcType=VARCHAR}, 
+		      #{item.DRFXSJD,jdbcType=VARCHAR}, #{item.FXXZ,jdbcType=VARCHAR}, #{item.FXYS,jdbcType=VARCHAR}, 
+		      #{item.YYTIME,jdbcType=VARCHAR}, #{item.YWNAME,jdbcType=VARCHAR}, #{item.YWJL,jdbcType=VARCHAR}, 
+		      #{item.YYTJ,jdbcType=VARCHAR}, #{item.FYGJ,jdbcType=VARCHAR}, #{item.SSNAME,jdbcType=VARCHAR}, 
+		      #{item.SSFS,jdbcType=VARCHAR}, #{item.SSYY,jdbcType=VARCHAR}, #{item.SSBFZ,jdbcType=VARCHAR}, 
+		      #{item.SSXJ,jdbcType=VARCHAR}, #{item.SSBLBG,jdbcType=VARCHAR}, #{item.RY,jdbcType=VARCHAR}, #{item.CY,jdbcType=VARCHAR}, 
+		      #{item.HLSQH,jdbcType=VARCHAR}, #{item.HLDJC,jdbcType=VARCHAR}, #{item.HLDJT,jdbcType=VARCHAR}, 
+		      #{item.HLPICC,jdbcType=VARCHAR}, #{item.HLSYG,jdbcType=VARCHAR}, #{item.HLFA,jdbcType=VARCHAR}, 
+		      #{item.HLYWLX,jdbcType=VARCHAR}, #{item.HLYWMC,jdbcType=VARCHAR}, #{item.HLGYTJ,jdbcType=VARCHAR}, 
+		      #{item.HLGYJL,jdbcType=VARCHAR}, #{item.FZ,jdbcType=VARCHAR}, #{item.MZ,jdbcType=VARCHAR}, #{item.SZSG,jdbcType=VARCHAR}, 
+		      #{item.SZTZ,jdbcType=VARCHAR}, #{item.SZTW,jdbcType=VARCHAR}, #{item.SZXW,jdbcType=VARCHAR}, #{item.SZSBW,jdbcType=VARCHAR}, 
+		      #{item.SZGSTJ,jdbcType=VARCHAR}, #{item.TEMP1,jdbcType=VARCHAR}, #{item.TEMP2,jdbcType=VARCHAR}, 
+		      #{item.TEMP3,jdbcType=VARCHAR}, #{item.TEMP4,jdbcType=VARCHAR}, #{item.TEMP5,jdbcType=VARCHAR}, 
+		      #{item.HLYWMC2,jdbcType=VARCHAR}, #{item.HLGYTJ2,jdbcType=VARCHAR}, #{item.HLGYJL2,jdbcType=VARCHAR}, 
+		      #{item.HLYWMC3,jdbcType=VARCHAR}, #{item.HLGYTJ3,jdbcType=VARCHAR}, #{item.HLGYJL3,jdbcType=VARCHAR}, 
+		      #{item.HLYWMC4,jdbcType=VARCHAR}, #{item.HLGYTJ4,jdbcType=VARCHAR}, #{item.HLGYJL4,jdbcType=VARCHAR}, 
+		      #{item.AFP,jdbcType=VARCHAR}, #{item.TDB,jdbcType=VARCHAR}, #{item.c11,jdbcType=VARCHAR}, #{item.VMA,jdbcType=VARCHAR}, 
+		      #{item.HVA,jdbcType=VARCHAR}, #{item.NSE,jdbcType=VARCHAR}, #{item.BNP,jdbcType=VARCHAR}, #{item.JGDB,jdbcType=VARCHAR}, 
+		      #{item.QT,jdbcType=VARCHAR})
+    	</foreach>
+  </insert>
   <insert id="insert" parameterType="com.med.brenda.model.Hzsfxx">
     insert into s_hzsfxx (ID, HZID, HZNAME, 
       SFDATE, ITEMCODE, ITEMTYPE, 

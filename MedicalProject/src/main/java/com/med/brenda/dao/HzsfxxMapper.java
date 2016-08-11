@@ -1,5 +1,8 @@
 package com.med.brenda.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.med.brenda.model.Hzsfxx;
 
 public interface HzsfxxMapper {
@@ -14,4 +17,8 @@ public interface HzsfxxMapper {
     int updateByPrimaryKeySelective(Hzsfxx record);
 
     int updateByPrimaryKey(Hzsfxx record);
+    
+    List<Hzsfxx> findHzxfxxByDate_Hzid(Map<String,Object> param);
+    
+    void batchInsert(List<Hzsfxx> hzsfxxs);
 }
