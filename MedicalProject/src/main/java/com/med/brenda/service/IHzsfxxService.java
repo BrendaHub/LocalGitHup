@@ -34,5 +34,17 @@ public interface IHzsfxxService {
 	 */
 	public boolean checkHzxfxxBaseDB(Long hzid, Long sfdate);
 	
-	public void addHzsfxxBeaseDB(List<Hzsfxx> sfs);
+	public void addHzsfxxBeaseDB(List<Hzsfxx> sfs, Long hzid);
+	
+	 int deleteByPrimaryKey(Long ID);
+
+    int insert(Hzsfxx record);
+
+    int insertSelective(Hzsfxx record);
+
+    Hzsfxx selectByPrimaryKey(Long ID);
+
+    int updateByPrimaryKeySelective(Hzsfxx record);
+
+    int updateByPrimaryKey(Hzsfxx record);
 }

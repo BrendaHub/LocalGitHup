@@ -1,6 +1,7 @@
 package com.med.brenda.controller.api.patient;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,10 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.exception.BusinessException;
+import com.med.brenda.model.Hzsfxx;
 import com.med.brenda.model.Hzxx;
 import com.med.brenda.model.User;
+import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.service.IHzxxService;
 import com.med.brenda.service.IUserService;
+import com.med.brenda.util.CommonUtils;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
@@ -46,6 +50,8 @@ public class PatientApi {
 	private IHzxxService hzxxService;
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private IHzsfxxService hzsfxxService;
 	/**
 	 * 根据用户ID获取用户对象
 	 * @param name
@@ -263,6 +269,37 @@ public class PatientApi {
 			 result.put("_msg", "完善患者信息失败");
 			 return result.toJSONString();
 		}
-		
+	}
+	
+	@ResponseBody
+	@ApiOperation(value = "用户每天成功登录系统后的初始化数据+【获取主页数据接口（暂为实现）】 ，｜  发布时间： 2016-08-11 23:45 ", httpMethod = "POST", response = String.class, notes = "")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/initHZSFXX",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String initHzsfxx(@ApiParam(required = true, name = "hzid", value = "患者ID") @RequestParam(value="hzid",required=true) String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+		 if(hzxx == null){
+			 result.put("_st", 2);//
+			 result.put("_msg", "患者不存在");
+			 return result.toJSONString();
+		 }
+		 //检查当前用户有没有初始化当天的随防数据
+		 if(!hzsfxxService.checkHzxfxxBaseDB(Long.parseLong(hzid), CommonUtils.getTimeInMillisBy00_00_00())){
+			 //初始化
+			 hzsfxxService.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), Long.parseLong(hzid));
+		 }
+		 
+		 //查询sf的数据返回
+		 //暂不提供返回的数据。
+		 result.put("_st", 1);//
+		 result.put("_msg", "初始化成功");
+		 result.put("_data", new JSONObject().toJSONString());
+		 return result.toJSONString();
 	}
 }

@@ -19,9 +19,9 @@ import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
  * @date 2016年8月1日 下午3:56:10
  * @tag 
  * @encode
- */
 @Configuration
 @EnableSwagger
+ */
 public class SwaggerConfig {
 	 private SpringSwaggerConfig springSwaggerConfig;
 
