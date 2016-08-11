@@ -1,13 +1,16 @@
 package com.med.brenda.controller.api.doctor;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.model.Gzysxx;
 import com.med.brenda.model.Hzxx;
@@ -33,6 +36,8 @@ import com.wordnik.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping(value="/api/doctor")
 public class DoctorApi {
+	
+	private Logger logger = Logger.getLogger(DoctorApi.class);
 	
 	@Autowired
 	private IHzxxService hzxxService;
@@ -76,12 +81,17 @@ public class DoctorApi {
 		}
 	}
 
-	@RequestMapping(value="/FeedTNBHEData", method = RequestMethod.POST)
+	@RequestMapping(value="/FeedTNBHEData",produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "医生注册新患者", httpMethod = "POST", response = JSONObject.class, notes = "医生注册新患者")
-	public String addPatient(@ApiParam(required = true, name = "ysid", value = "医生ID (long类型)")  long ysid,
-			@ApiParam(required = true, name = "ysname", value = "医生名称 (String类型)")  String ysname,
-			@ApiParam(required = true, name = "strs", value = "新患者基本信息 (string类型),格式为：name,（患者名字）|sfz,（身份证号）|jzphone,（监护人手机号）|hefz,（选择病种,取值依次为：1，2，3，4）|starttime,（随访开始日期，年月日）")  String strs){
+	public String addPatient(@ApiParam(required = true, name = "ysid", value = "医生ID (long类型)") @RequestParam(value="ysid",required=true)Long ysid,
+			@ApiParam(required = true, name = "ysname", value = "医生名称 (String类型)") @RequestParam(value="ysname",required=true)String ysname,
+			@ApiParam(required = true, name = "strs", value = "新患者基本信息 (string类型),格式为：name,（患者名字）|sfz,（身份证号）|jzphone,（监护人手机号）|hefz,（选择病种,取值依次为：1，2，3，4）|starttime,（随访开始日期，年月日）") @RequestParam(value="strs",required=true)String strs){
+		
+		logger.debug("ysid = " + ysid);
+		logger.debug("ysname = " + ysname);
+		logger.debug("strs = " + strs);
+		
 		JSONObject result = new JSONObject();
 		//判断参数
 		if(StringUtils.isBlank(ysid+"")){
@@ -102,6 +112,7 @@ public class DoctorApi {
 			String[] _tmp_hzxx = strs.split("\\|");
 			String pwd = "";//MD5大写
 			String hzName = "";
+			String dlhCode = "";
 			String pztype = "";//病种类型
 			if(_tmp_hzxx != null && _tmp_hzxx.length > 0 ){
 				for(String s: _tmp_hzxx){
@@ -112,6 +123,7 @@ public class DoctorApi {
 					}else if(_sub_s[0].trim().equals("sfz")){
 						hzVo.setSFZCODE(_sub_s[1].trim());
 						hzVo.setDLH(_sub_s[1].trim());
+						dlhCode = _sub_s[1].trim();
 						//设置密码，密码默认为身份证前六位
 						String _dlh = _sub_s[1].trim();
 						pwd = _dlh.substring(0, 6);
@@ -127,10 +139,14 @@ public class DoctorApi {
 				}
 			}
 			long hzId = hzxxService.addHz(hzVo);
+			//由于目前mybatis没有返回新添加的记录主键，所以需要查询
+			Hzxx newHzVo = hzxxService.hzLogon(dlhCode, pwd);
+			
+			logger.debug("新注册的患ID = " + hzId + "   > "+ JSON.toJSONString(newHzVo));
 			if(hzId > 0){
 				//添加医患关系记录
 				Gzysxx yshz = new Gzysxx();
-				yshz.setHZID(hzId);
+				yshz.setHZID(newHzVo.getID());
 				yshz.setHZNAME(hzName);
 				yshz.setYSID(ysid);
 				yshz.setYSNAME(ysname);

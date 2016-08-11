@@ -18,6 +18,6 @@ public class GzysxxService implements IGzysxxService {
 	@Override
 	public long addGzysxx(Gzysxx gzysxx) {
 		return gzysxxDao.insert(gzysxx);
-	}
+	} 
 
 }

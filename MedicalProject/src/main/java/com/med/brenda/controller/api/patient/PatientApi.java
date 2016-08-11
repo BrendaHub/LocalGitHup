@@ -129,26 +129,37 @@ public class PatientApi {
 		}
 	}
 	
-	 @RequestMapping(value="/uploadHzHeader",produces = "application/json; charset=utf-8",method=RequestMethod.POST)  
+	 @RequestMapping(value="/uploadHzHeader/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)  
 	 @ResponseBody
 	 @ApiOperation(value = "上传用户头像 ｜  发布时间： 2016-08-09 22:27", httpMethod = "POST", response = String.class, notes = "上传用户头像  2016-08-09 22:27")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-    private String uploadHzHeader(@ApiParam(required = true, name = "hzid", value = "患者ID")@RequestParam(value="hzid",required=true) String hzid ,
-    		@ApiParam(required = true, name = "MultipartFile file", value = "上传的头像文件")@RequestParam(value="file",required=false) MultipartFile file,  
+    public String uploadHzHeader(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid ,
+    		@ApiParam(required = true, name = "file", value = "上传的头像文件") @RequestParam(value="file",required=true) MultipartFile file,  
             HttpServletRequest request)throws Exception{  
+		 System.out.println("hzid =" + hzid);
+		 System.out.println("file =" + file);
 		 JSONObject result = new JSONObject();
-		 if(StringUtils.isBlank(hzid)){
+		 if(StringUtils.isBlank(hzid)){ 
 			result.put("_st", 0);//
 			result.put("_msg", "患者ID无效");
 			return result.toJSONString();
 		 }
 		 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
         //获得物理路径webapp所在路径  
-        String pathRoot = request.getSession().getServletContext().getRealPath("");  
+        StringBuilder pathRoot = new StringBuilder((String)request.getSession().getServletContext().getRealPath("")); 
+        StringBuilder imagePath = new StringBuilder(request.getContextPath());
+        imagePath.append("/upload/");
+        imagePath.append(hzid).append("/");
         
-        StringBuilder path= new StringBuilder("/upload/");
-        path.append(hzid);
-        path.append("/");
+        pathRoot.append("/upload/");
+        pathRoot.append(hzid);
+        pathRoot.append("/");
+        File tmpFile = new File(pathRoot.toString());
+        if(!tmpFile.isDirectory()){
+        	//创建目录了
+        	System.out.println("创建目录了");
+        	tmpFile.mkdirs();//如果目录 不存在就创建目录
+        }
         if(!file.isEmpty()){  
             //生成uuid作为文件名称  
             String uuid = UUID.randomUUID().toString().replaceAll("-","");  
@@ -156,15 +167,17 @@ public class PatientApi {
             String contentType=file.getContentType();  
             //获得文件后缀名称  
             String imageName=contentType.substring(contentType.indexOf("/")+1);  
-            path.append(uuid);
-            path.append(".");
-            path.append(imageName);
-            file.transferTo(new File(pathRoot+path.toString())); 
+            pathRoot.append(uuid);
+            pathRoot.append(".");
+            pathRoot.append(imageName);
+            file.transferTo(new File(pathRoot.toString())); 
             //将头像写入用户
-            hzxx.setTEMP2(pathRoot+path.toString());
+            imagePath.append(uuid).append(".").append(imageName);
+            hzxx.setTEMP2(imagePath.toString());
+            System.out.println(">>>>> "+imagePath.toString());
             hzxxService.updateByPrimaryKeySelective(hzxx);
         }  
-        System.out.println(path.toString());  
+        System.out.println(pathRoot.toString());  
         //request.setAttribute("imagesPath", path); 
         result.put("_st", 1);//
 		result.put("_msg", "上传用户头像成功");
@@ -175,7 +188,7 @@ public class PatientApi {
 	 @ResponseBody
 	 @ApiOperation(value = "检查当前用户是否完善了信息 ｜  发布时间： 2016-08-09 22:33", httpMethod = "GET", response = String.class, notes = "检查当前用户是否完善了信息")
 	 @ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	 @RequestMapping(value="/perfectHZXX/{hzid}/{pushtoken}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	 @RequestMapping(value="/perfectHZXX/{hzid}/{pushtoken}/{mobileversion}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
 	public String checkAboutPerfect(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid,
 			@ApiParam(required = false, name = "pushtoken", value = "手机用于推送的pushtoken") @PathVariable String pushtoken,
 			@ApiParam(required = false, name = "mobileversion", value = "手机品牌&型号") @PathVariable String mobileversion){
@@ -230,7 +243,7 @@ public class PatientApi {
 				if(perfectJsoninfo != null && hzxx != null){
 					String _nation = perfectJsoninfo.getString("nation");
 					Long _birthday =  perfectJsoninfo.getLong("birthday");
-					Long _diagnosisdate = perfectJsoninfo.getLong("perfectJsoninfo");
+					Long _diagnosisdate = perfectJsoninfo.getLong("diagnosisdate");
 					String _sex = perfectJsoninfo.getString("sex");
 					hzxx.setCSRQ(_birthday);
 					hzxx.setNFMQZSJ(String.valueOf(_diagnosisdate));
