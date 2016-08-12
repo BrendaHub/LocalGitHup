@@ -38,6 +38,18 @@
     from S_TNB_TNBSON
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="findFeedListByHzid_Date" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from S_TNB_TNBSON
+    where 1=1
+    <if test="hzid != null">
+    	and hzid = #{hzid,jdbcType=BIGINT}
+    </if>
+    <if test="password != null">
+    	and temp5 = #{date,jdbcType=VARCHAR}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from S_TNB_TNBSON
     where id = #{id,jdbcType=BIGINT}

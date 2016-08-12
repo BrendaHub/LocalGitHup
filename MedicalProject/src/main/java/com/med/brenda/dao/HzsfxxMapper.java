@@ -21,4 +21,6 @@ public interface HzsfxxMapper {
     List<Hzsfxx> findHzxfxxByDate_Hzid(Map<String,Object> param);
     
     void batchInsert(List<Hzsfxx> hzsfxxs);
+    
+    Hzsfxx findByHzidDataItemCode(Map<String,Object> param);
 }

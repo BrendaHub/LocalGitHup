@@ -36,6 +36,8 @@ public interface IHzsfxxService {
 	
 	public void addHzsfxxBeaseDB(List<Hzsfxx> sfs, Long hzid);
 	
+	Long findByHzidDataItemCode(Long hzid, Long date, String itemcode);
+	
 	 int deleteByPrimaryKey(Long ID);
 
     int insert(Hzsfxx record);

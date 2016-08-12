@@ -1,7 +1,9 @@
 package com.med.brenda.controller.api.patient;
 
 import java.io.File;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +24,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.exception.BusinessException;
 import com.med.brenda.model.Hzsfxx;
 import com.med.brenda.model.Hzxx;
+import com.med.brenda.model.TnbTnbson;
 import com.med.brenda.model.User;
 import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.service.IHzxxService;
+import com.med.brenda.service.ITnbTnbsonService;
 import com.med.brenda.service.IUserService;
 import com.med.brenda.util.CommonUtils;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -52,6 +56,8 @@ public class PatientApi {
 	private IUserService userService;
 	@Autowired
 	private IHzsfxxService hzsfxxService;
+	@Autowired
+	private ITnbTnbsonService tnbsonService;
 	/**
 	 * 根据用户ID获取用户对象
 	 * @param name
@@ -301,5 +307,150 @@ public class PatientApi {
 		 result.put("_msg", "初始化成功");
 		 result.put("_data", new JSONObject().toJSONString());
 		 return result.toJSONString();
+	}
+	
+	
+	@ResponseBody
+	@ApiOperation(value = "添加血糖，｜  发布时间： 2016-08-12 13:37 ", httpMethod = "POST", response = String.class, notes = "添加血糖，｜  发布时间： 2016-08-12 13:37")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/FeedXT/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String feedXT(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "itemcode", value = "血糖对应编号：凌晨015001；早餐前015002001；早餐后015002002；...") @RequestParam(value="itemcode",required=true) String itemcode,
+			@ApiParam(required = true, name = "addtime", value = "添加血糖的时间,格式为：HH:MM") @RequestParam(value="addtime",required=true) String addtime,
+			@ApiParam(required = true, name = "itemvalue", value = "血糖值") @RequestParam(value="itemvalue",required=true) String itemvalue,
+			@ApiParam(required = true, name = "date", value = "添加对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+		 if(hzxx == null){
+			 result.put("_st", 2);//
+			 result.put("_msg", "患者不存在");
+			 return result.toJSONString();
+		 }
+		 if(StringUtils.isBlank(itemcode)){
+			 result.put("_st", 3);//
+			 result.put("_msg", "itemcode传入错误");
+			 return result.toJSONString(); 
+		 }
+
+		 if(StringUtils.isBlank(itemvalue)){
+			 result.put("_st", 4);//
+			 result.put("_msg", "itemvalue传入错误");
+			 return result.toJSONString(); 
+		 }
+		 if(StringUtils.isBlank(addtime)){
+			 result.put("_st", 5);//
+			 result.put("_msg", "addtime传入错误");
+			 return result.toJSONString(); 
+		 }
+		 if(StringUtils.isBlank(date)){
+			 result.put("_st", 6);//
+			 result.put("_msg", "添加对应的日期(date)传入错误");
+			 return result.toJSONString(); 
+		 }
+		 //根据传入的日期转换成对应的long
+		 Long _date = null;
+			try {
+				_date = CommonUtils.getTimeInMillisByDate(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		 //插入相关的值之前，先查询出在hzsfxx表主对应项目的ID；
+		 Long hzsfFatherId = hzsfxxService.findByHzidDataItemCode(Long.parseLong(hzid), _date, itemcode.substring(0,3));
+		 //创建一个添加血糖的对象
+		 TnbTnbson bloodSugar = new TnbTnbson();
+		 bloodSugar.setFatherid(hzsfFatherId);
+		 bloodSugar.setHzid(Long.parseLong(hzid));
+		 bloodSugar.setItemcode(itemcode);
+		 bloodSugar.setItemname(CommonUtils.getBloodSugarByItemCode(itemcode));
+		 bloodSugar.setItemvalue(itemvalue);
+		 bloodSugar.setTemp1(addtime);
+	     bloodSugar.setTemp5(date);	
+	     bloodSugar.setTemp4(CommonUtils.getCurDate());
+	     int rowid = tnbsonService.insert(bloodSugar);
+	     if(rowid > 0 ){
+	    	 result.put("_st", 1);//
+			 result.put("_msg", "添加成功！");
+			 result.put("_data", JSON.toJSONString(bloodSugar));
+			 return result.toJSONString(); 
+	     }else{
+	    	 result.put("_st", 7);//
+			 result.put("_msg", "添加失败！");
+			 return result.toJSONString(); 
+	     }
+	}
+	
+	@ResponseBody
+	@ApiOperation(value = "更新血糖，｜  发布时间： 2016-08-12 15:15 ", httpMethod = "POST", response = String.class, notes = "更新血糖，｜  发布时间： 2016-08-12 15:15 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/FeedXTUpdate",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String feedXTUpdate(
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "dataid", value = "血糖项目ID") @RequestParam(value="dataid",required=true) String dataid,
+			@ApiParam(required = true, name = "addtime", value = "添加血糖的时间,格式为：HH:MM") @RequestParam(value="addtime",required=true) String addtime,
+			@ApiParam(required = true, name = "itemvalue", value = "血糖更新值") @RequestParam(value="itemvalue",required=true) String itemvalue){
+		 JSONObject result = new JSONObject();
+		 if(StringUtils.isBlank(dataid)){
+			 result.put("_st", 0);//
+			 result.put("_msg", "修改项目ID值无效");
+			 return result.toJSONString(); 
+		 }
+		 TnbTnbson tnbson = tnbsonService.selectByPrimaryKey(Long.parseLong(dataid));
+		 if(tnbson == null){
+			 result.put("_st", 2);//
+			 result.put("_msg", "项目ID对应值不存在");
+			 return result.toJSONString(); 
+		 }
+		 //update对应值
+		 tnbson.setItemvalue(itemvalue!=null?itemvalue.trim():"");
+		 tnbson.setTemp1(addtime!=null?addtime.trim():"");
+		 tnbson.setTemp4(CommonUtils.getCurDate());
+		 int rowid = tnbsonService.insert(tnbson);
+	     if(rowid > 0 ){
+	    	 result.put("_st", 1);//
+			 result.put("_msg", "更新成功！");
+			 result.put("_data", JSON.toJSONString(tnbson));
+			 return result.toJSONString(); 
+	     }else{
+	    	 result.put("_st", 7);//
+			 result.put("_msg", "更新失败！");
+			 return result.toJSONString(); 
+	     }
+	}
+	
+	@ResponseBody
+	@ApiOperation(value = "获取某天的所有血糖数据，｜  发布时间： 2016-08-12 15:26 ", httpMethod = "POST", response = String.class, notes = "获取某天的所有血糖数据，｜  发布时间： 2016-08-12 15:26 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/GetFeedXTByDate/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String getfeedXT(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "date", value = "要查询的日期，格式：yyyy-MM-dd，如2016-08-09 ， 8和9之前需要补0") @RequestParam(value="date",required=true) String date){
+		 JSONObject result = new JSONObject();
+		 if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+		 if(hzxx == null){
+			 result.put("_st", 2);//
+			 result.put("_msg", "患者不存在");
+			 return result.toJSONString();
+		 }
+		 List<TnbTnbson> list = tnbsonService.findFeedList(Long.parseLong(hzid), date);
+		 if(list != null && list.size() > 0 ){
+			 result.put("_st", 1);//
+			 result.put("_msg", "获取成功");
+			 result.put("_datalist", JSON.toJSONString(list));
+			 return result.toJSONString();
+		 }else{
+			 result.put("_st", 3);//
+			 result.put("_msg", "获取失败");
+			 return result.toJSONString();
+		 }
 	}
 }

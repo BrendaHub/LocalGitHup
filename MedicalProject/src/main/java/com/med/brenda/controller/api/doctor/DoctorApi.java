@@ -73,6 +73,8 @@ public class DoctorApi {
 			_data.put("Ysname", ys.getName());
 			_data.put("Ksid", ys.getSsksid());
 			_data.put("Ksname",ys.getSsks());
+			_body.put("_data", _data);
+			result.put("_body", _body);
 			return result.toJSONString();
 		}else{
 			result.put("_st", 0);

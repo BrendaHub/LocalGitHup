@@ -1,5 +1,8 @@
 package com.med.brenda.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.med.brenda.model.TnbTnbson;
 
 public interface TnbTnbsonMapper {
@@ -14,4 +17,6 @@ public interface TnbTnbsonMapper {
     int updateByPrimaryKeySelective(TnbTnbson record);
 
     int updateByPrimaryKey(TnbTnbson record);
+    
+    List<TnbTnbson> findFeedListByHzid_Date(Map<String, Object> param);
 }

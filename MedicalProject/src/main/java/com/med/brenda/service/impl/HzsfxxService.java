@@ -160,6 +160,18 @@ public class HzsfxxService implements IHzsfxxService {
 	public int updateByPrimaryKey(Hzsfxx record) {
 		return hzsfxxDao.updateByPrimaryKey(record);
 	}
+
+
+
+	@Override
+	public Long findByHzidDataItemCode(Long hzid, Long date, String itemcode) {
+		Map<String , Object> param = new HashMap<>();
+		param.put("hzid", hzid);
+		param.put("date", date);
+		param.put("itemcode", itemcode);
+		Hzsfxx hzsfxx = hzsfxxDao.findByHzidDataItemCode(param);
+		return hzsfxx!=null?hzsfxx.getID():null;
+	}
 	
 
 }
