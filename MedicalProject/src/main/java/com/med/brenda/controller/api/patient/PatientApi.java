@@ -25,6 +25,7 @@ import com.med.brenda.exception.BusinessException;
 import com.med.brenda.model.Hzsfxx;
 import com.med.brenda.model.Hzxx;
 import com.med.brenda.model.TnbTnbson;
+import com.med.brenda.model.TnbYinshi;
 import com.med.brenda.model.User;
 import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.service.IHzxxService;
@@ -689,5 +690,55 @@ public class PatientApi {
 			 result.put("_msg", "获取失败");
 			 return result.toJSONString();
 		 }
+	}
+	
+	//添加饮食
+	@ResponseBody
+	@ApiOperation(value = "添加饮食，｜  发布时间： 2016-08-13 13:21 ", httpMethod = "POST", response = String.class, notes = "添加饮食，｜  发布时间： 2016-08-13 13:21 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/AddDiet/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String addDiet(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "itemcode", value = "饮食对应编号：早021001；中021002；晚021003；") @RequestParam(value="itemcode",required=true) String itemcode,
+			@ApiParam(required = true, name = "dietjsondata", value = "饮食数据，以JSON串形式传入diet饮食的值，addmeal加餐的值，格式：{\"diet0\":1,\"diet1\":2,...,\"addmeal0\":1,\"addmeal\":12,...}") @RequestParam(value="dietjsondata",required=true) String dietjsondata,
+			@ApiParam(required = true, name = "date", value = "添加饮食对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		//判断参数
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 6);//
+			 result.put("_msg", "添加对应的日期(date)传入错误");
+			 return result.toJSONString(); 
+		 }
+		if(StringUtils.isBlank(itemcode)){
+			 result.put("_st", 3);//
+			 result.put("_msg", "itemcode传入错误");
+			 return result.toJSONString(); 
+		 }
+		if(StringUtils.isBlank(dietjsondata)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "饮食数据传入错误");
+			 return result.toJSONString(); 
+		 }
+		//根据患者ID、数据日期，和itemcode前三位值，查询出对应的值的hzsfxx表中的ID值。
+		//插入相关的值之前，先查询出在hzsfxx表主对应项目的ID；
+		//根据传入的日期转换成对应的long
+		 Long _date = null;
+			try {
+				_date = CommonUtils.getTimeInMillisByDate(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		Long hzsfFatherId = hzsfxxService.findByHzidDataItemCode(Long.parseLong(hzid), _date, itemcode.substring(0,3));
+		TnbYinshi tnbys = new TnbYinshi();//饮食对象
+		JSONObject perfectJsoninfo = JSON.parseObject(dietjsondata);
+		
+		
+		
+		return result.toJSONString();
 	}
 }
