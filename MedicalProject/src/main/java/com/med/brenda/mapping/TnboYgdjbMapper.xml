@@ -42,14 +42,17 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.TnboYgdjb">
-    insert into S_TNBO_YGDJB (id, name, sex, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into S_TNBO_YGDJB (name, sex, 
       csrq, mz, sheng, shi, 
       xian, phone, dzyx, 
       hyzk, xl, wyyz, sfzcode, 
       zy, gzdw, datarq, temp1, 
       temp2, temp3, temp4, 
       temp5)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
       #{csrq,jdbcType=VARCHAR}, #{mz,jdbcType=VARCHAR}, #{sheng,jdbcType=VARCHAR}, #{shi,jdbcType=VARCHAR}, 
       #{xian,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{dzyx,jdbcType=VARCHAR}, 
       #{hyzk,jdbcType=VARCHAR}, #{xl,jdbcType=VARCHAR}, #{wyyz,jdbcType=VARCHAR}, #{sfzcode,jdbcType=VARCHAR}, 

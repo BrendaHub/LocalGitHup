@@ -61,7 +61,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.TnbJcbfzsc">
-    insert into S_TNB_JCBFZSC (id, fatherid, hzid, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into S_TNB_JCBFZSC (fatherid, hzid, 
       itemcode, itemname, ch2h, 
       hbac, nt, ntt, ndb, 
       xt, yds, ct, rs, 
@@ -73,7 +76,7 @@
       xz4, xz5, datarq, temp1, 
       temp2, temp3, temp4, 
       temp5, ysid)
-    values (#{id,jdbcType=BIGINT}, #{fatherid,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, 
+    values (#{fatherid,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, 
       #{itemcode,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{ch2h,jdbcType=VARCHAR}, 
       #{hbac,jdbcType=VARCHAR}, #{nt,jdbcType=VARCHAR}, #{ntt,jdbcType=VARCHAR}, #{ndb,jdbcType=VARCHAR}, 
       #{xt,jdbcType=VARCHAR}, #{yds,jdbcType=VARCHAR}, #{ct,jdbcType=VARCHAR}, #{rs,jdbcType=VARCHAR}, 

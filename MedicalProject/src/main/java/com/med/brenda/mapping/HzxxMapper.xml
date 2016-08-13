@@ -98,7 +98,10 @@
     where ID = #{ID,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Hzxx">
-    insert into s_hzxx (ID, HZNAME, SEX, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="ID">
+		SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+    insert into s_hzxx (HZNAME, SEX, 
       AGE, SFZCODE, PHONE, 
       JZSID, GMSID, JYYYID, 
       WDBSID, DLH, PASSWORD, 
@@ -118,7 +121,7 @@
       NFMZZ, NFMQZSJ, TEMP6, 
       TEMP7, TEMP8, TEMP9, 
       TEMP10)
-    values (#{ID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, #{SEX,jdbcType=VARCHAR}, 
+    values (#{HZNAME,jdbcType=VARCHAR}, #{SEX,jdbcType=VARCHAR}, 
       #{AGE,jdbcType=VARCHAR}, #{SFZCODE,jdbcType=VARCHAR}, #{PHONE,jdbcType=VARCHAR}, 
       #{JZSID,jdbcType=BIGINT}, #{GMSID,jdbcType=BIGINT}, #{JYYYID,jdbcType=BIGINT}, 
       #{WDBSID,jdbcType=BIGINT}, #{DLH,jdbcType=VARCHAR}, #{PASSWORD,jdbcType=VARCHAR}, 

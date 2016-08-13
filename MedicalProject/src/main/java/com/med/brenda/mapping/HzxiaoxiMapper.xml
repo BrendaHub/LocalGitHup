@@ -34,12 +34,15 @@
     where ID = #{ID,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Hzxiaoxi">
-    insert into s_hzxiaoxi (ID, KSID, KSNAME, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="ID">
+		SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+    insert into s_hzxiaoxi (KSID, KSNAME, 
       YSID, YSNAME, HZID, HZNAME, 
       TITLE, CONTENT, TEMP1, 
       TEMP2, TEMP3, TEMP4, 
       TEMP5)
-    values (#{ID,jdbcType=BIGINT}, #{KSID,jdbcType=BIGINT}, #{KSNAME,jdbcType=VARCHAR}, 
+    values (#{KSID,jdbcType=BIGINT}, #{KSNAME,jdbcType=VARCHAR}, 
       #{YSID,jdbcType=BIGINT}, #{YSNAME,jdbcType=VARCHAR}, #{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
       #{TITLE,jdbcType=VARCHAR}, #{CONTENT,jdbcType=VARCHAR}, #{TEMP1,jdbcType=VARCHAR}, 
       #{TEMP2,jdbcType=VARCHAR}, #{TEMP3,jdbcType=VARCHAR}, #{TEMP4,jdbcType=VARCHAR}, 

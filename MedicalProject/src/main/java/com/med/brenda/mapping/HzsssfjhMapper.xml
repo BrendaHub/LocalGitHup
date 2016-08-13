@@ -35,12 +35,15 @@
     where ID = #{ID,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Hzsssfjh">
-    insert into s_hzsssfjh (ID, HZID, HZNAME, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="ID">
+		SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+    insert into s_hzsssfjh (HZID, HZNAME, 
       KSID, KSNAME, YSID, YSNAME, 
       DAYMONTH, SFCONTENT, SC, 
       TEMP1, TEMP2, TEMP3, 
       TEMP4, TEMP5)
-    values (#{ID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
+    values (#{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
       #{KSID,jdbcType=BIGINT}, #{KSNAME,jdbcType=VARCHAR}, #{YSID,jdbcType=BIGINT}, #{YSNAME,jdbcType=VARCHAR}, 
       #{DAYMONTH,jdbcType=VARCHAR}, #{SFCONTENT,jdbcType=VARCHAR}, #{SC,jdbcType=VARCHAR}, 
       #{TEMP1,jdbcType=VARCHAR}, #{TEMP2,jdbcType=VARCHAR}, #{TEMP3,jdbcType=VARCHAR}, 

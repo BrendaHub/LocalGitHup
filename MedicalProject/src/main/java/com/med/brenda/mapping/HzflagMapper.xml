@@ -24,9 +24,12 @@
     where ID = #{ID,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Hzflag">
-    insert into f_hzflag (ID, YSID, HZID, 
+  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="ID">
+		SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+    insert into f_hzflag (YSID, HZID, 
       TEMP1, TEMP2)
-    values (#{ID,jdbcType=BIGINT}, #{YSID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, 
+    values (#{YSID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, 
       #{TEMP1,jdbcType=VARCHAR}, #{TEMP2,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.med.brenda.model.Hzflag">

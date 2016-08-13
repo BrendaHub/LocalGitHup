@@ -31,11 +31,14 @@
     where ID = #{ID,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Gms">
-    insert into s_gms (ID, HZID, HZNAME, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="ID">
+		SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+    insert into s_gms (HZID, HZNAME, 
       GMWZMC, FY, CD, BZHMS, 
       TEMP1, TEMP2, TEMP3, 
       TEMP4, TEMP5)
-    values (#{ID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
+    values (#{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
       #{GMWZMC,jdbcType=VARCHAR}, #{FY,jdbcType=VARCHAR}, #{CD,jdbcType=VARCHAR}, #{BZHMS,jdbcType=VARCHAR}, 
       #{TEMP1,jdbcType=VARCHAR}, #{TEMP2,jdbcType=VARCHAR}, #{TEMP3,jdbcType=VARCHAR}, 
       #{TEMP4,jdbcType=VARCHAR}, #{TEMP5,jdbcType=VARCHAR})

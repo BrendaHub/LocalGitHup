@@ -47,11 +47,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Jkxj">
-    insert into S_JKXJ (id, ksid, ksname, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into S_JKXJ (ksid, ksname, 
       title, temp1, temp2, 
       temp3, temp4, temp5, 
       content)
-    values (#{id,jdbcType=BIGINT}, #{ksid,jdbcType=BIGINT}, #{ksname,jdbcType=VARCHAR}, 
+    values (#{ksid,jdbcType=BIGINT}, #{ksname,jdbcType=VARCHAR}, 
       #{title,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, 
       #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, #{temp5,jdbcType=VARCHAR}, 
       #{content,jdbcType=LONGVARCHAR})

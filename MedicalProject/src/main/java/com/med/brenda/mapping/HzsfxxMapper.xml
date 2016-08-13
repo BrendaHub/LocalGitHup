@@ -169,7 +169,10 @@
     	</foreach>
   </insert>
   <insert id="insert" parameterType="com.med.brenda.model.Hzsfxx">
-    insert into s_hzsfxx (ID, HZID, HZNAME, 
+  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="ID">
+		SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+    insert into s_hzsfxx (HZID, HZNAME, 
       SFDATE, ITEMCODE, ITEMTYPE, 
       ITEMNAME, ITEMVALUE, OTCS, 
       OTWYS, CONTENT, DRFXCS, 
@@ -191,7 +194,7 @@
       AFP, TDB, C11, VMA, 
       HVA, NSE, BNP, JGDB, 
       QT)
-    values (#{ID,jdbcType=BIGINT}, #{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
+    values (#{HZID,jdbcType=BIGINT}, #{HZNAME,jdbcType=VARCHAR}, 
       #{SFDATE,jdbcType=BIGINT}, #{ITEMCODE,jdbcType=VARCHAR}, #{ITEMTYPE,jdbcType=VARCHAR}, 
       #{ITEMNAME,jdbcType=VARCHAR}, #{ITEMVALUE,jdbcType=VARCHAR}, #{OTCS,jdbcType=VARCHAR}, 
       #{OTWYS,jdbcType=VARCHAR}, #{CONTENT,jdbcType=VARCHAR}, #{DRFXCS,jdbcType=VARCHAR}, 

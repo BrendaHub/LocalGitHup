@@ -48,13 +48,16 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Ysxx">
-    insert into S_YSXX (id, name, sex, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into S_YSXX (name, sex, 
       zc, ssksid, ssks, szyy, 
       dlh, password, yszyjs, 
       ysll, temp1, temp2, 
       temp3, temp4, temp5
       )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+    values (#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
       #{zc,jdbcType=VARCHAR}, #{ssksid,jdbcType=BIGINT}, #{ssks,jdbcType=VARCHAR}, #{szyy,jdbcType=VARCHAR}, 
       #{dlh,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{yszyjs,jdbcType=VARCHAR}, 
       #{ysll,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, 

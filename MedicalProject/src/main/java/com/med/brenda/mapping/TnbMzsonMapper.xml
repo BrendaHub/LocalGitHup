@@ -52,7 +52,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.TnbMzson">
-    insert into S_TNB_MZSON (id, fatherid, hzid, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into S_TNB_MZSON (fatherid, hzid, 
       itemcode, itemname, mzsg, 
       mzjkjy, mztz, mzbmi, 
       mzxy, mztw, mzyw, mzpf, 
@@ -62,7 +65,7 @@
       mzqt, mztjrq, temp1, 
       temp2, temp3, temp4, 
       temp5, ysid)
-    values (#{id,jdbcType=BIGINT}, #{fatherid,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, 
+    values (#{fatherid,jdbcType=BIGINT}, #{hzid,jdbcType=BIGINT}, 
       #{itemcode,jdbcType=VARCHAR}, #{itemname,jdbcType=VARCHAR}, #{mzsg,jdbcType=VARCHAR}, 
       #{mzjkjy,jdbcType=VARCHAR}, #{mztz,jdbcType=VARCHAR}, #{mzbmi,jdbcType=VARCHAR}, 
       #{mzxy,jdbcType=VARCHAR}, #{mztw,jdbcType=VARCHAR}, #{mzyw,jdbcType=VARCHAR}, #{mzpf,jdbcType=VARCHAR}, 

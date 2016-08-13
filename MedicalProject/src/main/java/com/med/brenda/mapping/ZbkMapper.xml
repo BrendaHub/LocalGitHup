@@ -30,11 +30,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Zbk">
-    insert into S_ZBK (id, zbcode, zbname, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into S_ZBK (zbcode, zbname, 
       content, pics, fatherid, 
       temp1, temp2, temp3, 
       temp4, temp5)
-    values (#{id,jdbcType=BIGINT}, #{zbcode,jdbcType=VARCHAR}, #{zbname,jdbcType=VARCHAR}, 
+    values (#{zbcode,jdbcType=VARCHAR}, #{zbname,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{pics,jdbcType=VARCHAR}, #{fatherid,jdbcType=VARCHAR}, 
       #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, #{temp3,jdbcType=VARCHAR}, 
       #{temp4,jdbcType=VARCHAR}, #{temp5,jdbcType=VARCHAR})

@@ -141,6 +141,50 @@ public class PatientApi {
 		}
 	}
 	
+	@RequestMapping(value="/uploadImage",produces = "application/json; charset=utf-8",method=RequestMethod.POST)  
+	 @ResponseBody
+	 @ApiOperation(value = "上传单张图片接口 ｜  发布时间： 2016-08-13 12:27", httpMethod = "POST", response = String.class, notes = "上传单张图片接口 ｜  发布时间： 2016-08-13 12:27")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+   public String upLoadImage(
+   		@ApiParam(required = true, name = "file", value = "上传的图片文件") @RequestParam(value="file",required=true) MultipartFile file,  
+           HttpServletRequest request)throws Exception{  
+		JSONObject result = new JSONObject();
+		 //获得物理路径webapp所在路径  
+        StringBuilder pathRoot = new StringBuilder((String)request.getSession().getServletContext().getRealPath("")); 
+        StringBuilder imagePath = new StringBuilder(request.getContextPath());
+        imagePath.append("/upload/");
+        pathRoot.append("/upload/");
+        File tmpFile = new File(pathRoot.toString());
+        if(!tmpFile.isDirectory()){
+        	//创建目录了
+        	System.out.println("创建目录了");
+        	tmpFile.mkdirs();//如果目录 不存在就创建目录
+        }
+        if(!file.isEmpty()){  
+            //生成uuid作为文件名称  
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");  
+            //获得文件类型（可以判断如果不是图片，禁止上传）  
+            String contentType=file.getContentType();  
+            //获得文件后缀名称  
+            String imageName=contentType.substring(contentType.indexOf("/")+1);  
+            pathRoot.append(uuid);
+            pathRoot.append(".");
+            pathRoot.append(imageName);
+            file.transferTo(new File(pathRoot.toString())); 
+            //将头像写入用户
+            imagePath.append(uuid).append(".").append(imageName);
+            result.put("_st", 1);//
+    		result.put("_msg", "上传图片成功");
+    		result.put("imagepath", imagePath.toString());
+    		return result.toJSONString();
+        }else{
+        	result.put("_st", 2);//
+    		result.put("_msg", "上传图片失败");
+    		return result.toJSONString();
+        }
+	}
+	
+	
 	 @RequestMapping(value="/uploadHzHeader/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)  
 	 @ResponseBody
 	 @ApiOperation(value = "上传用户头像 ｜  发布时间： 2016-08-09 22:27", httpMethod = "POST", response = String.class, notes = "上传用户头像  2016-08-09 22:27")
@@ -188,13 +232,18 @@ public class PatientApi {
             hzxx.setTEMP2(imagePath.toString());
             System.out.println(">>>>> "+imagePath.toString());
             hzxxService.updateByPrimaryKeySelective(hzxx);
-        }  
-        System.out.println(pathRoot.toString());  
-        //request.setAttribute("imagesPath", path); 
-        result.put("_st", 1);//
-		result.put("_msg", "上传用户头像成功");
-		result.put("hzxx", JSON.toJSONString(hzxx));
-		return result.toJSONString();
+            System.out.println(pathRoot.toString());  
+            //request.setAttribute("imagesPath", path); 
+            result.put("_st", 1);//
+    		result.put("_msg", "上传用户头像成功");
+    		result.put("hzxx", JSON.toJSONString(hzxx));
+    		return result.toJSONString();
+        }else{
+        	result.put("_st", 2);//
+    		result.put("_msg", "上传用户头像失败");
+    		return result.toJSONString();
+        }
+        
     }
 	 
 	 @ResponseBody
@@ -282,12 +331,18 @@ public class PatientApi {
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
 	@RequestMapping(value="/initHZSFXX",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
 	public String initHzsfxx(@ApiParam(required = true, name = "hzid", value = "患者ID") @RequestParam(value="hzid",required=true) String hzid,
-			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token){
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "date", value = "添加对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(hzid+"")){
 			 result.put("_st", 0);//
 			 result.put("_msg", "患者ID无效");
 			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 6);//
+			 result.put("_msg", "添加对应的日期(date)传入错误");
+			 return result.toJSONString(); 
 		 }
 		 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
 		 if(hzxx == null){
@@ -296,17 +351,23 @@ public class PatientApi {
 			 return result.toJSONString();
 		 }
 		 //检查当前用户有没有初始化当天的随防数据
-		 if(!hzsfxxService.checkHzxfxxBaseDB(Long.parseLong(hzid), CommonUtils.getTimeInMillisBy00_00_00())){
-			 //初始化
-			 hzsfxxService.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), Long.parseLong(hzid));
-		 }
+		 try {
+			if(!hzsfxxService.checkHzxfxxBaseDB(Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(date))){//CommonUtils.getTimeInMillisBy00_00_00())){
+				 //初始化
+				 hzsfxxService.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(date));
+			 }
+
+			 //查询sf的数据返回
+			 //暂不提供返回的数据。
+			 result.put("_st", 1);//
+			 result.put("_msg", "初始化成功");
+			 return result.toJSONString();
+		} catch (Exception e) {
+			result.put("_st", 7);//
+			 result.put("_msg", "初始化失败");
+			 return result.toJSONString();
+		}
 		 
-		 //查询sf的数据返回
-		 //暂不提供返回的数据。
-		 result.put("_st", 1);//
-		 result.put("_msg", "初始化成功");
-		 result.put("_data", new JSONObject().toJSONString());
-		 return result.toJSONString();
 	}
 	
 	
@@ -424,11 +485,11 @@ public class PatientApi {
 	}
 	
 	@ResponseBody
-	@ApiOperation(value = "获取某天的所有血糖数据，｜  发布时间： 2016-08-12 15:26 ", httpMethod = "POST", response = String.class, notes = "获取某天的所有血糖数据，｜  发布时间： 2016-08-12 15:26 ")
+	@ApiOperation(value = "获取某天的所有血糖数据，｜  发布时间： 2016-08-12 15:26 ", httpMethod = "GET", response = String.class, notes = "获取某天的所有血糖数据，｜  发布时间： 2016-08-12 15:26 ")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	@RequestMapping(value="/GetFeedXTByDate/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	@RequestMapping(value="/GetFeedXTByDate/{hzid}/{date}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
 	public String getfeedXT(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
-			@ApiParam(required = true, name = "date", value = "要查询的日期，格式：yyyy-MM-dd，如2016-08-09 ， 8和9之前需要补0") @RequestParam(value="date",required=true) String date){
+			@ApiParam(required = true, name = "date", value = "要查询的日期，格式：yyyy-MM-dd，如2016-08-09 ， 8和9之前需要补0") @PathVariable String date){
 		 JSONObject result = new JSONObject();
 		 if(StringUtils.isBlank(hzid+"")){
 			 result.put("_st", 0);//
@@ -439,11 +500,187 @@ public class PatientApi {
 		 if(hzxx == null){
 			 result.put("_st", 2);//
 			 result.put("_msg", "患者不存在");
-			 return result.toJSONString();
+			 return result.toJSONString(); 
 		 }
-		 List<TnbTnbson> list = tnbsonService.findFeedList(Long.parseLong(hzid), date);
+		 List<TnbTnbson> list = tnbsonService.findFeedList(Long.parseLong(hzid), "015", date);
 		 if(list != null && list.size() > 0 ){
 			 result.put("_st", 1);//
+			 result.put("_msg", "获取成功");
+			 result.put("_datalist", JSON.toJSONString(list));
+			 return result.toJSONString();
+		 }else{
+			 result.put("_st", 3);//
+			 result.put("_msg", "获取失败");
+			 return result.toJSONString();
+		 }
+	}
+	
+	@ResponseBody
+	@ApiOperation(value = "添加胰岛素，｜  发布时间： 2016-08-13 10:21 ", httpMethod = "POST", response = String.class, notes = "添加胰岛素，｜  发布时间： 2016-08-13 10:21 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/FeedYDS/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String feedYDS(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "itemcode", value = "胰岛素对应编号：凌晨015001；早016001；中016002；晚016003；睡前016004") @RequestParam(value="itemcode",required=true) String itemcode,
+			@ApiParam(required = true, name = "ydsnames", value = "选择的胰岛素名称，多个以空格分隔") @RequestParam(value="ydsnames",required=true) String ydsnames,
+			@ApiParam(required = true, name = "ydsjl", value = "胰岛素计量") @RequestParam(value="ydsjl",required=true) String ydsjl,
+			@ApiParam(required = true, name = "ydsrjsh", value = "胰岛素二甲双狐") @RequestParam(value="ydsrjsh",required=true) String ydsrjsh,
+			@ApiParam(required = true, name = "date", value = "添加对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		//判断参数
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 6);//
+			 result.put("_msg", "添加对应的日期(date)传入错误");
+			 return result.toJSONString(); 
+		 }
+		if(StringUtils.isBlank(itemcode)){
+			 result.put("_st", 3);//
+			 result.put("_msg", "itemcode传入错误");
+			 return result.toJSONString(); 
+		 }
+		if(StringUtils.isBlank(ydsnames)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "选择的胰岛素名称为空");
+			 return result.toJSONString(); 
+		}
+		if(StringUtils.isBlank(ydsjl)){
+			 result.put("_st", 4);//
+			 result.put("_msg", "胰岛素计量为空");
+			 return result.toJSONString(); 
+		}
+		if(StringUtils.isBlank(ydsrjsh)){
+			 result.put("_st", 5);//
+			 result.put("_msg", "胰岛素二甲双狐为空");
+			 return result.toJSONString(); 
+		}
+		//查询出患者随访中对应的ID值
+		//插入相关的值之前，先查询出在hzsfxx表主对应项目的ID；
+		//根据传入的日期转换成对应的long
+		 Long _date = null;
+			try {
+				_date = CommonUtils.getTimeInMillisByDate(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		 Long hzsfFatherId = hzsfxxService.findByHzidDataItemCode(Long.parseLong(hzid), _date, itemcode.substring(0,3));
+		 if(hzsfFatherId == null){
+			 result.put("_st", 7);//
+			 result.put("_msg", "添加胰岛素失败");
+			 return result.toJSONString(); 
+		 }else{
+			 TnbTnbson bs = new TnbTnbson();
+			 bs.setFatherid(hzsfFatherId);
+			 bs.setHzid(Long.parseLong(hzid));
+			 bs.setItemcode(itemcode);
+			 bs.setItemname(CommonUtils.getBloodSugarByItemCode(itemcode));
+			 bs.setYds(ydsnames);
+			 bs.setYdsjl(ydsjl!=null?ydsjl.trim():"");
+			 bs.setYdsejsg(ydsrjsh!=null?ydsrjsh.trim():"");
+			 bs.setTemp4(date);//更新时间
+			 bs.setTemp5(date);//插入时间
+			 
+			 int rowid = tnbsonService.insert(bs);
+			 if(rowid >0 ){
+				 result.put("_st", 1);//
+				 result.put("_msg", "添加成功！");
+				 result.put("_data", JSON.toJSONString(bs));
+				 return result.toJSONString(); 
+		     }else{
+		    	 result.put("_st", 7);//
+				 result.put("_msg", "添加失败！");
+				 return result.toJSONString(); 
+		     }
+		 }
+	}
+	
+	@ResponseBody
+	@ApiOperation(value = "修改胰岛素，｜  发布时间： 2016-08-13 11:21 ", httpMethod = "POST", response = String.class, notes = "修改胰岛素，｜  发布时间： 2016-08-13 11:21 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/FeedYDSUpdate/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String feedYDSUpdate(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "dataid", value = "修改记录ID") @RequestParam(value="dataid",required=true) String dataid,
+			@ApiParam(required = true, name = "ydsnames", value = "选择的胰岛素名称，多个以空格分隔") @RequestParam(value="ydsnames",required=true) String ydsnames,
+			@ApiParam(required = true, name = "ydsjl", value = "胰岛素计量") @RequestParam(value="ydsjl",required=true) String ydsjl,
+			@ApiParam(required = true, name = "ydsrjsh", value = "胰岛素二甲双狐") @RequestParam(value="ydsrjsh",required=true) String ydsrjsh){
+		JSONObject result = new JSONObject();
+		//判断参数
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(dataid)){
+			 result.put("_st", 3);//
+			 result.put("_msg", "修改记录ID传入错误");
+			 return result.toJSONString(); 
+		 }
+		if(StringUtils.isBlank(ydsnames)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "选择的胰岛素名称为空");
+			 return result.toJSONString(); 
+		}
+		if(StringUtils.isBlank(ydsjl)){
+			 result.put("_st", 4);//
+			 result.put("_msg", "胰岛素计量为空");
+			 return result.toJSONString(); 
+		}
+		if(StringUtils.isBlank(ydsrjsh)){
+			 result.put("_st", 5);//
+			 result.put("_msg", "胰岛素二甲双狐为空");
+			 return result.toJSONString(); 
+		}
+		TnbTnbson tnbson = tnbsonService.selectByPrimaryKey(Long.parseLong(dataid.trim()));
+		if(tnbson != null){
+			tnbson.setYds(ydsnames);
+			tnbson.setYdsjl(ydsjl!=null?ydsjl.trim():"");
+			tnbson.setYdsejsg(ydsrjsh!=null?ydsrjsh.trim():"");
+			tnbson.setTemp4(CommonUtils.getCurDate());//更新时间
+			int rowid = tnbsonService.updateByPrimaryKeySelective(tnbson);
+			if(rowid > 0 ){
+				result.put("_st", 1);//
+				result.put("_msg", "修改成功！");
+				result.put("_data", JSON.toJSONString(tnbson));
+				return result.toJSONString(); 
+		     }else{
+		    	 result.put("_st", 7);//
+				 result.put("_msg", "更新失败！");
+				 return result.toJSONString(); 
+		     }
+		}else{
+			result.put("_st", 8);//
+			result.put("_msg", "记录ID没有对应记录");
+			return result.toJSONString(); 
+		}
+	}
+	
+	@ResponseBody
+	@ApiOperation(value = "获取某天所有胰岛素记录，｜  发布时间： 2016-08-13 11:21 ", httpMethod = "GET", response = String.class, notes = "获取某天所有胰岛素记录，｜  发布时间： 2016-08-13 11:21 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/getFeedYDS/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String getFeedYDS(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "date", value = "添加对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		//判断参数
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 6);//
+			 result.put("_msg", "添加对应的日期(date)传入错误");
+			 return result.toJSONString(); 
+		 }
+		List<TnbTnbson> list = tnbsonService.findFeedList(Long.parseLong(hzid), "016", date);
+		if(list != null && list.size() > 0 ){
+			result.put("_st", 1);//
 			 result.put("_msg", "获取成功");
 			 result.put("_datalist", JSON.toJSONString(list));
 			 return result.toJSONString();

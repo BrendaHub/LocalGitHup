@@ -26,10 +26,13 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Roles">
-    insert into t_roles (id, rolename, roledesc, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into t_roles (rolename, roledesc, 
       createtime, modifytime, adduid, 
       moduid)
-    values (#{id,jdbcType=BIGINT}, #{rolename,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR}, 
+    values (#{rolename,jdbcType=VARCHAR}, #{roledesc,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=BIGINT}, #{modifytime,jdbcType=BIGINT}, #{adduid,jdbcType=BIGINT}, 
       #{moduid,jdbcType=BIGINT})
   </insert>

@@ -34,7 +34,7 @@ public interface IHzsfxxService {
 	 */
 	public boolean checkHzxfxxBaseDB(Long hzid, Long sfdate);
 	
-	public void addHzsfxxBeaseDB(List<Hzsfxx> sfs, Long hzid);
+	public void addHzsfxxBeaseDB(List<Hzsfxx> sfs, Long hzid, Long date);
 	
 	Long findByHzidDataItemCode(Long hzid, Long date, String itemcode);
 	

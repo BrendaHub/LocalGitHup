@@ -53,6 +53,10 @@ public class CommonUtils {
 			bloodSugar.put("015006004", "随机");
 			bloodSugar.put("015006005", "随机");
 			bloodSugar.put("015001", "凌晨");
+			bloodSugar.put("016001", "早(胰岛素)");
+			bloodSugar.put("016002", "中(胰岛素)");
+			bloodSugar.put("016003", "晚(胰岛素)");
+			bloodSugar.put("016004", "睡前(胰岛素)");
 		}
 		return bloodSugar.get(itemCode);
 	}

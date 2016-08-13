@@ -29,11 +29,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Mz">
-    insert into S_MZ (id, ysid, ysname, 
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into S_MZ (ysid, ysname, 
       qj, zj, temp1, temp2, 
       temp3, temp4, temp5
       )
-    values (#{id,jdbcType=BIGINT}, #{ysid,jdbcType=BIGINT}, #{ysname,jdbcType=VARCHAR}, 
+    values (#{ysid,jdbcType=BIGINT}, #{ysname,jdbcType=VARCHAR}, 
       #{qj,jdbcType=VARCHAR}, #{zj,jdbcType=VARCHAR}, #{temp1,jdbcType=VARCHAR}, #{temp2,jdbcType=VARCHAR}, 
       #{temp3,jdbcType=VARCHAR}, #{temp4,jdbcType=VARCHAR}, #{temp5,jdbcType=VARCHAR}
       )
