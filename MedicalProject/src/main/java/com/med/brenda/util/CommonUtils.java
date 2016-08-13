@@ -57,6 +57,11 @@ public class CommonUtils {
 			bloodSugar.put("016002", "中(胰岛素)");
 			bloodSugar.put("016003", "晚(胰岛素)");
 			bloodSugar.put("016004", "睡前(胰岛素)");
+			bloodSugar.put("021001", "早(饮食)");
+			bloodSugar.put("021002", "中(饮食)");
+			bloodSugar.put("021003", "晚(饮食)");
+			bloodSugar.put("022", "运动");
+			bloodSugar.put("023", "症状");
 		}
 		return bloodSugar.get(itemCode);
 	}

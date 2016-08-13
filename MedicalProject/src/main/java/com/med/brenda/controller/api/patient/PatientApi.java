@@ -31,6 +31,7 @@ import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.service.IHzxxService;
 import com.med.brenda.service.ITnbTnbsonService;
 import com.med.brenda.service.IUserService;
+import com.med.brenda.service.IYinshiService;
 import com.med.brenda.util.CommonUtils;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -59,6 +60,8 @@ public class PatientApi {
 	private IHzsfxxService hzsfxxService;
 	@Autowired
 	private ITnbTnbsonService tnbsonService;
+	@Autowired
+	private IYinshiService yinshiService;
 	/**
 	 * 根据用户ID获取用户对象
 	 * @param name
@@ -472,7 +475,7 @@ public class PatientApi {
 		 tnbson.setItemvalue(itemvalue!=null?itemvalue.trim():"");
 		 tnbson.setTemp1(addtime!=null?addtime.trim():"");
 		 tnbson.setTemp4(CommonUtils.getCurDate());
-		 int rowid = tnbsonService.insert(tnbson);
+		 int rowid = tnbsonService.updateByPrimaryKeySelective(tnbson);
 	     if(rowid > 0 ){
 	    	 result.put("_st", 1);//
 			 result.put("_msg", "更新成功！");
@@ -692,6 +695,138 @@ public class PatientApi {
 		 }
 	}
 	
+	//修改饮食
+	@ResponseBody
+	@ApiOperation(value = "修改饮食，｜  发布时间： 2016-08-13 13:21 ", httpMethod = "POST", response = String.class, notes = "修改饮食，｜  发布时间： 2016-08-13 13:21 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/ModifyDiet/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String modifyDiet(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "dataid", value = "饮食记录ID") @RequestParam(value="dataid",required=true) String dataid,
+			@ApiParam(required = true, name = "dietjsondata", value = "饮食数据，以JSON串形式传入diet饮食的值，addmeal加餐的值，格式：{\"diet0\":1,\"diet1\":2,...,\"addmeal0\":1,\"addmeal\":12,...,\"image0\":\"/upload/图片名称\",...}") @RequestParam(value="dietjsondata",required=true) String dietjsondata,
+			@ApiParam(required = true, name = "date", value = "添加饮食对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		//判断参数
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 6);//
+			 result.put("_msg", "添加对应的日期(date)传入错误");
+			 return result.toJSONString(); 
+		 }
+		if(StringUtils.isBlank(dataid)){
+			 result.put("_st", 3);//
+			 result.put("_msg", "dataid传入错误");
+			 return result.toJSONString(); 
+		 }
+		if(StringUtils.isBlank(dietjsondata)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "饮食数据传入错误");
+			 return result.toJSONString(); 
+		 }
+		//根据ID查询到饮食的值
+		TnbYinshi tnbys = yinshiService.selectByPrimaryKey(Long.parseLong(dataid));
+		JSONObject perfectJsoninfo = JSON.parseObject(dietjsondata);
+		for(int i = 0 ; i< 8 ; i ++){
+			if(StringUtils.isNoneBlank(perfectJsoninfo.getString("diet"+i))){
+				switch(i){
+				case 0:
+						tnbys.setZhushi(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 1:
+					tnbys.setSc(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 2:
+					tnbys.setShuiguo(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 3:
+					tnbys.setRou(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 4:
+					tnbys.setNai(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 5:
+					tnbys.setDan(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 6:
+					tnbys.setYou(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 7:
+					tnbys.setBindgan(perfectJsoninfo.getString("diet"+i));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		for(int i = 0 ; i< 8 ; i ++){
+			if(StringUtils.isNoneBlank(perfectJsoninfo.getString("addmeal"+i))){
+				switch(i){
+				case 0:
+					tnbys.setJzhushi(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 1:
+					tnbys.setJsc(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 2:
+					tnbys.setJshuiguo(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 3:
+					tnbys.setJrou(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 4:
+					tnbys.setJnai(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 5:
+					tnbys.setJdan(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 6:
+					tnbys.setJyou(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 7:
+					tnbys.setJbindgan(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		for(int i = 0 ; i < 3; i ++){
+			if(StringUtils.isNoneBlank(perfectJsoninfo.getString("image"+i))){
+				switch(i){
+				case 0:
+					tnbys.setImage1(perfectJsoninfo.getString("image"+i));
+					break;
+
+				case 1:
+					tnbys.setImage2(perfectJsoninfo.getString("image"+i));
+					break;
+
+				case 2:
+					tnbys.setImage3(perfectJsoninfo.getString("image"+i));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		tnbys.setTemp4(CommonUtils.getCurDate());//修改时间
+		int rowid = yinshiService.updateByPrimaryKeySelective(tnbys);
+		if(rowid > 0 ){
+			result.put("_st", 1);//
+			 result.put("_msg", "添加饮食成功");
+			 result.put("_data", JSON.toJSONString(tnbys));
+			 return result.toJSONString(); 
+		}else{
+			result.put("_st", 4);//
+			 result.put("_msg", "添加饮食失败");
+			 return result.toJSONString(); 
+		}
+	}
+	
 	//添加饮食
 	@ResponseBody
 	@ApiOperation(value = "添加饮食，｜  发布时间： 2016-08-13 13:21 ", httpMethod = "POST", response = String.class, notes = "添加饮食，｜  发布时间： 2016-08-13 13:21 ")
@@ -700,7 +835,7 @@ public class PatientApi {
 	public String addDiet(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
 			@ApiParam(required = true, name = "itemcode", value = "饮食对应编号：早021001；中021002；晚021003；") @RequestParam(value="itemcode",required=true) String itemcode,
-			@ApiParam(required = true, name = "dietjsondata", value = "饮食数据，以JSON串形式传入diet饮食的值，addmeal加餐的值，格式：{\"diet0\":1,\"diet1\":2,...,\"addmeal0\":1,\"addmeal\":12,...}") @RequestParam(value="dietjsondata",required=true) String dietjsondata,
+			@ApiParam(required = true, name = "dietjsondata", value = "饮食数据，以JSON串形式传入diet饮食的值，addmeal加餐的值，格式：{\"diet0\":1,\"diet1\":2,...,\"addmeal0\":1,\"addmeal\":12,...,\"image0\":\"/upload/图片名称\",...}") @RequestParam(value="dietjsondata",required=true) String dietjsondata,
 			@ApiParam(required = true, name = "date", value = "添加饮食对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
 		JSONObject result = new JSONObject();
 		//判断参数
@@ -735,10 +870,141 @@ public class PatientApi {
 			}
 		Long hzsfFatherId = hzsfxxService.findByHzidDataItemCode(Long.parseLong(hzid), _date, itemcode.substring(0,3));
 		TnbYinshi tnbys = new TnbYinshi();//饮食对象
+		tnbys.setFatherid(hzsfFatherId);
+		tnbys.setItemcode(itemcode);
+		tnbys.setItemname(CommonUtils.getBloodSugarByItemCode(itemcode));
 		JSONObject perfectJsoninfo = JSON.parseObject(dietjsondata);
+		for(int i = 0 ; i< 8 ; i ++){
+			if(StringUtils.isNoneBlank(perfectJsoninfo.getString("diet"+i))){
+				switch(i){
+				case 0:
+						tnbys.setZhushi(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 1:
+					tnbys.setSc(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 2:
+					tnbys.setShuiguo(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 3:
+					tnbys.setRou(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 4:
+					tnbys.setNai(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 5:
+					tnbys.setDan(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 6:
+					tnbys.setYou(perfectJsoninfo.getString("diet"+i));
+					break;
+				case 7:
+					tnbys.setBindgan(perfectJsoninfo.getString("diet"+i));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		for(int i = 0 ; i< 8 ; i ++){
+			if(StringUtils.isNoneBlank(perfectJsoninfo.getString("addmeal"+i))){
+				switch(i){
+				case 0:
+					tnbys.setJzhushi(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 1:
+					tnbys.setJsc(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 2:
+					tnbys.setJshuiguo(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 3:
+					tnbys.setJrou(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 4:
+					tnbys.setJnai(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 5:
+					tnbys.setJdan(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 6:
+					tnbys.setJyou(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				case 7:
+					tnbys.setJbindgan(perfectJsoninfo.getString("addmeal"+i));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		for(int i = 0 ; i < 3; i ++){
+			if(StringUtils.isNoneBlank(perfectJsoninfo.getString("image"+i))){
+				switch(i){
+				case 0:
+					tnbys.setImage1(perfectJsoninfo.getString("image"+i));
+					break;
+
+				case 1:
+					tnbys.setImage2(perfectJsoninfo.getString("image"+i));
+					break;
+
+				case 2:
+					tnbys.setImage3(perfectJsoninfo.getString("image"+i));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+		tnbys.setTemp4(date);//修改时间
+		tnbys.setTemp5(date);//创建时间
 		
+		int rowid = yinshiService.insertSelective(tnbys);
+		if(rowid > 0 ){
+			result.put("_st", 1);//
+			 result.put("_msg", "添加饮食成功");
+			 result.put("_data", JSON.toJSONString(tnbys));
+			 return result.toJSONString(); 
+		}else{
+			result.put("_st", 4);//
+			 result.put("_msg", "添加饮食失败");
+			 return result.toJSONString(); 
+		}
+	}
+	
+	//根据患者ID，和日期获取饮食记录
+	@ResponseBody
+	@ApiOperation(value = "根据患者ID，和日期获取饮食记录，｜  发布时间： 2016-08-13 13:21 ", httpMethod = "GET", response = String.class, notes = "根据患者ID，和日期获取饮食记录，｜  发布时间： 2016-08-13 13:21 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/GetDiets/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String getDiets(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "date", value = "添加饮食对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		//判断参数
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 6);//
+			 result.put("_msg", "添加对应的日期(date)传入错误");
+			 return result.toJSONString(); 
+		 }
+		//根据 hzid , 021 ,日期，查询出所有的饮食记录
+		List<TnbYinshi> list = yinshiService.getYinshiListByHzid_date(Long.parseLong(hzid), "021", date);
 		
-		
-		return result.toJSONString();
+		if(list != null && list.size() > 0 ){
+			result.put("_st", 1);//
+			 result.put("_msg", "获取成功");
+			 result.put("_datalist", JSON.toJSONString(list));
+			 return result.toJSONString();
+		 }else{
+			 result.put("_st", 3);//
+			 result.put("_msg", "获取失败");
+			 return result.toJSONString();
+		 }
 	}
 }

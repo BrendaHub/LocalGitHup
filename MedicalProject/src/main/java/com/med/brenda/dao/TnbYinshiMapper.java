@@ -1,5 +1,8 @@
 package com.med.brenda.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.med.brenda.model.TnbYinshi;
 
 public interface TnbYinshiMapper {
@@ -14,4 +17,6 @@ public interface TnbYinshiMapper {
     int updateByPrimaryKeySelective(TnbYinshi record);
 
     int updateByPrimaryKey(TnbYinshi record);
+    
+    List<TnbYinshi> getYinshiListByHzid_date(Map<String, Object> param);
 }

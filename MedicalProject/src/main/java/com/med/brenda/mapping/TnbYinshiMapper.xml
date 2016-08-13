@@ -45,6 +45,21 @@
     from S_TNB_YINSHI
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="getYinshiListByHzid_date" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from S_TNB_YINSHI
+    where 1=1 
+  	<if test="hzid != null">
+    	and hzid = #{hzid,jdbcType=BIGINT}
+    </if>
+    <if test="temp5 != null">
+    	and temp5 = #{temp5,jdbcType=VARCHAR}
+    </if>
+    <if test="itemcode != null">
+    	and itemcode like CONCAT('${itemcode,jdbcType=VARCHAR}','%' )
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from S_TNB_YINSHI
     where id = #{id,jdbcType=BIGINT}
@@ -75,11 +90,11 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.med.brenda.model.TnbYinshi">
+  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
     insert into S_TNB_YINSHI
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="fatherid != null">
         fatherid,
       </if>
