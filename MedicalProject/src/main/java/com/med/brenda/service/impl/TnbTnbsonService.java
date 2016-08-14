@@ -52,11 +52,11 @@ public class TnbTnbsonService implements ITnbTnbsonService {
 	}
 
 	@Override
-	public List<TnbTnbson> findFeedList(Long hzid, String itemcodeprefix, String date) {
+	public List<TnbTnbson> findFeedList(Long hzid, String itemcode, String date) {
 		Map<String,Object> param = new HashMap<>();
 		param.put("hzid", hzid);
 		param.put("date", date);
-		param.put("itemcode", itemcodeprefix);
+		param.put("itemcode", itemcode);
 		return tnbsonDao.findFeedListByHzid_Date(param);
 	}
 

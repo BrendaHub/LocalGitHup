@@ -2,6 +2,7 @@ package com.med.brenda.service;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.med.brenda.model.Hzsfxx;
 
 /**
@@ -38,6 +39,8 @@ public interface IHzsfxxService {
 	
 	Long findByHzidDataItemCode(Long hzid, Long date, String itemcode);
 	
+	Hzsfxx findByHzidDateTemp3(Long hzid, Long date, String temp3);
+	
 	 int deleteByPrimaryKey(Long ID);
 
     int insert(Hzsfxx record);
@@ -49,4 +52,6 @@ public interface IHzsfxxService {
     int updateByPrimaryKeySelective(Hzsfxx record);
 
     int updateByPrimaryKey(Hzsfxx record);
+    
+    void addGrowthData(Long hzid, String date, JSONArray array) throws Exception;
 }

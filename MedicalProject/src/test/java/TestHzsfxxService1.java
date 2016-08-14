@@ -35,7 +35,7 @@ public class TestHzsfxxService1 {
 //		user.setAFP("AFP11111");
 //		System.out.println(service.insertSelective(user));
 		System.out.println(service.checkHzxfxxBaseDB(1l, CommonUtils.getTimeInMillisBy00_00_00()));
-		service.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), 1l);
+		service.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), 1l, CommonUtils.getTimeInMillisBy00_00_00());
 		System.out.println(service.checkHzxfxxBaseDB(1l, CommonUtils.getTimeInMillisBy00_00_00()));
 	}
 }

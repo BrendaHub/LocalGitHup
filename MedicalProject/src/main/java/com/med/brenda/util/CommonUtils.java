@@ -10,7 +10,7 @@ import java.util.Map;
 public class CommonUtils {
 	
 	// 先把字符串转成Date类型
-	static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	// 获取当天00:00:00时的毫秒数
 	public static Long getTimeInMillisBy00_00_00() {
 		Calendar cal = Calendar.getInstance();
@@ -62,6 +62,12 @@ public class CommonUtils {
 			bloodSugar.put("021003", "晚(饮食)");
 			bloodSugar.put("022", "运动");
 			bloodSugar.put("023", "症状");
+			bloodSugar.put("001001", "身高");
+			bloodSugar.put("001002", "体重");
+			bloodSugar.put("001003", "头围");
+			bloodSugar.put("001004", "胸围");
+			bloodSugar.put("001005", "上臂围");
+			bloodSugar.put("001006", "肱三头肌皮褶厚度");
 		}
 		return bloodSugar.get(itemCode);
 	}

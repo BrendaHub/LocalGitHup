@@ -109,6 +109,21 @@
     	and ITEMCODE = #{itemcode,jdbcType=VARCHAR}
     </if>
   </select>
+  <select id="findByHzidDateTemp3"  parameterType="java.util.Map"  resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from s_hzsfxx 
+    where 1=1 
+    <if test="hzid != null">
+    	and HZID = #{hzid,jdbcType=BIGINT}
+    </if>
+    <if test="date != null">
+    	and SFDATE = #{date,jdbcType=BIGINT}
+    </if>
+    <if test="itemcode != null">
+    	and TEMP3 = #{itemcode,jdbcType=VARCHAR}
+    </if>
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

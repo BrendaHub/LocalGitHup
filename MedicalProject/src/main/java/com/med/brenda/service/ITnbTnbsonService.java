@@ -17,5 +17,5 @@ public interface ITnbTnbsonService {
 
 	int updateByPrimaryKey(TnbTnbson record);
 	
-	List<TnbTnbson> findFeedList(Long hzid, String itemcodeprefix, String date);
+	List<TnbTnbson> findFeedList(Long hzid, String itemcode, String date);
 }

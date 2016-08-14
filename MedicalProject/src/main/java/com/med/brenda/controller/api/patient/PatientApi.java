@@ -872,6 +872,7 @@ public class PatientApi {
 		TnbYinshi tnbys = new TnbYinshi();//饮食对象
 		tnbys.setFatherid(hzsfFatherId);
 		tnbys.setItemcode(itemcode);
+		tnbys.setHzid(Long.parseLong(hzid));
 		tnbys.setItemname(CommonUtils.getBloodSugarByItemCode(itemcode));
 		JSONObject perfectJsoninfo = JSON.parseObject(dietjsondata);
 		for(int i = 0 ; i< 8 ; i ++){

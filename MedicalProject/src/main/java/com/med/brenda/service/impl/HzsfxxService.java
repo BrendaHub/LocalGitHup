@@ -2,15 +2,19 @@ package com.med.brenda.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.dao.HzsfxxMapper;
 import com.med.brenda.model.Hzsfxx;
 import com.med.brenda.service.IHzsfxxService;
@@ -171,6 +175,80 @@ public class HzsfxxService implements IHzsfxxService {
 		param.put("itemcode", itemcode);
 		Hzsfxx hzsfxx = hzsfxxDao.findByHzidDataItemCode(param);
 		return hzsfxx!=null?hzsfxx.getID():null;
+	}
+
+
+
+	@Override
+	public Hzsfxx findByHzidDateTemp3(Long hzid, Long date, String temp3) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("hzid", hzid);
+		param.put("date", date);
+		param.put("itemcode", temp3);
+		Hzsfxx hzsfxx = hzsfxxDao.findByHzidDateTemp3(param);
+		return hzsfxx;
+	}
+
+
+	/**
+	 * 添加生长数据
+	 */
+	@Override
+	public void addGrowthData(Long hzid, String date, JSONArray array) throws Exception {
+		List<Hzsfxx> list = new ArrayList<>();
+		if(!array.isEmpty()){
+			for(Iterator it = array.iterator(); it.hasNext();){
+				JSONObject jsono = (JSONObject)it.next();
+				Hzsfxx hzsfxx = new Hzsfxx();
+				hzsfxx.setHZID(hzid);
+				Long longTime = CommonUtils.getTimeInMillisByDate(date);
+				hzsfxx.setSFDATE(longTime);
+				hzsfxx.setITEMTYPE("生长数据");
+				String itemcode = jsono.getString("itemcode");
+				String itemcode_prifex = itemcode.substring(0,3);
+				hzsfxx.setITEMCODE(itemcode_prifex);
+				hzsfxx.setTEMP1(jsono.getString("img"));//图片
+				hzsfxx.setTEMP3(itemcode);//itemcode全
+				if("001001".equals(itemcode)){
+					if(StringUtils.isBlank(jsono.getString("height"))){
+						continue;
+					}
+					hzsfxx.setITEMVALUE(jsono.getString("height"));//身高
+				}else if("001002".equals(itemcode)){
+					if(StringUtils.isBlank(jsono.getString("weight"))){
+						continue;
+					}
+					hzsfxx.setITEMVALUE(jsono.getString("weight"));//体重
+				}else if("001003".equals(itemcode)){
+					if(StringUtils.isBlank(jsono.getString("headsize"))){
+						continue;
+					}
+					hzsfxx.setITEMVALUE(jsono.getString("headsize"));//头围
+				}else if("001004".equals(itemcode)){
+					if(StringUtils.isBlank(jsono.getString("bust"))){
+						continue;
+					}
+					hzsfxx.setITEMVALUE(jsono.getString("bust"));//胸围
+				}else if("001005".equals(itemcode)){
+					if(StringUtils.isBlank(jsono.getString("armsize"))){
+						continue;
+					}
+					hzsfxx.setITEMVALUE(jsono.getString("armsize"));//上臂围
+				}else if("001006".equals(itemcode)){
+					if(StringUtils.isBlank(jsono.getString("triceps"))){
+						continue;
+					}
+					hzsfxx.setITEMVALUE(jsono.getString("triceps"));//肱三头肌皮褶厚度
+				}
+				hzsfxx.setTEMP4(date);//修改时间
+				hzsfxx.setTEMP5(date);//添加时间
+				
+				list.add(hzsfxx);
+			}
+		}
+		if(list != null && list.size() > 0 ){
+			hzsfxxDao.batchInsert(list);
+		}
 	}
 	
 
