@@ -252,4 +252,83 @@ public class HzsfxxService implements IHzsfxxService {
 	}
 	
 
+	//修改某项生长数据
+	/**
+	 * 
+	 * @param dataid  记录ID
+	 * @param itemvalue 修改后的值
+	 * @return
+	 */
+	public boolean modifyGrowthData(Long dataid, String itemvalue){
+		try{
+			Hzsfxx hzsfxx = hzsfxxDao.selectByPrimaryKey(dataid);
+			if(hzsfxx != null){
+				hzsfxx.setITEMVALUE(itemvalue);
+				int rowid = hzsfxxDao.updateByPrimaryKeySelective(hzsfxx);
+				
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+
+	/**
+	 * 添加患者的用药记录
+	 * {"drugname":"用药名称","drugtime":"12:23","drugdose":"223","drugchannel":"用药途径"}
+	 */
+	@Override
+	public Long addUserDrug(Long hzid, Long date, JSONObject userDrug) {
+		Hzsfxx hzsfxx = new Hzsfxx();
+		hzsfxx.setHZID(hzid);
+		hzsfxx.setSFDATE(date);
+		hzsfxx.setITEMCODE("003");
+		hzsfxx.setITEMNAME(CommonUtils.getBloodSugarByItemCode("003"));
+		hzsfxx.setITEMNAME(userDrug.getString("drugname"));//用药名称
+		hzsfxx.setYWNAME(userDrug.getString("drugname"));//用药名称
+		hzsfxx.setYYTIME(userDrug.getString("drugtime"));//用药时间
+		hzsfxx.setYWJL(userDrug.getString("drugdose"));//用药剂量
+		hzsfxx.setYYTJ(userDrug.getString("drugchannel"));//用药途径
+		hzsfxx.setTEMP1("3.png");//图片
+		hzsfxx.setTEMP2("2");
+		hzsfxx.setTEMP3("003");
+		hzsfxx.setTEMP4(CommonUtils.transferLongToDate(date));//修改时间
+		hzsfxx.setTEMP5(CommonUtils.transferLongToDate(date));//添加时间
+		
+		
+		int rowid = hzsfxxDao.insert(hzsfxx);
+		if(rowid > 0 ){
+			return hzsfxx.getID();
+		}else{
+			return 0l;
+		}
+	}
+
+	
+	/**
+	 * 修改患者的用户记录
+	 * {"drugname":"用药名称","drugtime":"12:23","drugdose":"223","drugchannel":"用药途径"}
+	 */
+	@Override
+	public boolean modifyUserDrug(Long dataid, JSONObject userDrug) {
+		Hzsfxx hzsfxx = hzsfxxDao.selectByPrimaryKey(dataid);
+		hzsfxx.setITEMNAME(userDrug.getString("drugname"));//用药名称
+		hzsfxx.setYWNAME(userDrug.getString("drugname"));//用药名称
+		hzsfxx.setYYTIME(userDrug.getString("drugtime"));//用药时间
+		hzsfxx.setYWJL(userDrug.getString("drugdose"));//用药剂量
+		hzsfxx.setYYTJ(userDrug.getString("drugchannel"));//用药途径
+		hzsfxx.setTEMP1("3.png");//图片
+		hzsfxx.setTEMP2("2");
+		hzsfxx.setTEMP3("003");
+		hzsfxx.setTEMP4(CommonUtils.getCurDate());//修改时间
+		int rowid = hzsfxxDao.updateByPrimaryKeySelective(hzsfxx);
+		if(rowid > 0 ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 }

@@ -3,6 +3,7 @@ package com.med.brenda.service;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.model.Hzsfxx;
 
 /**
@@ -54,4 +55,7 @@ public interface IHzsfxxService {
     int updateByPrimaryKey(Hzsfxx record);
     
     void addGrowthData(Long hzid, String date, JSONArray array) throws Exception;
+    public boolean modifyGrowthData(Long dataid, String itemvalue);
+    public Long addUserDrug(Long hzid, Long date, JSONObject userDrug);
+    public boolean modifyUserDrug(Long dataid, JSONObject userDrug);
 }

@@ -186,8 +186,8 @@ public class PatientApi2 {
 			 result.put("_msg", "日期无效");
 			 return result.toJSONString();
 		}
-		//根据患 者ID， 指定日期， 021 查询出运动记录
-		List<TnbTnbson> list = tnbsonService.findFeedList(Long.parseLong(hzid), "021", date);
+		//根据患 者ID， 指定日期， 022 查询出运动记录
+		List<TnbTnbson> list = tnbsonService.findFeedList(Long.parseLong(hzid), "022", date);
 		if(list != null && list.size() > 0 ){
 			result.put("_st", 1);//
 			 result.put("_msg", "获取成功");
@@ -208,7 +208,8 @@ public class PatientApi2 {
 	public String AddSymptom(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
 			@ApiParam(required = true, name = "itemcode", value = "症状对应编号：023") @RequestParam(value="itemcode",required=true) String itemcode,
-			@ApiParam(required = true, name = "jsondata", value = "症状数据，以JSON串形式传入运动的值 (只要是选中为1，未选为0)，格式：{\"ZZDNDY\":\"1|0\",\"ZZYN\":\"1|0\",\"ZZXS\":\"1|0\",\"ZZFL\":\"1|0\",\"ZZQT\":\"0,0,1,1,1,0,0,0,0,0,0,0\"}") @RequestParam(value="jsondata",required=true) String jsondata,
+			@ApiParam(required = true, name = "jsondata", value = "症状数据，以JSON串形式传入运动的值 (只要是选中为1，未选为0)，"
+					+ "格式：{\"ZZDNDY\":\"1|0\",\"ZZYN\":\"1|0\",\"ZZXS\":\"1|0\",\"ZZFL\":\"1|0\",\"ZZQT\":\"0,0,1,1,1,0,0,0,0,0,0,0\"}") @RequestParam(value="jsondata",required=true) String jsondata,
 			@ApiParam(required = true, name = "date", value = "添加症状对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(hzid)){
@@ -598,5 +599,37 @@ public class PatientApi2 {
 		}
 	}
 	
-	
+	//修改某个生长数据
+	@ResponseBody
+	@ApiOperation(value = "修改某个指定的生长数据，｜  发布时间： 2016-08-15 22:10 ", httpMethod = "POST", response = String.class, notes = "修改某个指定的生长数据，｜  发布时间： 2016-08-15 22:10 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/ModifyGrowthData",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	public String ModifyGrowthData(@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "dataid", value = "修改项目的ID") @RequestParam(value="dataid",required=true) String dataid,
+			@ApiParam(required = true, name = "itemvalue", value = "生长数据的值，可以是小数,这里应该是float，但由于原来的表设计成string,所在暂传string") @RequestParam(value="itemvalue",required=true) String itemvalue){
+		JSONObject result = new JSONObject();
+		
+		if(StringUtils.isBlank(dataid)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "dataid无效");
+			 return result.toJSONString();
+		}
+
+		if(StringUtils.isBlank(itemvalue)){
+			 result.put("_st", 3);//
+			 result.put("_msg", "itemvalue无效");
+			 return result.toJSONString();
+		}
+		
+		boolean back = hzsfxxService.modifyGrowthData(Long.parseLong(dataid), itemvalue);
+		if(back){
+			result.put("_st", 1);//
+			 result.put("_msg", "修改成功");
+			 return result.toJSONString();
+		}else{
+			result.put("_st", 5);//
+			 result.put("_msg", "修改失败");
+			 return result.toJSONString();
+		}
+	}
 }

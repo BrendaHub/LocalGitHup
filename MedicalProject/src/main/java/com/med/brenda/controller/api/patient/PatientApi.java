@@ -839,7 +839,7 @@ public class PatientApi {
 			@ApiParam(required = true, name = "date", value = "添加饮食对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
 		JSONObject result = new JSONObject();
 		//判断参数
-		if(StringUtils.isBlank(hzid+"")){
+		if(StringUtils.isBlank(hzid)){
 			 result.put("_st", 0);//
 			 result.put("_msg", "患者ID无效");
 			 return result.toJSONString();
@@ -961,7 +961,7 @@ public class PatientApi {
 		tnbys.setTemp4(date);//修改时间
 		tnbys.setTemp5(date);//创建时间
 		
-		int rowid = yinshiService.insertSelective(tnbys);
+		int rowid = yinshiService.insert(tnbys);
 		if(rowid > 0 ){
 			result.put("_st", 1);//
 			 result.put("_msg", "添加饮食成功");

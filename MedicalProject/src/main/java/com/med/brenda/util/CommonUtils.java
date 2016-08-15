@@ -31,6 +31,26 @@ public class CommonUtils {
 		return longDate;
 	}
 	
+	/**
+
+     * 把毫秒转化成日期
+
+     * @param dateFormat(日期格式，例如：MM/ dd/yyyy HH:mm:ss)
+
+     * @param millSec(毫秒数)
+
+     * @return
+
+     */
+
+    public static String transferLongToDate(Long millSec){
+
+    		Date date= new Date(millSec);
+
+            return sdf.format(date);
+
+    }
+	
 	//获取当下的日期，返回yyyy-MM-dd
 	public static String getCurDate(){
 		return sdf.format(new Date());
@@ -68,6 +88,7 @@ public class CommonUtils {
 			bloodSugar.put("001004", "胸围");
 			bloodSugar.put("001005", "上臂围");
 			bloodSugar.put("001006", "肱三头肌皮褶厚度");
+			bloodSugar.put("003", "用药");
 		}
 		return bloodSugar.get(itemCode);
 	}
