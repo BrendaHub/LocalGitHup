@@ -5,6 +5,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.model.Hzsfxx;
+import com.med.brenda.model.Hzxx;
 
 /**
  * 患者随访信息表
@@ -58,4 +59,6 @@ public interface IHzsfxxService {
     public boolean modifyGrowthData(Long dataid, String itemvalue);
     public Long addUserDrug(Long hzid, Long date, JSONObject userDrug);
     public boolean modifyUserDrug(Long dataid, JSONObject userDrug);
+    Long addInspectData(Hzxx hzxx, String date);
+    Long addCost(Hzxx hzxx , String cost, String desc , String[] images);
 }

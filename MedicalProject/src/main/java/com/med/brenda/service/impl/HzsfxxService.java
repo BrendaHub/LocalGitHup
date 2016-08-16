@@ -1,5 +1,6 @@
 package com.med.brenda.service.impl;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,7 +17,10 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.dao.HzsfxxMapper;
+import com.med.brenda.dao.HzsfxxsonMapper;
 import com.med.brenda.model.Hzsfxx;
+import com.med.brenda.model.Hzsfxxson;
+import com.med.brenda.model.Hzxx;
 import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.util.CommonUtils;
 @Service
@@ -26,6 +30,8 @@ public class HzsfxxService implements IHzsfxxService {
 	
 	@Resource
 	private HzsfxxMapper hzsfxxDao;
+	@Resource
+	private HzsfxxsonMapper hzsfxxsonDao;
 	
 	@Override
 	public boolean checkHzxfxxBaseDB(Long hzid, Long sfdate) {
@@ -329,6 +335,73 @@ public class HzsfxxService implements IHzsfxxService {
 		}else{
 			return false;
 		}
+	}
+
+
+	/**
+	 * 在患者随访表中插入检查化验的记录基础数据
+	 */
+	@Override
+	public Long addInspectData(Hzxx hzxx, String date) {
+		Hzsfxx hzsfxx = new Hzsfxx();
+		hzsfxx.setHZID(hzxx.getID());
+		hzsfxx.setHZNAME(hzxx.getHZNAME());
+		try {
+			hzsfxx.setSFDATE(CommonUtils.getTimeInMillisByDate(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+		hzsfxx.setITEMCODE("018");
+		hzsfxx.setITEMNAME(CommonUtils.getBloodSugarByItemCode("018"));
+		hzsfxx.setTEMP1("71.png");
+		hzsfxx.setTEMP2("1");
+		hzsfxx.setTEMP3("018");
+		hzsfxx.setTEMP4(date);
+		hzsfxx.setTEMP5(date);
+		int rowid = hzsfxxDao.insert(hzsfxx);
+		if(rowid > 0 ){
+			return hzsfxx.getID();
+		}else{
+			return null;
+		}
+	}
+
+
+	/**
+	 * 患者添加某天的费用记录，在hzsfxx表中
+	 */
+	@Override
+	public Long addCost(Hzxx hzxx, String date, String cost, String desc, String[] images) {
+		Hzsfxx hzsfxx = new Hzsfxx();
+		hzsfxx.setHZID(hzxx.getID());
+		hzsfxx.setHZNAME(hzxx.getHZNAME());
+		hzsfxx.setSFDATE(CommonUtils.getTimeInMillisByDate(date));
+		hzsfxx.setITEMCODE("012");
+		hzsfxx.setITEMNAME(CommonUtils.getBloodSugarByItemCode("012"));
+		hzsfxx.setITEMVALUE(cost);
+		hzsfxx.setCONTENT(desc);
+		hzsfxx.setFYGJ(cost);
+		hzsfxx.setTEMP1("12.png");
+		hzsfxx.setTEMP2("2");
+		hzsfxx.setTEMP3("012");
+		hzsfxx.setTEMP4(date);
+		hzsfxx.setTEMP5(date);
+		int rowid = hzsfxxDao.insert(hzsfxx);
+		if(rowid > 0 ){
+			Long _id = hzsfxx.getID();
+			//先删除关联的图片
+			hzsfxxsonDao.se
+			//保存图片，到 hzsfxxson表中
+			Hzsfxxson hzsfxxson = null;//保存费用关联的图片
+			if(images != null && images.length > 0 ){
+				for(String img : images){
+					hzsfxxson = new Hzsfxxson();
+					
+				}
+			}
+		}
+		return null;
 	}
 	
 }

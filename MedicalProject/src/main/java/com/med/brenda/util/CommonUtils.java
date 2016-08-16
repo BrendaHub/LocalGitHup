@@ -89,6 +89,8 @@ public class CommonUtils {
 			bloodSugar.put("001005", "上臂围");
 			bloodSugar.put("001006", "肱三头肌皮褶厚度");
 			bloodSugar.put("003", "用药");
+			bloodSugar.put("018", "门诊检查/化验");
+			bloodSugar.put("012", "费用");
 		}
 		return bloodSugar.get(itemCode);
 	}
