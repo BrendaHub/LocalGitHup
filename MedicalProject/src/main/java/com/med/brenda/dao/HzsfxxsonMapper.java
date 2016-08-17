@@ -1,5 +1,7 @@
 package com.med.brenda.dao;
 
+import java.util.List;
+
 import com.med.brenda.model.Hzsfxxson;
 
 public interface HzsfxxsonMapper {
@@ -14,4 +16,6 @@ public interface HzsfxxsonMapper {
     int updateByPrimaryKeySelective(Hzsfxxson record);
 
     int updateByPrimaryKey(Hzsfxxson record);
+    
+    List<Hzsfxxson> findListByFatherId(Long fatherid);
 }

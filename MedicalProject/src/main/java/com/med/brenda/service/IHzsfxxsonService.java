@@ -1,5 +1,7 @@
 package com.med.brenda.service;
 
+import java.util.List;
+
 import com.med.brenda.model.Hzsfxxson;
 
 public interface IHzsfxxsonService {
@@ -15,4 +17,6 @@ public interface IHzsfxxsonService {
     int updateByPrimaryKeySelective(Hzsfxxson record);
 
     int updateByPrimaryKey(Hzsfxxson record);
+    
+    List<Hzsfxxson> findListByFatherId(Long fatherid);
 }

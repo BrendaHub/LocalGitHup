@@ -1,5 +1,7 @@
 package com.med.brenda.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -46,6 +48,11 @@ public class HzsfxxsonService implements IHzsfxxsonService {
 	@Override
 	public int updateByPrimaryKey(Hzsfxxson record) {
 		return HzsfxxsonDao.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public List<Hzsfxxson> findListByFatherId(Long fatherid) {
+		return HzsfxxsonDao.findListByFatherId(fatherid);
 	}
 
 }

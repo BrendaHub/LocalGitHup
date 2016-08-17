@@ -115,4 +115,67 @@ public class TnbJcbfzscService implements ITnbJcbfzscService {
 			return null;
 		}
 	}
+
+	/**
+	 * 修改inspectData 检查化验数据：
+	 *  {"ch2h":"0","hbac":"1","nt":"2","ntt":"3","ndb":"4","xt":"5","yds":"6",
+	 * "ct":"7","rs":"8","xqpzc":"9","cssxpzj":"10","jgwx1":"11","jgwx2":"12","jgwx3":"13",
+	 * "jgwx4":"14","jgwx5":"15","szs1":"16","szs4":"17","szs5":"18","szs3":"19","szs2":"20",
+	 * "sgn1":"21","sgn2":"22","xz1":"23","xz2":"24","xz3":"25","xz4":"26","xz5":"27",
+	 * "imageurl":"","datarq":"20160303"}
+	 * 
+	 */
+	@Override
+	public boolean modifyInspectData(Long dataid, JSONObject inspectData) {
+		TnbJcbfzsc jcb = tnbJcbfzscDao.selectByPrimaryKey(dataid);
+		//解析数据
+		if(inspectData != null && !inspectData.isEmpty()){
+			jcb.setCh2h(inspectData.getString("ch2h"));
+			jcb.setHbac(inspectData.getString("hbac"));
+			jcb.setNt(inspectData.getString("nt"));
+			jcb.setNtt(inspectData.getString("ntt"));
+			jcb.setNdb(inspectData.getString("ndb"));
+			jcb.setXt(inspectData.getString("xt"));
+			jcb.setYds(inspectData.getString("yds"));
+			jcb.setCt(inspectData.getString("ct"));
+			jcb.setRs(inspectData.getString("rs"));
+			jcb.setXqpzc(inspectData.getString("xqpzc"));
+			jcb.setCssxpzj(inspectData.getString("cssxpzj"));
+			jcb.setJgwx1(inspectData.getString("jgwx1"));
+			jcb.setJgwx2(inspectData.getString("jgwx2"));
+			jcb.setJgwx3(inspectData.getString("jgwx3"));
+			jcb.setJgwx4(inspectData.getString("jgwx4"));
+			jcb.setJgwx5(inspectData.getString("jgwx5"));
+			jcb.setSzs1(inspectData.getString("szs1"));
+			jcb.setSzs4(inspectData.getString("szs4"));
+			jcb.setSzs5(inspectData.getString("szs5"));
+			jcb.setSzs3(inspectData.getString("szs3"));
+			jcb.setSzs2(inspectData.getString("szs2"));
+			jcb.setSgn1(inspectData.getString("sgn1"));
+			jcb.setSgn2(inspectData.getString("sgn2"));
+			jcb.setXz1(inspectData.getString("xz1"));
+			/**
+			 * inspectData 检查化验数据：
+			 * {"ch2h":"0","hbac":"1","nt":"2","ntt":"3","ndb":"4","xt":"5","yds":"6",
+			 * "ct":"7","rs":"8","xqpzc":"9","cssxpzj":"10","jgwx1":"11","jgwx2":"12","jgwx3":"13",
+			 * "jgwx4":"14","jgwx5":"15","szs1":"16","szs4":"17","szs5":"18","szs3":"19","szs2":"20",
+			 * "sgn1":"21","sgn2":"22","xz1":"23","xz2":"24","xz3":"25","xz4":"26","xz5":"27",
+			 * "imageurl":"","datarq":"20160303"}
+			 */
+			jcb.setXz2(inspectData.getString("xz2"));
+			jcb.setXz3(inspectData.getString("xz3"));
+			jcb.setXz4(inspectData.getString("xz4"));
+			jcb.setXz5(inspectData.getString("xz5"));
+			jcb.setTemp1(inspectData.getString("imageurl"));
+			jcb.setTemp4(inspectData.getString("datarq"));//修改日期
+		}
+		int rowid = tnbJcbfzscDao.updateByPrimaryKeySelective(jcb);
+		if(rowid >0 ){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	
 }

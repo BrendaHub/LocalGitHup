@@ -314,7 +314,7 @@ public class HzsfxxService implements IHzsfxxService {
 
 	
 	/**
-	 * 修改患者的用户记录
+	 * 修改患者的用药记录
 	 * {"drugname":"用药名称","drugtime":"12:23","drugdose":"223","drugchannel":"用药途径"}
 	 */
 	@Override
@@ -376,7 +376,12 @@ public class HzsfxxService implements IHzsfxxService {
 		Hzsfxx hzsfxx = new Hzsfxx();
 		hzsfxx.setHZID(hzxx.getID());
 		hzsfxx.setHZNAME(hzxx.getHZNAME());
-		hzsfxx.setSFDATE(CommonUtils.getTimeInMillisByDate(date));
+		try {
+			hzsfxx.setSFDATE(CommonUtils.getTimeInMillisByDate(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 		hzsfxx.setITEMCODE("012");
 		hzsfxx.setITEMNAME(CommonUtils.getBloodSugarByItemCode("012"));
 		hzsfxx.setITEMVALUE(cost);
@@ -390,14 +395,30 @@ public class HzsfxxService implements IHzsfxxService {
 		int rowid = hzsfxxDao.insert(hzsfxx);
 		if(rowid > 0 ){
 			Long _id = hzsfxx.getID();
-			//先删除关联的图片
-			hzsfxxsonDao.se
+			//先删除关联的图片,通过fatherID 查询记录并删除
+			List<Hzsfxxson> list = hzsfxxsonDao.findListByFatherId(hzsfxx.getID());
+			if(list != null && list.size() > 0){
+				for(Hzsfxxson hzsfxxson : list){
+					hzsfxxsonDao.deleteByPrimaryKey(hzsfxxson.getID());
+				}
+			}
 			//保存图片，到 hzsfxxson表中
 			Hzsfxxson hzsfxxson = null;//保存费用关联的图片
 			if(images != null && images.length > 0 ){
 				for(String img : images){
 					hzsfxxson = new Hzsfxxson();
-					
+					hzsfxxson.setFATHERID(hzsfxx.getID());
+					hzsfxxson.setIMAGEURL(img);
+					hzsfxxson.setTEMP4(date);//修改时间
+					hzsfxxson.setTEMP5(date);//添加时间
+				}
+			}
+			if(hzsfxxson != null){
+				rowid = hzsfxxsonDao.insert(hzsfxxson);
+				if(rowid > 0){
+					return hzsfxx.getID();
+				}else{
+					return null;
 				}
 			}
 		}

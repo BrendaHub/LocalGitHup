@@ -17,4 +17,6 @@ public interface ITnbJcbfzscService {
     int updateByPrimaryKey(TnbJcbfzsc record);
     //添加检查、化验数据
     Long addInspectData(Long Hzid, String date, Long fatherid, JSONObject inspectData);
+    //修改检查，化验数据
+    boolean modifyInspectData(Long dataid , JSONObject inspectData);
 }

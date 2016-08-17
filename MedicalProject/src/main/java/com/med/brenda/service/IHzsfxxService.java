@@ -60,5 +60,5 @@ public interface IHzsfxxService {
     public Long addUserDrug(Long hzid, Long date, JSONObject userDrug);
     public boolean modifyUserDrug(Long dataid, JSONObject userDrug);
     Long addInspectData(Hzxx hzxx, String date);
-    Long addCost(Hzxx hzxx , String cost, String desc , String[] images);
+    Long addCost(Hzxx hzxx, String date, String cost, String desc, String[] images);
 }
