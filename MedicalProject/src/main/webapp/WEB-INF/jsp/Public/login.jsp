@@ -1,73 +1,105 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>后台管理系统</title>
-	<meta charset="UTF-8">
-   <link rel="stylesheet" type="text/css" href="/Css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/Css/bootstrap-responsive.css" />
-    <link rel="stylesheet" type="text/css" href="/Css/style.css" />
-    <script type="text/javascript" src="/Js/jquery.js"></script>
-    <script type="text/javascript" src="/Js/jquery.sorted.js"></script>
-    <script type="text/javascript" src="/Js/bootstrap.js"></script>
-    <script type="text/javascript" src="/Js/ckform.js"></script>
-    <script type="text/javascript" src="/Js/common.js"></script>
-    <style type="text/css">
-        body {
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #0B0A10;
-        }
-
-        .form-signin {
-            max-width: 300px;
-            padding: 19px 29px 29px;
-            margin: 0 auto 20px;
-            background-color: #fff;
-            border: 1px solid #e5e5e5;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            border-radius: 5px;
-            -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-            -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
-        }
-
-        .form-signin .form-signin-heading,
-        .form-signin .checkbox {
-            margin-bottom: 10px;
-        }
-
-        .form-signin input[type="text"],
-        .form-signin input[type="password"] {
-            font-size: 16px;
-            height: auto;
-            margin-bottom: 15px;
-            padding: 7px 9px;
-        }
-		h5{
-			font-size: 14px;
-			color:red;
-		}
-    </style>  
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Css/login.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<script src="/Js/jquery-1.8.1.min.js"></script>
+	<script src="/Js/jquery.cookie.js"></script>
+    <title>医堂客登录</title>
+    <style>
+    	h5{
+    		color:red;
+    	}
+    </style>
 </head>
 <body>
-<div class="container">
-
-    <form class="form-signin" method="post" action="/logon">
-        <h2 class="form-signin-heading">登录系统</h2>
-        <h5>${result._msg }</h5>
-        <input type="text" name="username" class="input-block-level" placeholder="账号">
-        <input type="password" name="password" class="input-block-level" placeholder="密码">
-        <input type="text" name="verifycode" class="input-block-level" placeholder="验证码"><br/>
-       	<img src="/verifycode" id="_verifyCode"/>&nbsp;&nbsp;<a href="javascript:#this;" onclick="changeVerifyCode();">换一个</a>
-        <br/><br/><p><button class="btn btn-large btn-success" type="submit"> &nbsp;&nbsp;&nbsp;&nbsp;登 &nbsp;&nbsp;&nbsp;&nbsp;录 &nbsp;&nbsp;&nbsp;&nbsp;</button></p>
-    </form>
-</div>
-<script>
-	function changeVerifyCode(){
-		$("#_verifyCode").attr("src", $("#_verifyCode").attr("src")+"?ff="+Math.random());
-	}
-</script>
+    <header>
+		<table width="100%">
+            <td align="left"><img src="/Images/login/tnblogo.png"/></td>
+        </table>
+    </header>
+    <div class="_content">
+        <table class="_top">
+            <td></td>
+        </table>
+		<form class="form-signin" method="post" action="/logon">
+        <div class="_bottom">
+            <div class="log_left"><img src="/Images/login/left.png"/></div>
+            <div class="log_right">
+                <div class="log_top">
+                    	用户登录<span>UserLogin</span>
+                </div>
+                <div class="row">
+                    <div >
+                        <img src="/Images/login/user.png" style="width:20px; margin-left:10px;margin-top:-8px;">
+                    </div>
+                    <div >
+                        <input id="username" name="username" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA; margin-left:8px;" placeholder="在此输入登录账号" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div >
+                        <img src="/Images/login/lock.png" style="width:18px; margin-left:12px;margin-top:-8px;">
+                    </div>
+                    <div >
+                        <input id="userPass" type="password" name="password" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA; margin-left:8px; " placeholder="在此输入密码" >
+                    </div>
+                </div>
+                <div class="rowvc">
+                    <div>
+                        <img src="/Images/login/lock.png" style="width:18px; margin-left:12px;margin-top:-8px;">
+                    </div>
+                    <div>
+                        <input id="userPass" name="verifycode" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA;margin-top:5px; " placeholder="验证码" >
+                    </div>
+                    <img src="/verifycode" id="_verifyCode" width="80px" height="30px" onclick="changeVerifyCode();"/>
+                </div>
+                <div class="log_btm">
+                    <input class="_log" id="_log" type="button" value="登录"/>
+                    <div>
+                        <input type="checkbox" id="checkbox_a1" class="chk_1" />
+                        <label for="checkbox_a1"></label>
+                        <span class="_remember"><label for="checkbox_a1">记住账号</label></span>
+                        <span class="_forget">忘记密码 ?</span>
+                    </div>
+                </div>
+                <h5>${result._msg }</h5>
+            </div>
+        </div>
+        </form>
+    </div>
+    <footer>版权所有  2016</footer>
 </body>
 </html>
+<script>
+   
+    function changeVerifyCode(){
+		$("#_verifyCode").attr("src", $("#_verifyCode").attr("src")+"?ff="+Math.random());
+	}
+    function formsubmit(){
+    	if($('#checkbox_a1').is(':checked')){//记住账号
+    		console.log("记住账号选 中了....")
+    		$.cookie("logo_user_cookie", $("#username").val() ,{expire:7,path:"/"});
+    	}
+    	$(".form-signin").submit();
+    }
+   $(function () {
+	   var usr_cookie = $.cookie("logo_user_cookie");
+	   if(usr_cookie != undefined){
+		   $('#checkbox_a1').attr("checked",true);
+	   }else{
+		   $('#checkbox_a1').attr("checked",false);
+	   }
+    	
+       $("#_log").click(function(){
+    	   formsubmit();
+       });
+       
+       $("._forget").click(function(){
+    	   
+       });
+    
+    });
+</script>
