@@ -33,5 +33,25 @@ public class HzxxService implements IHzxxService {
 	public int updateByPrimaryKeySelective(Hzxx record) {
 		return hzxxDao.updateByPrimaryKeySelective(record);
 	}
+	@Override
+	public int deleteByPrimaryKey(Long ID) {
+		return hzxxDao.deleteByPrimaryKey(ID);
+	}
+	@Override
+	public int insert(Hzxx record) {
+		return hzxxDao.insert(record);
+	}
+	@Override
+	public int insertSelective(Hzxx record) {
+		return hzxxDao.insertSelective(record);
+	}
+	@Override
+	public Hzxx selectByPrimaryKey(Long ID) {
+		return hzxxDao.selectByPrimaryKey(ID);
+	}
+	@Override
+	public int updateByPrimaryKey(Hzxx record) {
+		return hzxxDao.updateByPrimaryKey(record);
+	}
 
 }

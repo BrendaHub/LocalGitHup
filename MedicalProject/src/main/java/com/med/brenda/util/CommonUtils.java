@@ -31,7 +31,7 @@ public class CommonUtils {
 		return longDate;
 	}
 	
-	public static String getSendSMS(String sfzcode, String mm, String downloadurl){
+	public static String getSendSMS(String sfzcode, String downloadurl){
 		StringBuilder sb = new StringBuilder("欢迎使用糖宝随访系统，您的用户名为：");
 		sb.append(sfzcode);
 		sb.append(",密码为：");

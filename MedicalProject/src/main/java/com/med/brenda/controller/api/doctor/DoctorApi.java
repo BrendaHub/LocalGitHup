@@ -9,15 +9,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.med.brenda.model.AppDlLog;
 import com.med.brenda.model.Gzysxx;
 import com.med.brenda.model.Hzxx;
 import com.med.brenda.model.Ysxx;
+import com.med.brenda.service.IAppDlLogService;
 import com.med.brenda.service.IGzysxxService;
 import com.med.brenda.service.IHzxxService;
 import com.med.brenda.service.impl.YsxxService;
+import com.med.brenda.util.CommonUtils;
+import com.med.brenda.util.GlobalVariables;
+import com.med.brenda.util.HttpSend;
 import com.med.brenda.util.MD5;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -45,6 +51,36 @@ public class DoctorApi {
 	private IGzysxxService gzysxxService;
 	@Autowired
 	private YsxxService ysxxService;
+	@Autowired
+	private IAppDlLogService appService;
+	
+	@RequestMapping(value="/dlapp/{phone}/{sfcode}", method = RequestMethod.GET)
+	@ApiOperation(value = "App下载专用跳转Action", httpMethod = "GET", response = JSONObject.class, notes = "App下载专用跳转Action")
+	public ModelAndView dlapp(@ApiParam(required = true, name = "phone", value = "手机号 (String类型)") @PathVariable String phone,
+			@ApiParam(required = true, name = "sfcode", value = "身份证号 (String类型)") @PathVariable String sfcode){
+		if(StringUtils.isBlank(phone)){
+			//提示错识
+			return new ModelAndView("error");
+		}
+		if(StringUtils.isBlank(sfcode)){
+			//提示错识
+			return new ModelAndView("error");
+		}
+		
+		AppDlLog appl = new AppDlLog();
+		appl.setMobile(phone);
+		appl.setSfzcode(sfcode);
+		appl.setCreatetime(System.currentTimeMillis());
+		
+		int rowid = appService.insert(appl);
+		if(rowid > 0 ){
+			//跳转
+			return new ModelAndView("dl/appdl");
+		}else{
+			//提示错识
+			return new ModelAndView("error");
+		}
+	}
 	
 	@RequestMapping(value="/DoctorLogin/{ysdlh}/{yspwd}", method = RequestMethod.POST)
 	@ResponseBody
@@ -115,6 +151,7 @@ public class DoctorApi {
 			String pwd = "";//MD5大写
 			String hzName = "";
 			String dlhCode = "";
+			String modile = "";
 			String pztype = "";//病种类型
 			if(_tmp_hzxx != null && _tmp_hzxx.length > 0 ){
 				for(String s: _tmp_hzxx){
@@ -132,7 +169,8 @@ public class DoctorApi {
 						pwd = MD5.GetMD5Code(pwd);
 						hzVo.setPASSWORD(pwd);
 					}else if(_sub_s[0].trim().equals("jzphone")){
-						hzVo.setPHONE(_sub_s[1].trim());
+						modile = _sub_s[1].trim();
+						hzVo.setPHONE(modile);
 					}else if(_sub_s[0].trim().equals("hefz")){
 						hzVo.setTEMP1(_sub_s[1].trim());
 					}else if(_sub_s[0].trim().equals("starttime")){
@@ -142,8 +180,8 @@ public class DoctorApi {
 			}
 			long hzId = hzxxService.addHz(hzVo);
 			//由于目前mybatis没有返回新添加的记录主键，所以需要查询
-			Hzxx newHzVo = hzxxService.hzLogon(dlhCode, pwd);
-			
+			//Hzxx newHzVo = hzxxService.hzLogon(dlhCode, pwd);
+			Hzxx newHzVo = hzxxService.selectByPrimaryKey(hzVo.getID());
 			logger.debug("新注册的患ID = " + hzId + "   > "+ JSON.toJSONString(newHzVo));
 			if(hzId > 0){
 				//添加医患关系记录
@@ -156,13 +194,27 @@ public class DoctorApi {
 				yshz.setKSNAME("内分泌科");
 				long gzysxxid = gzysxxService.addGzysxx(yshz);
 			}
-			result.put("_st", 1);
-			result.put("_msg", "保存成功");
-			return result.toJSONString();
+			//添加成功后，向新的患者下发短信
+			String dlUrl = "http://api.doctor330.com/api/doctor/dlapp/"+modile+"/"+dlhCode;
+			String smsContent = CommonUtils.getSendSMS(dlhCode, dlUrl);
+			String strTim = null;//HttpSend.paraTo16("2012-2-16 12:00:00"); //定时发送时间
+			String strSchSmsParam = "reg=" + GlobalVariables.strReg + "&pwd=" + GlobalVariables.strPwd + "&sourceadd=" +
+					GlobalVariables.strSourceAdd + "&tim=" + strTim + "&phone=" + modile + "&content=" + smsContent;
+			//定时短信
+			String strRes = HttpSend.postSend(GlobalVariables.strSchSmsUrl, strSchSmsParam);
+			if(strRes.startsWith("result=0")){
+				result.put("_st", 1);
+				result.put("_msg", "创建成功");
+				return result.toJSONString();
+			}else{
+				result.put("_st", 3);
+				result.put("_msg", "创建失败");
+				return result.toJSONString();
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			result.put("_st", 3);
-			result.put("_msg", "新的患者信息失败");
+			result.put("_msg", "创建新的患者信息失败");
 			return result.toJSONString();
 		}
 	}

@@ -506,9 +506,9 @@ public class PatientApi2 {
 	
 	//获取基础数据接口
 	@ResponseBody
-	@ApiOperation(value = "修改睡眠、体温、血压基础随访数据，｜  发布时间： 2016-08-14 14:10 ", httpMethod = "POST", response = String.class, notes = "修改睡眠、体温、血压基础随访数据，｜  发布时间： 2016-08-14 14:10 ")
+	@ApiOperation(value = "获取睡眠、体温、血压基础随访数据，｜  发布时间： 2016-08-14 14:10 ", httpMethod = "GET", response = String.class, notes = "修改睡眠、体温、血压基础随访数据，｜  发布时间： 2016-08-14 14:10 ")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	@RequestMapping(value="/GETBaseData/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	@RequestMapping(value="/GETBaseData/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
 	public String GETBaseData(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
 			@ApiParam(required = true, name = "itemcode", value = "添加项目编号：睡眠：014001；体温：014002；血压：014003") @RequestParam(value="itemcode",required=true) String itemcode,

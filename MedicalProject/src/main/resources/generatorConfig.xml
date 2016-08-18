@@ -12,8 +12,8 @@
 			<property name="suppressAllComments" value="true" />
 		</commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://192.168.1.106:3306/db_doctor330?useUnicode=true&amp;characterEncoding=UTF-8"
-			userId="root" password="doctor330_Brenda123">
+			connectionURL="jdbc:mysql://api.doctor330.com:3306/db_doctor330?useUnicode=true&amp;characterEncoding=UTF-8"
+			userId="root" password="doctor330_2016Brenda">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="true" />
@@ -29,14 +29,21 @@
 
 		<sqlMapGenerator targetPackage="com.med.brenda.mapping" targetProject="src/main/java">
 			<property name="enableSubPackages" value="false" />
-		</sqlMapGenerator>
+		</sqlMapGenerator> 
 
 		<javaClientGenerator type="XMLMAPPER"
 			targetPackage="com.med.brenda.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		
-		<table tableName="t_user" domainObjectName="User"
+		<table tableName="t_app_dl_log" domainObjectName="AppDlLog"
+			enableCountByExample="false" enableSelectByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="true" />
+		</table>
+		
+		<!-- table tableName="t_user" domainObjectName="User"
 			enableCountByExample="false" enableSelectByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			selectByExampleQueryId="false">
@@ -245,7 +252,7 @@
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
-		</table>
+		</table> -->
 	</context>
 
 </generatorConfiguration>

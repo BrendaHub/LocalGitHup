@@ -13,7 +13,7 @@ package com.med.brenda.util;
  */
 public class SMS {
 
-	public static sendRegisterSMS(String mobile, String sendTime){
-		
-	}
+//	public static sendRegisterSMS(String mobile, String sendTime){
+//		
+//	}
 }
