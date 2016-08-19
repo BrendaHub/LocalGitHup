@@ -67,6 +67,28 @@
       <arg column="TEMP10" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
+  <!-- sql id="query_where" >
+		<trim prefix="where" prefixOverrides="and">
+			<if test="userId  !=null">
+				userId =#{userId}
+			</if>
+			<if test="collectionType != null  ">
+				and  CollectionType =#{collectionType}
+			</if>
+			<if test="typeCode != null">
+				and typeCode = #{typeCode}
+			</if>
+			<if test="collectionName != null">
+				AND collectionName like CONCAT('%',#{collectionName},'%')
+			</if>
+			<if test="addTime != null">
+				and AddTime >= #{addTime}
+			</if>
+			<if test="startTime != null">
+				and AddTime  &lt;=  #{startTime}
+			</if>
+		</trim>
+	</sql -->
   <sql id="Base_Column_List">
     ID, HZNAME, SEX, AGE, SFZCODE, PHONE, JZSID, GMSID, JYYYID, WDBSID, DLH, PASSWORD, 
     MZ, CSRQ, XX, RHXX, LXRNAME, GX, YX, QQ, WX, CSTZ, CSSC, CSYZ, CSJG, ZZYCBC, MQYQBCCS, 
@@ -92,6 +114,18 @@
     <if test="password != null">
     	and PASSWORD = #{password,jdbcType=VARCHAR}
     </if>
+  </select>
+  <select id="findListCount" parameterType="java.util.Map" resultMap="java.lang.Integer">
+  	select 
+    count(1)
+    from s_hzxx
+    <!--include refid="query_where"/--> 
+  </select>
+  <select id="findList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from s_hzxx
+    <!--include refid="query_where"/--> order by id desc limit #{pageNo},#{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from s_hzxx

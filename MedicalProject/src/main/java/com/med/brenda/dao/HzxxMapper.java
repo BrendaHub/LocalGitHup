@@ -1,5 +1,6 @@
 package com.med.brenda.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.med.brenda.model.Hzxx;
@@ -18,4 +19,8 @@ public interface HzxxMapper {
     int updateByPrimaryKey(Hzxx record);
     
     Hzxx hzLogon(Map<String,String> map);
+    
+    int findListCount(Map<String, Object> conditionMap);
+    
+    List<Hzxx> findList(Map<String, Object> conditionMap);
 }

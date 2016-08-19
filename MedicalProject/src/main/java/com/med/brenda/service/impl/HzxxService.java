@@ -1,6 +1,7 @@
 package com.med.brenda.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.med.brenda.controller.common.Query;
 import com.med.brenda.dao.HzxxMapper;
 import com.med.brenda.model.Hzxx;
 import com.med.brenda.service.IHzxxService;
@@ -52,6 +54,20 @@ public class HzxxService implements IHzxxService {
 	@Override
 	public int updateByPrimaryKey(Hzxx record) {
 		return hzxxDao.updateByPrimaryKey(record);
+	}
+	
+	
+	@Override
+	public int findListCount(Query query) {
+		Map<String,Object> conditionMap = new HashMap<>();
+		return hzxxDao.findListCount(conditionMap);
+	}
+	@Override
+	public List<Hzxx> findList(Query query) {
+		Map<String,Object> conditionMap = new HashMap<>();
+		conditionMap.put("pageNo", query.getPageIndex());
+		conditionMap.put("pageSize", query.getPageSize());
+		return hzxxDao.findList(conditionMap);
 	}
 
 }

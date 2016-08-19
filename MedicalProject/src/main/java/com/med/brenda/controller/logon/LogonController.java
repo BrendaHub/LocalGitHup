@@ -65,6 +65,7 @@ public class LogonController {
 			return new ModelAndView("Public/login").addObject("result", JSON.toJSON(resultMap));
 		}else{
 			user.setPassword(new MD5().GetMD5Code(user.getPassword()));
+			user.setAge(new Integer(0));
 			User newUser = userService.getUserByUserNamePwd(user);
 			if(newUser == null){
 				resultMap.put("_st", Integer.parseInt("1002"));

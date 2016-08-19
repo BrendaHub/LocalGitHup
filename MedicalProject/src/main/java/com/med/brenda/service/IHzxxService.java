@@ -1,5 +1,8 @@
 package com.med.brenda.service;
 
+import java.util.List;
+
+import com.med.brenda.controller.common.Query;
 import com.med.brenda.model.Hzxx;
 
 /**
@@ -41,4 +44,8 @@ public interface IHzxxService {
 	Hzxx hzLogon(String sfzh, String password);
 
 	long addHz(Hzxx hz);
+	
+	int findListCount(Query query);
+	
+	List<Hzxx> findList(Query query);
 }

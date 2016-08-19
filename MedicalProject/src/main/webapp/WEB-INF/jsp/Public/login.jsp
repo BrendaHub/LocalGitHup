@@ -12,6 +12,18 @@
     	h5{
     		color:red;
     	}
+    	input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+			color: #ccc;
+		}
+		input:-moz-placeholder, textarea:-moz-placeholder {
+			color: #ccc;
+		}
+		input::-moz-placeholder, textarea::-moz-placeholder {
+			color: #ccc;
+		}
+		input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+			color: #ccc;
+		}
     </style>
 </head>
 <body>
@@ -36,7 +48,7 @@
                         <img src="/Images/login/user.png" style="width:20px; margin-left:10px;margin-top:-8px;">
                     </div>
                     <div >
-                        <input id="username" name="username" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA; margin-left:8px;" placeholder="在此输入登录账号" >
+                        <input id="username" name="username" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA;color:#966925; margin-left:8px;" placeholder="在此输入登录账号" >
                     </div>
                 </div>
                 <div class="row">
@@ -44,7 +56,7 @@
                         <img src="/Images/login/lock.png" style="width:18px; margin-left:12px;margin-top:-8px;">
                     </div>
                     <div >
-                        <input id="userPass" type="password" name="password" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA; margin-left:8px; " placeholder="在此输入密码" >
+                        <input id="userPass" type="password" name="password" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA;color:#966925; margin-left:8px; " placeholder="在此输入密码" >
                     </div>
                 </div>
                 <div class="rowvc">
@@ -52,7 +64,7 @@
                         <img src="/Images/login/lock.png" style="width:18px; margin-left:12px;margin-top:-8px;">
                     </div>
                     <div>
-                        <input id="userPass" name="verifycode" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA;margin-top:5px; " placeholder="验证码" >
+                        <input id="userPass" name="verifycode" style="outline: none; border:0px; height:30px; font-size:18px; background-color:#ECF5FA;color:#966925;margin-top:5px; " placeholder="验证码"  onkeydown='if(event.keyCode==13){formsubmit();}'>
                     </div>
                     <img src="/verifycode" id="_verifyCode" width="80px" height="30px" onclick="changeVerifyCode();"/>
                 </div>
@@ -62,7 +74,7 @@
                         <input type="checkbox" id="checkbox_a1" class="chk_1" />
                         <label for="checkbox_a1"></label>
                         <span class="_remember"><label for="checkbox_a1">记住账号</label></span>
-                        <span class="_forget">忘记密码 ?</span>
+                        <!-- span class="_forget">忘记密码 ?</span -->
                     </div>
                 </div>
                 <h5>${result._msg }</h5>
@@ -70,7 +82,7 @@
         </div>
         </form>
     </div>
-    <footer>版权所有  2016</footer>
+    <footer>版权所有&copy;  2016 氪堂医疗科技（上海）有限公司</footer>
 </body>
 </html>
 <script>
@@ -89,6 +101,7 @@
 	   var usr_cookie = $.cookie("logo_user_cookie");
 	   if(usr_cookie != undefined){
 		   $('#checkbox_a1').attr("checked",true);
+		   $('#username').attr("value",usr_cookie);
 	   }else{
 		   $('#checkbox_a1').attr("checked",false);
 	   }

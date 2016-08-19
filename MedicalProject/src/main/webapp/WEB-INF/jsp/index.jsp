@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>后台管理系统</title>
+    <title>糖宝随访App，后台管理系统</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="/Css/dpl-min.css" rel="stylesheet" type="text/css" />
     <link href="/Css/bui-min.css" rel="stylesheet" type="text/css" />
@@ -47,7 +47,7 @@ BUI.use('common/main',function(){
       						]
       					},
       					{id:'7',homePage : '9',menu:[{text:'业务管理',items:[
-      									{id:'9',text:'查询业务',href:'Node/index.html'}]}
+      									{id:'9',text:'患者列表',href:'/HZXX/list'}]}
       									]}
       				];
     new PageUtil.MainPage({

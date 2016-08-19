@@ -25,5 +25,35 @@ public class UserService implements IUserService {
 		return userDao.getUserByUserNamePwd(user);
 	}
 
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		return userDao.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int insert(User record) {
+		return userDao.insert(record);
+	}
+
+	@Override
+	public int insertSelective(User record) {
+		return userDao.insertSelective(record);
+	}
+
+	@Override
+	public User selectByPrimaryKey(Long id) {
+		return userDao.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(User record) {
+		return userDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int updateByPrimaryKey(User record) {
+		return userDao.updateByPrimaryKey(record);
+	}
+
 
 }
