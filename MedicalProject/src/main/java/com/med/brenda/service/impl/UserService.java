@@ -1,8 +1,11 @@
 package com.med.brenda.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +24,19 @@ public class UserService implements IUserService {
 		return userDao.selectByPrimaryKey(userId);
 	}
 
-	public User getUserByUserNamePwd(User user) {
-		return userDao.getUserByUserNamePwd(user);
+	public User getUserByUserNamePwd(String username, String passwd) {
+		System.out.println(username +"   "+ passwd);
+		Map<String, Object> param = new HashMap<>();
+		param.put("username", username);
+		param.put("passwd", passwd);
+		List<User> list = userDao.getUserByUserNamePwd(param);
+		if(list != null && list.size() > 0){
+			User user = list.get(0);
+			return user;
+		}else{
+			return null;
+		}
+		
 	}
 
 	@Override

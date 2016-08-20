@@ -1,5 +1,7 @@
 package com.med.brenda.service;
 
+import java.util.List;
+
 import com.med.brenda.model.User;
 
 /**
@@ -35,7 +37,7 @@ public interface IUserService {
 
 	int updateByPrimaryKey(User record);
 
-	User getUserByUserNamePwd(User tmpUser);
+	User getUserByUserNamePwd(String userName, String passwd);
 
 	User getUserById(long userId);
 }

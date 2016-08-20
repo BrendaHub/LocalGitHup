@@ -1,5 +1,8 @@
 package com.med.brenda.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.med.brenda.model.User;
 
 public interface UserMapper {
@@ -15,5 +18,5 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
     
-    User getUserByUserNamePwd(User tmpUser);
+    List<User> getUserByUserNamePwd(Map<String, Object> param);
 }

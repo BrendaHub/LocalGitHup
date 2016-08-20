@@ -96,7 +96,7 @@ public class PatientApi {
 		User puser = new User();
 		puser.setUsername(username);
 		puser.setPassword(password);
-		User newUser = userService.getUserByUserNamePwd(puser);
+		User newUser = userService.getUserByUserNamePwd(username,password);
 
 	    if(newUser != null) {
 	    	return JSON.toJSONString(newUser);

@@ -115,7 +115,7 @@
     	and PASSWORD = #{password,jdbcType=VARCHAR}
     </if>
   </select>
-  <select id="findListCount" parameterType="java.util.Map" resultMap="java.lang.Integer">
+  <select id="findListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
   	select 
     count(1)
     from s_hzxx

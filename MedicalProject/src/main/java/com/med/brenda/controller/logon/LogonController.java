@@ -41,7 +41,12 @@ public class LogonController {
 	public ModelAndView toLogin(HttpServletRequest request){
 		//注销当前登录用户
 		request.getSession().removeAttribute("_userinfo");
-		
+		return new ModelAndView("Public/login");
+		//return new ModelAndView("redirect:/tologin");
+	}
+	
+	@RequestMapping(value="/tologin", method=RequestMethod.GET)
+	public ModelAndView gotoLogin(HttpServletRequest request){
 		return new ModelAndView("Public/login");
 	}
 	
@@ -66,7 +71,9 @@ public class LogonController {
 		}else{
 			user.setPassword(new MD5().GetMD5Code(user.getPassword()));
 			user.setAge(new Integer(0));
-			User newUser = userService.getUserByUserNamePwd(user);
+			logger.debug("username =" + user.getUsername());
+			logger.debug("password = " + user.getPassword());
+			User newUser = userService.getUserByUserNamePwd(user.getUsername(), user.getPassword());
 			if(newUser == null){
 				resultMap.put("_st", Integer.parseInt("1002"));
 				resultMap.put("_msg", "账号密码错误");

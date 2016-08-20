@@ -38,6 +38,17 @@ public class HzxxController extends BaseController {
 	
 	@Autowired
 	private IHzxxService hzxxService;
+	
+	/**
+	 * 去图表分析页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/tofenxi", method=RequestMethod.GET)
+	public ModelAndView tofenxi(HttpServletRequest request){
+		
+		return new ModelAndView("hzxx/line");
+	}
 
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public ModelAndView hzlist(HttpServletRequest request){
@@ -58,6 +69,6 @@ public class HzxxController extends BaseController {
         resultMap.put("pageIndex", query.getPageIndex());
         resultMap.put("pageTotal", count);
         resultMap.put("result", list);
-		return new ModelAndView("Node/index",resultMap);
+		return new ModelAndView("hzxx/index",resultMap);
 	}
 }
