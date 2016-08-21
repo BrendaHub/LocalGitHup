@@ -52,7 +52,7 @@
     <if test="itemcode != null">
     	and itemcode like CONCAT('%', '${itemcode}','%' )
     </if>
-  <lect>
+  </select>
   <select id="findFeedListByHzid_Date" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
