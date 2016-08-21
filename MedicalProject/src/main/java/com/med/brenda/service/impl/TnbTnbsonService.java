@@ -60,4 +60,12 @@ public class TnbTnbsonService implements ITnbTnbsonService {
 		return tnbsonDao.findFeedListByHzid_Date(param);
 	}
 
+	@Override
+	public int findByHzidDate(Long hzid, Long date, String itemcode) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("hzid", hzid);
+		param.put("date", date);
+		param.put("itemcode", itemcode);
+		return tnbsonDao.findFeedListByHzid_DateCount(param);
+	}
 }

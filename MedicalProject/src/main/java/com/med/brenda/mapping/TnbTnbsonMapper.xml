@@ -38,6 +38,21 @@
     from S_TNB_TNBSON
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="findFeedListByHzid_DateCount" parameterType="java.util.Map" resultType="java.lang.Integer">>
+  	select 
+    count(1)
+    from S_TNB_TNBSON
+    where 1=1
+    <if test="hzid != null">
+    	and hzid = #{hzid,jdbcType=BIGINT}
+    </if>
+    <if test="date != null">
+    	and temp5 = #{date,jdbcType=VARCHAR}
+    </if>
+    <if test="itemcode != null">
+    	and itemcode like CONCAT('%', '${itemcode}','%' )
+    </if>
+  <lect>
   <select id="findFeedListByHzid_Date" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

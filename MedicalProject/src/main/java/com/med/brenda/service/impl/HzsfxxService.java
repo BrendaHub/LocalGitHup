@@ -425,4 +425,17 @@ public class HzsfxxService implements IHzsfxxService {
 		return null;
 	}
 	
+	/**
+	 * 获取某个患者某天的所有随访数据，参数说明：
+	 * @param hzid  患者ID
+	 * @param date 需要查询的对应日期
+	 * @param mon 需要查询对应的月份
+	 */
+	@Override
+	public String getCurrentDateTNB(Long hzid, String date, int mon) {
+		
+		return null;
+	}
+
+	
 }

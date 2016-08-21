@@ -19,4 +19,6 @@ public interface TnbTnbsonMapper {
     int updateByPrimaryKey(TnbTnbson record);
     
     List<TnbTnbson> findFeedListByHzid_Date(Map<String, Object> param);
+    
+    int findFeedListByHzid_DateCount(Map<String, Object> param);
 }

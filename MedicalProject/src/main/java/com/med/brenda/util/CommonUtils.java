@@ -2,13 +2,19 @@ package com.med.brenda.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 public class CommonUtils {
 	
+	private Logger logger = Logger.getLogger(CommonUtils.class);
 	// 先把字符串转成Date类型
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	// 获取当天00:00:00时的毫秒数
@@ -103,5 +109,50 @@ public class CommonUtils {
 			bloodSugar.put("012", "费用");
 		}
 		return bloodSugar.get(itemCode);
+	}
+	
+	//根据传入的日期，行到当前日期前后，各10天的日期
+	public List<Long> get_10Date(String _date){
+		List<Long> dateList = new ArrayList<>();
+		try {
+			logger.debug("传入的日期为：" + _date);
+			Date date = sdf.parse(_date);
+			System.out.println(date);
+			Calendar   calendar   =   new   GregorianCalendar(); 
+			
+			//开始造 出相应的数据, 先是前面10个
+			for(int i = 10 ; i >= 1 ; i --){
+				calendar.setTime(date); 
+				logger.debug("i = " + i );
+				calendar.add(calendar.DATE, -i);//把日期往后增加一天.整数往后推,负数往前移动 
+				Date __date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+				logger.debug(sdf.format(__date));
+				logger.debug(__date.getTime());
+				dateList.add(__date.getTime());
+			}
+			dateList.add(date.getTime());
+			//造出后面的10个日期记录
+			for(int i = 1; i < 11 ; i ++){
+				calendar.setTime(date); 
+				logger.debug("i = " + i );
+				calendar.add(calendar.DATE, i);//把日期往后增加一天.整数往后推,负数往前移动 
+				Date __date=calendar.getTime();   //这个时间就是日期往后推一天的结果 
+				logger.debug(sdf.format(__date));
+				logger.debug(__date.getTime());
+				dateList.add(__date.getTime());
+			}
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dateList;
+	}
+	public static void main(String[] args) {
+		List<Long> list = new CommonUtils().get_10Date("20180812");
+		System.out.println("===========================================");
+		list.stream().forEach(a ->{
+			System.out.println(a);
+			System.out.println(CommonUtils.transferLongToDate(a));
+		});
 	}
 }
