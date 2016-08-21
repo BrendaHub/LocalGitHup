@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.SysDlDayLogMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.SysDlDayLog">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="sfzh" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="hzid" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="hzname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mz" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="writedate" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="itemvalue" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sfzh, hzid, hzname, sex, mz, writedate, itemvalue
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_dl_daylog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_dl_daylog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.SysDlDayLog">
+    insert into t_dl_daylog (id, sfzh, hzid, 
+      hzname, sex, mz, writedate, 
+      itemvalue)
+    values (#{id,jdbcType=BIGINT}, #{sfzh,jdbcType=VARCHAR}, #{hzid,jdbcType=VARCHAR}, 
+      #{hzname,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{mz,jdbcType=VARCHAR}, #{writedate,jdbcType=VARCHAR}, 
+      #{itemvalue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.SysDlDayLog">
+    insert into t_dl_daylog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sfzh != null">
+        sfzh,
+      </if>
+      <if test="hzid != null">
+        hzid,
+      </if>
+      <if test="hzname != null">
+        hzname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="mz != null">
+        mz,
+      </if>
+      <if test="writedate != null">
+        writedate,
+      </if>
+      <if test="itemvalue != null">
+        itemvalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sfzh != null">
+        #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="hzid != null">
+        #{hzid,jdbcType=VARCHAR},
+      </if>
+      <if test="hzname != null">
+        #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="mz != null">
+        #{mz,jdbcType=VARCHAR},
+      </if>
+      <if test="writedate != null">
+        #{writedate,jdbcType=VARCHAR},
+      </if>
+      <if test="itemvalue != null">
+        #{itemvalue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.SysDlDayLog">
+    update t_dl_daylog
+    <set>
+      <if test="sfzh != null">
+        sfzh = #{sfzh,jdbcType=VARCHAR},
+      </if>
+      <if test="hzid != null">
+        hzid = #{hzid,jdbcType=VARCHAR},
+      </if>
+      <if test="hzname != null">
+        hzname = #{hzname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="mz != null">
+        mz = #{mz,jdbcType=VARCHAR},
+      </if>
+      <if test="writedate != null">
+        writedate = #{writedate,jdbcType=VARCHAR},
+      </if>
+      <if test="itemvalue != null">
+        itemvalue = #{itemvalue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.SysDlDayLog">
+    update t_dl_daylog
+    set sfzh = #{sfzh,jdbcType=VARCHAR},
+      hzid = #{hzid,jdbcType=VARCHAR},
+      hzname = #{hzname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      mz = #{mz,jdbcType=VARCHAR},
+      writedate = #{writedate,jdbcType=VARCHAR},
+      itemvalue = #{itemvalue,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

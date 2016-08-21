@@ -36,14 +36,27 @@
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
 		
-		<table tableName="t_app_dl_log" domainObjectName="AppDlLog"
+		<table tableName="t_dl_daylog" domainObjectName="SysDlDayLog"
+			enableCountByExample="false" enableSelectByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="true" />
+		</table>
+		<table tableName="t_dl_weeklog" domainObjectName="SysDlWeekLog"
 			enableCountByExample="false" enableSelectByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			selectByExampleQueryId="false">
 			<property name="useActualColumnNames" value="true" />
 		</table>
 		
-		<!-- table tableName="t_user" domainObjectName="User"
+		<!--  table tableName="t_app_dl_log" domainObjectName="AppDlLog"
+			enableCountByExample="false" enableSelectByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="true" />
+		</table>
+		
+		<table tableName="t_user" domainObjectName="User"
 			enableCountByExample="false" enableSelectByExample="false"
 			enableUpdateByExample="false" enableDeleteByExample="false"
 			selectByExampleQueryId="false">
