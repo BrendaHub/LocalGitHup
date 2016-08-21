@@ -745,7 +745,7 @@ public class PatientApi2 {
 			JSONObject userDrug = JSONObject.parseObject(modifyjsondata);
 			boolean rowid = hzsfxxService.modifyUserDrug(hzsfxx.getID(), userDrug);
 			if(rowid){
-				result.put("_st", 2);//
+				result.put("_st", 1);//
 				result.put("_msg", "修改成功");
 				return result.toJSONString();
 			}else{

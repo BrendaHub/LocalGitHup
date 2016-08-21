@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 
 public class CommonUtils {
 	
-	private Logger logger = Logger.getLogger(CommonUtils.class);
+	private static Logger logger = Logger.getLogger(CommonUtils.class);
 	// 先把字符串转成Date类型
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	// 获取当天00:00:00时的毫秒数
@@ -48,23 +48,14 @@ public class CommonUtils {
 	}
 	
 	/**
-
      * 把毫秒转化成日期
-
      * @param dateFormat(日期格式，例如：MM/ dd/yyyy HH:mm:ss)
-
      * @param millSec(毫秒数)
-
      * @return
-
      */
-
     public static String transferLongToDate(Long millSec){
-
-    		Date date= new Date(millSec);
-
-            return sdf.format(date);
-
+		Date date= new Date(millSec);
+        return sdf.format(date);
     }
 	
 	//获取当下的日期，返回yyyy-MM-dd
@@ -112,7 +103,7 @@ public class CommonUtils {
 	}
 	
 	//根据传入的日期，行到当前日期前后，各10天的日期
-	public List<Long> get_10Date(String _date){
+	public static List<Long> get_10Date(String _date){
 		List<Long> dateList = new ArrayList<>();
 		try {
 			logger.debug("传入的日期为：" + _date);

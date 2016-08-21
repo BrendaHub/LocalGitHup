@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.exception.BusinessException;
 import com.med.brenda.model.Hzsfxx;
@@ -81,6 +82,8 @@ public class PatientApi {
 	        throw new BusinessException("根据{id=" + id + "}获取不到Hzxx对象");
 	    }
 	}
+	
+	
 	
 	/**
 	 * 根据用户名+密码获取用户对象
@@ -249,6 +252,38 @@ public class PatientApi {
         }
         
     }
+	 
+	@RequestMapping(value="/changeHeadUrl/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
+	@ResponseBody
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@ApiOperation(value = "修改患者头像 ｜  发布时间： 2016-08-21 12:33", httpMethod = "POST", response = String.class, notes = "修改患者头像 ｜  发布时间： 2016-08-21 12:33")
+	public String ChangeHeadUrl(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "headerpicurl", value = "头像URL：/upload/") @RequestParam(value="headerpicurl",required=true) String headerpicurl){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(hzid+"")){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		 }
+		if(StringUtils.isBlank(headerpicurl)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "头像信息无效");
+			 return result.toJSONString();
+		 }
+		Hzxx hzxx = hzxxService.selectByPrimaryKey(Long.parseLong(hzid));
+		hzxx.setTEMP2(headerpicurl);//设置头像
+		int rowid = hzxxService.updateByPrimaryKeySelective(hzxx);
+		if(rowid > 0 ){
+			result.put("_st", 1);//
+			result.put("_msg", "头像更换成功");
+			return result.toJSONString();
+		}else{
+			result.put("_st", 3);//
+			result.put("_msg", "头像更换失败");
+			return result.toJSONString();
+		}
+	}
 	 
 	 @ResponseBody
 	 @ApiOperation(value = "检查当前用户是否完善了信息 ｜  发布时间： 2016-08-09 22:33", httpMethod = "GET", response = String.class, notes = "检查当前用户是否完善了信息")
@@ -994,14 +1029,29 @@ public class PatientApi {
 			 result.put("_msg", "添加对应的日期(date)传入错误");
 			 return result.toJSONString(); 
 		 }
+		String back = "请填写性别和出生日期";
+		Hzxx hzxx = hzxxService.selectByPrimaryKey(Long.parseLong(hzid));
+		String sex = hzxx.getSEX();
+		Long csrq = hzxx.getCSRQ();
+		if(StringUtils.isBlank(sex) || csrq == null || csrq == 0){
+			back = "请填写性别和出生日期";
+		}else{
+			back = "287";
+		}
+
 		//根据 hzid , 021 ,日期，查询出所有的饮食记录
 		List<TnbYinshi> list = yinshiService.getYinshiListByHzid_date(Long.parseLong(hzid), "021", date);
-		
 		if(list != null && list.size() > 0 ){
+			String _jsonStr = JSON.toJSONString(list);
+			//JSONObject j = JSON.parseObject(_jsonStr);
+			JSONArray js = JSON.parseArray(_jsonStr);
+			JSONObject json = new JSONObject();
+			json.put("Biaozhunrl", back);
+			js.add(json);
 			result.put("_st", 1);//
-			 result.put("_msg", "获取成功");
-			 result.put("_datalist", JSON.toJSONString(list));
-			 return result.toJSONString();
+			result.put("_msg", "获取成功");
+			result.put("_datalist", js.toJSONString());
+			return result.toJSONString();
 		 }else{
 			 result.put("_st", 3);//
 			 result.put("_msg", "获取失败");

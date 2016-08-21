@@ -433,6 +433,14 @@ public class HzsfxxService implements IHzsfxxService {
 	 */
 	@Override
 	public String getCurrentDateTNB(Long hzid, String date, int mon) {
+		/**
+		 * 当前接口需要做的事情有：
+		 * 1、处理 date 前10，后 10 日期的数据 
+		 */
+		List<Long> list = CommonUtils.get_10Date(date);
+		if(list != null && list.size() > 0 ){
+			
+		}
 		
 		return null;
 	}

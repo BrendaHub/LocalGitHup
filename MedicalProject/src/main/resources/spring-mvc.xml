@@ -60,6 +60,7 @@
 						<value>/api/patient</value>
 						<value>/api/doctor</value>
 						<value>dl/appdl</value>
+						<value>/upload/</value>
 					</list>
 				</property>
 			</bean>
