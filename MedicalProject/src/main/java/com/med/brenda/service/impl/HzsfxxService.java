@@ -18,9 +18,13 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.dao.HzsfxxMapper;
 import com.med.brenda.dao.HzsfxxsonMapper;
+import com.med.brenda.dao.TnbTnbsonMapper;
+import com.med.brenda.dao.TnbYinshiMapper;
 import com.med.brenda.model.Hzsfxx;
 import com.med.brenda.model.Hzsfxxson;
 import com.med.brenda.model.Hzxx;
+import com.med.brenda.model.TnbTnbson;
+import com.med.brenda.model.TnbYinshi;
 import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.util.CommonUtils;
 @Service
@@ -32,6 +36,10 @@ public class HzsfxxService implements IHzsfxxService {
 	private HzsfxxMapper hzsfxxDao;
 	@Resource
 	private HzsfxxsonMapper hzsfxxsonDao;
+	@Resource
+	private TnbTnbsonMapper tnbsonDao;
+	@Resource
+	private TnbYinshiMapper yinshiDao;
 	
 	@Override
 	public boolean checkHzxfxxBaseDB(Long hzid, Long sfdate) {
@@ -433,16 +441,194 @@ public class HzsfxxService implements IHzsfxxService {
 	 */
 	@Override
 	public String getCurrentDateTNB(Long hzid, String date, int mon) {
+		JSONObject result = new JSONObject();
 		/**
 		 * 当前接口需要做的事情有：
 		 * 1、处理 date 前10，后 10 日期的数据 
 		 */
-		List<Long> list = CommonUtils.get_10Date(date);
-		if(list != null && list.size() > 0 ){
-			
+		JSONArray _Mon = new JSONArray();//???????????????????????????
+		JSONObject _jsonMon = new JSONObject();
+		try {
+			_jsonMon.put("Mon", CommonUtils.parseLongDatetoJson(CommonUtils.getTimeInMillisByDate(date)).get("Mon"));
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
-		
-		return null;
+		_Mon.add(_jsonMon);
+		List<Long> list = CommonUtils.get_10Date(date);
+		JSONArray _date = new JSONArray();//？？？？？？？？？？？？？？？？？
+		JSONArray _datalist = new JSONArray();
+		if(list != null && list.size() > 0 ){
+			for(Iterator it = list.iterator(); it.hasNext(); ){
+				JSONObject date_data = new JSONObject();
+				//标记这一天的小图标
+				StringBuilder sb = new StringBuilder();
+				Long _long = (Long)it.next();
+				JSONObject _dJ = CommonUtils.parseLongDatetoJson(_long);
+				logger.debug("这一天的日期为: " + _long + " 转为日期格式 为：" + CommonUtils.transferLongToDate(_long));
+				//第一个日期 Long 转换成 date
+				Map<String, Object> param1 = new HashMap<>();
+				param1.put("hzid", hzid);
+				param1.put("sfdate", _long);
+				List<Hzsfxx> listsfxx = hzsfxxDao.findHzxfxxByDate_Hzid(param1);
+				for(Iterator it1 = listsfxx.iterator(); it1.hasNext(); ){
+					JSONObject hzdata = new JSONObject();
+					Hzsfxx hzsfxx = (Hzsfxx)it1.next();
+					hzdata.put("Iconrul", hzsfxx.getTEMP1());
+					hzdata.put("Title", hzsfxx.getITEMNAME());
+					hzdata.put("Datetime", CommonUtils.transferLongToDate(_long));
+					hzdata.put("Id", hzsfxx.getID());
+					hzdata.put("Type", hzsfxx.getTEMP2());
+					hzdata.put("Zdorcode", hzsfxx.getITEMCODE());
+					StringBuilder contents = new StringBuilder();
+					if("015".equals(hzsfxx.getITEMCODE())){
+						Map<String, Object> p = new HashMap<>();
+						p.put("hzid", hzid);
+						p.put("date", CommonUtils.transferLongToDate(_long));
+						p.put("itemcode", hzsfxx.getITEMCODE());
+						List<TnbTnbson> tnb1  = tnbsonDao.findFeedListByHzid_Date(p);
+						if(tnb1!=null&&tnb1.size()>0){
+							sb.append(hzsfxx.getTEMP1());
+							sb.append(",");
+							int index = 0 ; 
+							for(index = 0 ; index < tnb1.size(); index ++){
+								TnbTnbson tnbs = (TnbTnbson)tnb1.get(index);
+								contents.append(tnbs.getItemvalue());
+								contents.append(";");
+								contents.append(tnbs.getItemcode());
+								contents.append(";");
+								contents.append(tnbs.getFatherid());
+								contents.append(";");
+								contents.append(tnbs.getTemp1());
+								if(index != tnb1.size() -1){
+									contents.append("|");
+								}
+							}
+							continue;
+						}else{
+							continue;
+						}
+					}
+					if("016".equals(hzsfxx.getITEMCODE())){
+						Map<String, Object> p = new HashMap<>();
+						p.put("hzid", hzid);
+						p.put("date", CommonUtils.transferLongToDate(_long));
+						p.put("itemcode", hzsfxx.getITEMCODE());
+						List<TnbTnbson> tnb1  = tnbsonDao.findFeedListByHzid_Date(p);
+						if(tnb1!=null&&tnb1.size()>0){
+							sb.append(hzsfxx.getTEMP1());
+							sb.append(",");
+							int index = 0 ; 
+							for(index = 0 ; index < tnb1.size(); index ++){
+								TnbTnbson tnbs = (TnbTnbson)tnb1.get(index);
+								contents.append(tnbs.getItemcode());
+								contents.append(";");
+								contents.append(tnbs.getYds());
+								contents.append(";");
+								contents.append(tnbs.getYdsjl()+"U");
+								contents.append(";");
+								contents.append("二甲双胍 "+tnbs.getYdsejsg()+"片");
+								contents.append(";");
+								contents.append(tnbs.getFatherid());
+								if(index != tnb1.size() -1){
+									contents.append("|");
+								}
+							}
+							continue;
+						}else{
+							continue;
+						}
+					}
+					if("022".equals(hzsfxx.getITEMCODE())){
+						Map<String, Object> p = new HashMap<>();
+						p.put("hzid", hzid);
+						p.put("date", CommonUtils.transferLongToDate(_long));
+						p.put("itemcode", hzsfxx.getITEMCODE());
+						List<TnbTnbson> tnb1  = tnbsonDao.findFeedListByHzid_Date(p);
+						if(tnb1!=null&&tnb1.size()>0){
+							sb.append(hzsfxx.getTEMP1());
+							sb.append(",");
+							TnbTnbson tnbs = (TnbTnbson)tnb1.get(0);
+							String ydlx = tnbs.getYdlx().trim();
+							if("0".equals(ydlx)){
+								contents.append("低强度运动  ");
+							}else if("1".equals(ydlx)){
+								contents.append("轻中强度运动  ");
+							}else if("2".equals(ydlx)){
+								contents.append("中强度运动  ");
+							}else if("3".equals(ydlx)){
+								contents.append("高重强度运动  ");
+							}
+							contents.append(tnbs.getYdcxsj());
+							continue;
+						}else{
+							continue;
+						}
+					}
+					if("023".equals(hzsfxx.getITEMCODE())){
+						Map<String, Object> p = new HashMap<>();
+						p.put("hzid", hzid);
+						p.put("date", CommonUtils.transferLongToDate(_long));
+						p.put("itemcode", hzsfxx.getITEMCODE());
+						List<TnbTnbson> tnb1  = tnbsonDao.findFeedListByHzid_Date(p);
+						if(tnb1!=null&&tnb1.size()>0){
+							sb.append(hzsfxx.getTEMP1());
+							sb.append(",");
+							TnbTnbson tnbs = (TnbTnbson)tnb1.get(0);
+							String zzdndy = tnbs.getZzdndy();
+							String zzyn = tnbs.getZzyn();
+							String zzxz = tnbs.getZzxs();
+							String zzfl = tnbs.getZzfl();
+							String tmp = zzdndy+zzyn+zzxz+zzfl;
+							if(tmp.indexOf("1") != -1){
+								contents.append("糖尿病症状  ");
+							}
+							String zzqt = tnbs.getZzqt();
+							if(zzqt.indexOf("1") != -1){
+								contents.append("低血糖症状");
+							}
+							continue;
+						}else{
+							continue;
+						}
+					}
+					if("021".equals(hzsfxx.getITEMCODE())){
+						Map<String, Object> p = new HashMap<>();
+						p.put("hzid", hzid);
+						p.put("temp5", CommonUtils.transferLongToDate(_long));
+						p.put("itemcode", hzsfxx.getITEMCODE());
+						List<TnbYinshi> yinshis = yinshiDao.getYinshiListByHzid_date(p);
+						if(yinshis!=null&&yinshis.size()>0){
+							sb.append(hzsfxx.getTEMP1());
+							sb.append(",");
+							contents.append("目标:1435千卡 当前:511.29千卡");
+							continue;
+						}else{
+							continue;
+						}
+					}
+					sb.append(hzsfxx.getTEMP1());
+					sb.append(",");
+					
+					contents.append(hzsfxx.getITEMVALUE());
+					hzdata.put("Content", contents.toString());
+					_datalist.add(hzdata);
+				}
+				date_data.put("Day", _dJ.get("Day"));
+				date_data.put("Week", _dJ.get("Week"));
+				date_data.put("Iconurl", sb.toString());
+				date_data.put("Id", CommonUtils.transferLongToDate(_long));
+				_date.add(date_data);
+			}
+		}
+		//拼接后半数据， 
+		result.put("_st", 1);
+		result.put("_msg", "调用成功");
+		JSONObject sb = new JSONObject();
+		sb.put("_mon", _Mon);
+		sb.put("_date", _date);
+		sb.put("_datalist", _datalist);
+		result.put("_data", sb);
+		return result.toJSONString();
 	}
 
 	

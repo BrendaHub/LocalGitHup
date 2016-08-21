@@ -39,16 +39,19 @@ public class TestHzsfxxService1 {
 //		service.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), 1l, CommonUtils.getTimeInMillisBy00_00_00());
 //		System.out.println(service.checkHzxfxxBaseDB(1l, CommonUtils.getTimeInMillisBy00_00_00()));
 		
-		try {
-			System.out.println(CommonUtils.getTimeInMillisByDate("20160815"));
-			System.out.println(CommonUtils.getTimeInMillisBy00_00_00());
-			System.out.println(service.checkHzxfxxBaseDB(Long.parseLong("1"), CommonUtils.getTimeInMillisByDate("20160815")));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			System.out.println(CommonUtils.getTimeInMillisByDate("20160815"));
+//			System.out.println(CommonUtils.getTimeInMillisBy00_00_00());
+//			System.out.println(service.checkHzxfxxBaseDB(Long.parseLong("1"), CommonUtils.getTimeInMillisByDate("20160815")));
+//		} catch (NumberFormatException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		String json = service.getCurrentDateTNB(1l, "20160812", 0);
+		System.out.println(json);
 	}
 }

@@ -3,6 +3,7 @@ package com.med.brenda.controller.api.patient;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +54,8 @@ import com.wordnik.swagger.annotations.ApiResponse;
 @Controller
 @RequestMapping(value="/api/patient")
 public class PatientApi {
+	
+	Logger logger = Logger.getLogger(PatientApi.class);
 	
 	@Autowired
 	private IHzxxService hzxxService;
@@ -741,6 +745,8 @@ public class PatientApi {
 			@ApiParam(required = true, name = "dietjsondata", value = "饮食数据，以JSON串形式传入diet饮食的值，addmeal加餐的值，格式：{\"diet0\":1,\"diet1\":2,...,\"addmeal0\":1,\"addmeal\":12,...,\"image0\":\"/upload/图片名称\",...}") @RequestParam(value="dietjsondata",required=true) String dietjsondata,
 			@ApiParam(required = true, name = "date", value = "添加饮食对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
 		JSONObject result = new JSONObject();
+
+		logger.debug("json 串为= "+ dietjsondata);
 		//判断参数
 		if(StringUtils.isBlank(hzid+"")){
 			 result.put("_st", 0);//
@@ -873,6 +879,7 @@ public class PatientApi {
 			@ApiParam(required = true, name = "dietjsondata", value = "饮食数据，以JSON串形式传入diet饮食的值，addmeal加餐的值，格式：{\"diet0\":1,\"diet1\":2,...,\"addmeal0\":1,\"addmeal\":12,...,\"image0\":\"/upload/图片名称\",...}") @RequestParam(value="dietjsondata",required=true) String dietjsondata,
 			@ApiParam(required = true, name = "date", value = "添加饮食对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
 		JSONObject result = new JSONObject();
+		logger.debug("json 串为= "+ dietjsondata);
 		//判断参数
 		if(StringUtils.isBlank(hzid)){
 			 result.put("_st", 0);//
@@ -1045,12 +1052,17 @@ public class PatientApi {
 			String _jsonStr = JSON.toJSONString(list);
 			//JSONObject j = JSON.parseObject(_jsonStr);
 			JSONArray js = JSON.parseArray(_jsonStr);
-			JSONObject json = new JSONObject();
-			json.put("Biaozhunrl", back);
-			js.add(json);
+			JSONArray newArray = new JSONArray();
+			if(js.size() > 0 ){
+				for(Iterator it = js.iterator(); it.hasNext();){
+					JSONObject _tmpJson = (JSONObject)it.next();
+					_tmpJson.put("Biaozhunrl", back);
+					newArray.add(_tmpJson);
+				}
+			}
 			result.put("_st", 1);//
 			result.put("_msg", "获取成功");
-			result.put("_datalist", js.toJSONString());
+			result.put("_datalist", newArray.toJSONString());
 			return result.toJSONString();
 		 }else{
 			 result.put("_st", 3);//

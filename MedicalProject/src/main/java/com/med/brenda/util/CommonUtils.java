@@ -12,9 +12,12 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class CommonUtils {
 	
 	private static Logger logger = Logger.getLogger(CommonUtils.class);
+	private static String[] WEEKS = {"日","一","二","三","四","五","六"};
 	// 先把字符串转成Date类型
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	// 获取当天00:00:00时的毫秒数
@@ -138,12 +141,48 @@ public class CommonUtils {
 		}
 		return dateList;
 	}
+	
+	/**
+	 * date 转成 对应的json对角，有如下元素
+	 * Day
+	 * Week
+	 * Mon
+	 * @param date
+	 * @return
+	 */
+	public static JSONObject parseLongDatetoJson(Long date){
+			Date _date = new Date(date);
+			System.out.println(sdf.format(_date));
+			Calendar cal=Calendar.getInstance();
+			cal.setTime(_date);
+	        int year = cal.get(Calendar.YEAR);//获取年份
+	        int month=cal.get(Calendar.MONTH) + 1;//获取月份
+	        int day=cal.get(Calendar.DATE);//获取日 
+			int week_index = cal.get(Calendar.DAY_OF_WEEK) - 1;//星期
+			if(week_index<0){
+				week_index = 0;
+			}
+			JSONObject result = new JSONObject();
+			result.put("Mon", year + "年"+month+"月");
+			result.put("Day", day+"");
+			result.put("Week", WEEKS[week_index]);
+		return result;
+	}
+	
 	public static void main(String[] args) {
-		List<Long> list = new CommonUtils().get_10Date("20180812");
-		System.out.println("===========================================");
-		list.stream().forEach(a ->{
-			System.out.println(a);
-			System.out.println(CommonUtils.transferLongToDate(a));
-		});
+//		List<Long> list = new CommonUtils().get_10Date("20180812");
+//		System.out.println("===========================================");
+//		list.stream().forEach(a ->{
+//			System.out.println(a);
+//			System.out.println(CommonUtils.transferLongToDate(a));
+//		});
+//		CommonUtils.parseLongDatetoJson(1470931200000l);
+		 try {
+			System.out.println( CommonUtils.parseLongDatetoJson(CommonUtils.getTimeInMillisByDate("20160812")).get("Mon"));
+			//System.out.println(CommonUtils.getTimeInMillisByDate("20160812"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
