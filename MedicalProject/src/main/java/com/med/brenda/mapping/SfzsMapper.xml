@@ -35,7 +35,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.Sfzs">
-  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+  		<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 		SELECT LAST_INSERT_ID() AS id
 		</selectKey>
     insert into S_SFZS (ksid, ksname, 

@@ -8,7 +8,14 @@ public class Query  implements Serializable{
     private int pageIndex = 1;
     // 每页多少条
     private int pageSize = 20;
-    //总页数
+    private int pageNo = 1;
+    public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+	//总页数
     private int pageCount;
     private int total;//总条数
     //搜索关键字

@@ -48,7 +48,7 @@ BUI.use('common/main',function(){
       					},
       					{id:'7',homePage : '9',menu:[{text:'业务管理',items:[
       									{id:'9',text:'患者列表',href:'/HZXX/list'},
-      									{id:'91',text:'血糖分析',href:'/HZXX/tofenxi'}
+      									{id:'91',text:'血糖分析',href:'/HZXX/tofenxi1/5'}
       									]}
       									]}
       				];

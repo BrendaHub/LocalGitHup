@@ -22,12 +22,20 @@
     from t_dl_daylog
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List" /> FROM t_dl_daylog 
+  	WHERE sfzh IN 
+  	(SELECT t.sfzh FROM (SELECT sfzh FROM t_dl_daylog GROUP BY sfzh limit #{pageNo},#{pageSize}) AS t)
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_dl_daylog
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.SysDlDayLog">
-    insert into t_dl_daylog (id, sfzh, hzid, 
+  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into t_dl_daylog (sfzh, hzid, 
       hzname, sex, mz, writedate, 
       itemvalue)
     values (#{id,jdbcType=BIGINT}, #{sfzh,jdbcType=VARCHAR}, #{hzid,jdbcType=VARCHAR}, 

@@ -54,10 +54,13 @@ public class BaseController {
 	 */
 	public void initPageFlag(HttpServletRequest request,Query query, int defaultPageSize){
 		String pageNo = request.getParameter("pageNo");// 第几页
+
+		System.out.println("pageNo = " + pageNo);
 		if (pageNo == null || pageNo.equals("") || pageNo.equals("0")) {
 			pageNo = "1";
 		}
 		String pageSizestr = request.getParameter("pageSize");// 条数
+		System.out.println("pageSizestr = " + pageSizestr);
 		if (pageSizestr == null || pageSizestr.equals("") || pageSizestr.equals("0")) {
 			pageSizestr = String.valueOf(defaultPageSize);
 		}
@@ -68,7 +71,9 @@ public class BaseController {
 		int beginNo = 0;
 		beginNo = Integer.valueOf(pageNo) > 1 ? pageSize * (Integer.valueOf(pageNo) - 1) : 0;
 		query.setPageIndex(beginNo);
+		query.setPageNo(Integer.valueOf(pageNo));
 		query.setPageSize(pageSize);
+		
 	}
 
 	/**

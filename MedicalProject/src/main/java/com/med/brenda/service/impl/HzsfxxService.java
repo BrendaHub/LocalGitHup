@@ -440,7 +440,7 @@ public class HzsfxxService implements IHzsfxxService {
 	 * @param mon 需要查询对应的月份
 	 */
 	@Override
-	public String getCurrentDateTNB(Long hzid, String date, int mon) {
+	public String getCurrentDateTNB(Long hzid, String date) {
 		JSONObject result = new JSONObject();
 		/**
 		 * 当前接口需要做的事情有：

@@ -51,7 +51,7 @@ public class TestHzsfxxService1 {
 //			e.printStackTrace();
 //		}
 		
-		String json = service.getCurrentDateTNB(1l, "20160812", 0);
+		String json = service.getCurrentDateTNB(1l, "20160812");
 		System.out.println(json);
 	}
 }

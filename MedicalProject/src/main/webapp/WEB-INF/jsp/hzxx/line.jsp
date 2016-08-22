@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html>
 
@@ -15,20 +18,19 @@
     </style>
 </head>
 
-<body>
-    <div style="width:75%;">
+<body><!-- type="hidden" pageCount:${pageCount }|pageSize:${pageSize }|pageIndex:${pageIndex }|pageTotal:${pageTotal }  -->
+	<input type="hidden"  name="pageNo" id="pageNo" value=""/>
+    <div style="width:90%;">
         <canvas id="canvas"></canvas>
     </div>
     <br>
     <br>
-    <button id="randomizeData">Randomize Data</button>
-    <button id="changeDataObject">Change Data Object</button>
-    <button id="addDataset">Add Dataset</button>
-    <button id="removeDataset">Remove Dataset</button>
-    <button id="addData">Add Data</button>
-    <button id="removeData">Remove Data</button>
+    	<button id="gouppage">&gt;上一组（5人）</button>
+    	<button id="godownpage">下一组（5人）&lt;</button>
+    
     <script>
-        var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    	//日期
+        var MONTHS = ["2016/5/17","2016/5/18","2016/5/19","2016/5/20","2016/5/21","2016/5/22","2016/5/23","2016/5/24","2016/5/25","2016/5/26","2016/5/27","2016/5/28","2016/5/29","2016/5/30","2016/5/31","2016/6/1","2016/6/2","2016/6/3","2016/6/4","2016/6/5","2016/6/6","2016/6/7","2016/6/8","2016/6/9","2016/6/10","2016/6/11","2016/6/12","2016/6/13","2016/6/14","2016/6/15","2016/6/16","2016/6/17","2016/6/18","2016/6/19","2016/6/20","2016/6/21","2016/6/22","2016/6/23","2016/6/24","2016/6/25","2016/6/26","2016/6/27","2016/6/28","2016/6/29","2016/6/30","2016/7/1","2016/7/2","2016/7/3","2016/7/4","2016/7/5","2016/7/6","2016/7/7","2016/7/8","2016/7/9","2016/7/10","2016/7/11","2016/7/12","2016/7/13","2016/7/14","2016/7/15","2016/7/16","2016/7/17","2016/7/18","2016/7/19","2016/7/20","2016/7/21","2016/7/22","2016/7/23","2016/7/24","2016/7/25","2016/7/26","2016/7/27","2016/7/28","2016/7/29","2016/7/30","2016/7/31","2016/8/1","2016/8/2","2016/8/3","2016/8/4","2016/8/5","2016/8/6","2016/8/7","2016/8/8","2016/8/9","2016/8/10","2016/8/11","2016/8/12","2016/8/13","2016/8/14","2016/8/15","2016/8/16","2016/8/17","2016/8/18","2016/8/19","2016/8/20","2016/8/21"];
         
         var randomScalingFactor = function() {
             return Math.round(Math.random() * 100);
@@ -44,26 +46,19 @@
         var config = {
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [{
-                    label: "My First dataset",
-                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-                    fill: false,
-                    borderDash: [5, 5],
-                }, {
-                    hidden: true,
-                    label: 'hidden dataset',
-                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-                }, {
-                    label: "My Second dataset",
-                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-                }]
+                labels: ["2016/5/17","2016/5/18","2016/5/19","2016/5/20","2016/5/21","2016/5/22","2016/5/23","2016/5/24","2016/5/25","2016/5/26","2016/5/27","2016/5/28","2016/5/29","2016/5/30","2016/5/31","2016/6/1","2016/6/2","2016/6/3","2016/6/4","2016/6/5","2016/6/6","2016/6/7","2016/6/8","2016/6/9","2016/6/10","2016/6/11","2016/6/12","2016/6/13","2016/6/14","2016/6/15","2016/6/16","2016/6/17","2016/6/18","2016/6/19","2016/6/20","2016/6/21","2016/6/22","2016/6/23","2016/6/24","2016/6/25","2016/6/26","2016/6/27","2016/6/28","2016/6/29","2016/6/30","2016/7/1","2016/7/2","2016/7/3","2016/7/4","2016/7/5","2016/7/6","2016/7/7","2016/7/8","2016/7/9","2016/7/10","2016/7/11","2016/7/12","2016/7/13","2016/7/14","2016/7/15","2016/7/16","2016/7/17","2016/7/18","2016/7/19","2016/7/20","2016/7/21","2016/7/22","2016/7/23","2016/7/24","2016/7/25","2016/7/26","2016/7/27","2016/7/28","2016/7/29","2016/7/30","2016/7/31","2016/8/1","2016/8/2","2016/8/3","2016/8/4","2016/8/5","2016/8/6","2016/8/7","2016/8/8","2016/8/9","2016/8/10","2016/8/11","2016/8/12","2016/8/13","2016/8/14","2016/8/15","2016/8/16","2016/8/17","2016/8/18","2016/8/19","2016/8/20","2016/8/21"],
+                datasets: [
+                   
+                ]
             },
-            options: {
+            options: { 
+            	scaleFontSize : 72,
+            	scaleShowGridLines : false,
+                scaleSteps : 15,
                 responsive: true,
                 title:{
                     display:true,
-                    text:'Chart.js Line Chart'
+                    text:'糖宝随访，血糖随访数据走势分析'
                 },
                 tooltips: {
                     mode: 'label',
@@ -91,16 +86,17 @@
                         // },
                     }
                 },
-                hover: {
-                    mode: 'dataset'
-                },
                 scales: {
                     xAxes: [{
                         display: true,
                         scaleLabel: {
                             show: true,
                             labelString: 'Month'
-                        }
+                        },
+	                    ticks: {
+	                        min: "2016/5/17",
+	                        max: "2016/9/17"
+	                    }
                     }],
                     yAxes: [{
                         display: true,
@@ -109,13 +105,18 @@
                             labelString: 'Value'
                         },
                         ticks: {
-                            suggestedMin: -10,
-                            suggestedMax: 250,
+                            suggestedMin: 3,
+                            suggestedMax: 15,
+                            //max: 3,
+                            //min: 15,
+                            //stepSize: 3
                         }
                     }]
                 }
             }
         };
+        
+      	
 
         $.each(config.data.datasets, function(i, dataset) {
             dataset.borderColor = randomColor(0.4);
@@ -129,90 +130,299 @@
             var ctx = document.getElementById("canvas").getContext("2d");
             window.myLine = new Chart(ctx, config);
         };
+        
+        $("#gouppage").click(function(){//上
+        	if(parseInt($("#pageNo").val()) == 1){
+        		alert("已是第一组了");
+        		return false;
+        	}
+        	$.ajax({
+        		type: "get",
+        		cache:false,
+        		url: "/HZXX/tofenxi/5",
+        		data: {
+        			pageNo:	parseInt($("#pageNo").val()) - 1 ,
+        			pageSize:5
+        		},
+        		success: function (data) {
+        			if(data) {
+        				$("#pageNo").val(data.pageNo);
+        				var hzname0 = "";
+        				var itemvalue0 = new Array();
+        				var hzname1 = "";
+        				var itemvalue1 = new Array();
+        				var hzname2 = "";
+        				var itemvalue2 = new Array();
+        				var hzname3 = "";
+        				var itemvalue3 = new Array();
+        				var hzname4 = "";
+        				var itemvalue4 = new Array();
+        				var dataarray = data.result;
+        				for(var i = 0;i < dataarray.length; i++) {
+        					var _dataarray = dataarray[i].data;
+        					if(i == 0){
+        						hzname0 = dataarray[i].hzname;
+        					}
+        					if(i == 1){
+        						hzname1 = dataarray[i].hzname;
+        					}
+        					if(i == 2){
+        						hzname2 = dataarray[i].hzname;
+        					}
+        					if(i == 3){
+        						hzname3 = dataarray[i].hzname;
+        					}
+        					if(i == 4){
+        						hzname4 = dataarray[i].hzname;
+        					}
+        					for(var j = 0 ; j < _dataarray.length; j++){
+        						console.log(_dataarray[j].hzname);
+        						if(i == 0 ){
+        							itemvalue0.push(_dataarray[j].itemvalue);
+        						}if(i == 1 ){
+        							itemvalue1.push(_dataarray[j].itemvalue);
+        						}if(i == 2 ){
+        							itemvalue2.push(_dataarray[j].itemvalue);
+        						}if(i == 3 ){
+        							itemvalue3.push(_dataarray[j].itemvalue);
+        						}if(i == 4 ){
+        							itemvalue4.push(_dataarray[j].itemvalue);
+        						}
+        					}
+       					}
+        				
+        				config.data = {
+        						labels: ["2016/5/17","2016/5/18","2016/5/19","2016/5/20","2016/5/21","2016/5/22","2016/5/23","2016/5/24","2016/5/25","2016/5/26","2016/5/27","2016/5/28","2016/5/29","2016/5/30","2016/5/31","2016/6/1","2016/6/2","2016/6/3","2016/6/4","2016/6/5","2016/6/6","2016/6/7","2016/6/8","2016/6/9","2016/6/10","2016/6/11","2016/6/12","2016/6/13","2016/6/14","2016/6/15","2016/6/16","2016/6/17","2016/6/18","2016/6/19","2016/6/20","2016/6/21","2016/6/22","2016/6/23","2016/6/24","2016/6/25","2016/6/26","2016/6/27","2016/6/28","2016/6/29","2016/6/30","2016/7/1","2016/7/2","2016/7/3","2016/7/4","2016/7/5","2016/7/6","2016/7/7","2016/7/8","2016/7/9","2016/7/10","2016/7/11","2016/7/12","2016/7/13","2016/7/14","2016/7/15","2016/7/16","2016/7/17","2016/7/18","2016/7/19","2016/7/20","2016/7/21","2016/7/22","2016/7/23","2016/7/24","2016/7/25","2016/7/26","2016/7/27","2016/7/28","2016/7/29","2016/7/30","2016/7/31","2016/8/1","2016/8/2","2016/8/3","2016/8/4","2016/8/5","2016/8/6","2016/8/7","2016/8/8","2016/8/9","2016/8/10","2016/8/11","2016/8/12","2016/8/13","2016/8/14","2016/8/15","2016/8/16","2016/8/17","2016/8/18","2016/8/19","2016/8/20","2016/8/21"],
+        		                datasets: [{
+        		                    label: hzname0,
+        		                    data: itemvalue1,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname1,
+        		                    data: itemvalue1,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname2,
+        		                    data: itemvalue2,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname3,
+        		                    data: itemvalue3,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname4,
+        		                    data: itemvalue4,
+        		                    fill: false,
+        		                },]
+        		            };
 
-        $('#randomizeData').click(function() {
-            $.each(config.data.datasets, function(i, dataset) {
-                dataset.data = dataset.data.map(function() {
-                    return randomScalingFactor();
-                });
+        		            $.each(config.data.datasets, function(i, dataset) {
+        		                dataset.borderColor = randomColor(0.4);
+        		                dataset.backgroundColor = randomColor(0.5);
+        		                dataset.pointBorderColor = randomColor(0.7);
+        		                dataset.pointBackgroundColor = randomColor(0.5);
+        		                dataset.pointBorderWidth = 1;
+        		            });
 
+        		            // Update the chart
+        		            window.myLine.update();
+        			}
+        		}
+        	});
+        });
+        $("#godownpage").click(function(){//下
+        	if(parseInt($("#pageNo").val()) == 10){
+        		alert("已是最后一组了");
+        		return false;
+        	}
+        	$.ajax({
+        		type: "get",
+        		cache:false,
+        		url: "/HZXX/tofenxi/5",
+        		data: {
+        			pageNo:	parseInt($("#pageNo").val()) + 1 ,
+        			pageSize:5
+        		},
+        		success: function (data) {
+        			if(data) {
+        				$("#pageNo").val(data.pageNo);
+        				var hzname0 = "";
+        				var itemvalue0 = new Array();
+        				var hzname1 = "";
+        				var itemvalue1 = new Array();
+        				var hzname2 = "";
+        				var itemvalue2 = new Array();
+        				var hzname3 = "";
+        				var itemvalue3 = new Array();
+        				var hzname4 = "";
+        				var itemvalue4 = new Array();
+        				var dataarray = data.result;
+        				for(var i = 0;i < dataarray.length; i++) {
+        					var _dataarray = dataarray[i].data;
+        					if(i == 0){
+        						hzname0 = dataarray[i].hzname;
+        					}
+        					if(i == 1){
+        						hzname1 = dataarray[i].hzname;
+        					}
+        					if(i == 2){
+        						hzname2 = dataarray[i].hzname;
+        					}
+        					if(i == 3){
+        						hzname3 = dataarray[i].hzname;
+        					}
+        					if(i == 4){
+        						hzname4 = dataarray[i].hzname;
+        					}
+        					for(var j = 0 ; j < _dataarray.length; j++){
+        						console.log(_dataarray[j].hzname);
+        						if(i == 0 ){
+        							itemvalue0.push(_dataarray[j].itemvalue);
+        						}if(i == 1 ){
+        							itemvalue1.push(_dataarray[j].itemvalue);
+        						}if(i == 2 ){
+        							itemvalue2.push(_dataarray[j].itemvalue);
+        						}if(i == 3 ){
+        							itemvalue3.push(_dataarray[j].itemvalue);
+        						}if(i == 4 ){
+        							itemvalue4.push(_dataarray[j].itemvalue);
+        						}
+        					}
+       					}
+        				
+        				config.data = {
+        						labels: ["2016/5/17","2016/5/18","2016/5/19","2016/5/20","2016/5/21","2016/5/22","2016/5/23","2016/5/24","2016/5/25","2016/5/26","2016/5/27","2016/5/28","2016/5/29","2016/5/30","2016/5/31","2016/6/1","2016/6/2","2016/6/3","2016/6/4","2016/6/5","2016/6/6","2016/6/7","2016/6/8","2016/6/9","2016/6/10","2016/6/11","2016/6/12","2016/6/13","2016/6/14","2016/6/15","2016/6/16","2016/6/17","2016/6/18","2016/6/19","2016/6/20","2016/6/21","2016/6/22","2016/6/23","2016/6/24","2016/6/25","2016/6/26","2016/6/27","2016/6/28","2016/6/29","2016/6/30","2016/7/1","2016/7/2","2016/7/3","2016/7/4","2016/7/5","2016/7/6","2016/7/7","2016/7/8","2016/7/9","2016/7/10","2016/7/11","2016/7/12","2016/7/13","2016/7/14","2016/7/15","2016/7/16","2016/7/17","2016/7/18","2016/7/19","2016/7/20","2016/7/21","2016/7/22","2016/7/23","2016/7/24","2016/7/25","2016/7/26","2016/7/27","2016/7/28","2016/7/29","2016/7/30","2016/7/31","2016/8/1","2016/8/2","2016/8/3","2016/8/4","2016/8/5","2016/8/6","2016/8/7","2016/8/8","2016/8/9","2016/8/10","2016/8/11","2016/8/12","2016/8/13","2016/8/14","2016/8/15","2016/8/16","2016/8/17","2016/8/18","2016/8/19","2016/8/20","2016/8/21"],
+        		                datasets: [{
+        		                    label: hzname0,
+        		                    data: itemvalue1,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname1,
+        		                    data: itemvalue1,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname2,
+        		                    data: itemvalue2,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname3,
+        		                    data: itemvalue3,
+        		                    fill: false,
+        		                },{
+        		                    label: hzname4,
+        		                    data: itemvalue4,
+        		                    fill: false,
+        		                },]
+        		            };
+
+        		            $.each(config.data.datasets, function(i, dataset) {
+        		                dataset.borderColor = randomColor(0.4);
+        		                dataset.backgroundColor = randomColor(0.5);
+        		                dataset.pointBorderColor = randomColor(0.7);
+        		                dataset.pointBackgroundColor = randomColor(0.5);
+        		                dataset.pointBorderWidth = 1;
+        		            });
+
+        		            // Update the chart
+        		            window.myLine.update();
+        			}
+        		}
+        	});
+        });
+        
+        $(document).ready(function(){
+            	$.ajax({
+            		type: "get",
+            		cache:false,
+            		url: "/HZXX/tofenxi/5",
+            		data: {
+            		},
+            		success: function (data) {
+            			if(data) {
+            				$("#pageNo").val(data.pageNo);
+            				var hzname0 = "";
+            				var itemvalue0 = new Array();
+            				var hzname1 = "";
+            				var itemvalue1 = new Array();
+            				var hzname2 = "";
+            				var itemvalue2 = new Array();
+            				var hzname3 = "";
+            				var itemvalue3 = new Array();
+            				var hzname4 = "";
+            				var itemvalue4 = new Array();
+            				var dataarray = data.result;
+            				for(var i = 0;i < dataarray.length; i++) {
+            					var _dataarray = dataarray[i].data;
+            					if(i == 0){
+            						hzname0 = dataarray[i].hzname;
+            					}
+            					if(i == 1){
+            						hzname1 = dataarray[i].hzname;
+            					}
+            					if(i == 2){
+            						hzname2 = dataarray[i].hzname;
+            					}
+            					if(i == 3){
+            						hzname3 = dataarray[i].hzname;
+            					}
+            					if(i == 4){
+            						hzname4 = dataarray[i].hzname;
+            					}
+            					for(var j = 0 ; j < _dataarray.length; j++){
+            						console.log(_dataarray[j].hzname);
+            						if(i == 0 ){
+            							itemvalue0.push(_dataarray[j].itemvalue);
+            						}if(i == 1 ){
+            							itemvalue1.push(_dataarray[j].itemvalue);
+            						}if(i == 2 ){
+            							itemvalue2.push(_dataarray[j].itemvalue);
+            						}if(i == 3 ){
+            							itemvalue3.push(_dataarray[j].itemvalue);
+            						}if(i == 4 ){
+            							itemvalue4.push(_dataarray[j].itemvalue);
+            						}
+            					}
+           					}
+            				
+            				config.data = {
+            						labels: ["2016/5/17","2016/5/18","2016/5/19","2016/5/20","2016/5/21","2016/5/22","2016/5/23","2016/5/24","2016/5/25","2016/5/26","2016/5/27","2016/5/28","2016/5/29","2016/5/30","2016/5/31","2016/6/1","2016/6/2","2016/6/3","2016/6/4","2016/6/5","2016/6/6","2016/6/7","2016/6/8","2016/6/9","2016/6/10","2016/6/11","2016/6/12","2016/6/13","2016/6/14","2016/6/15","2016/6/16","2016/6/17","2016/6/18","2016/6/19","2016/6/20","2016/6/21","2016/6/22","2016/6/23","2016/6/24","2016/6/25","2016/6/26","2016/6/27","2016/6/28","2016/6/29","2016/6/30","2016/7/1","2016/7/2","2016/7/3","2016/7/4","2016/7/5","2016/7/6","2016/7/7","2016/7/8","2016/7/9","2016/7/10","2016/7/11","2016/7/12","2016/7/13","2016/7/14","2016/7/15","2016/7/16","2016/7/17","2016/7/18","2016/7/19","2016/7/20","2016/7/21","2016/7/22","2016/7/23","2016/7/24","2016/7/25","2016/7/26","2016/7/27","2016/7/28","2016/7/29","2016/7/30","2016/7/31","2016/8/1","2016/8/2","2016/8/3","2016/8/4","2016/8/5","2016/8/6","2016/8/7","2016/8/8","2016/8/9","2016/8/10","2016/8/11","2016/8/12","2016/8/13","2016/8/14","2016/8/15","2016/8/16","2016/8/17","2016/8/18","2016/8/19","2016/8/20","2016/8/21"],
+            		                datasets: [{
+            		                    label: hzname0,
+            		                    data: itemvalue1,
+            		                    fill: false,
+            		                },{
+            		                    label: hzname1,
+            		                    data: itemvalue1,
+            		                    fill: false,
+            		                },{
+            		                    label: hzname2,
+            		                    data: itemvalue2,
+            		                    fill: false,
+            		                },{
+            		                    label: hzname3,
+            		                    data: itemvalue3,
+            		                    fill: false,
+            		                },{
+            		                    label: hzname4,
+            		                    data: itemvalue4,
+            		                    fill: false,
+            		                },]
+            		            };
+
+            		            $.each(config.data.datasets, function(i, dataset) {
+            		                dataset.borderColor = randomColor(0.4);
+            		                dataset.backgroundColor = randomColor(0.5);
+            		                dataset.pointBorderColor = randomColor(0.7);
+            		                dataset.pointBackgroundColor = randomColor(0.5);
+            		                dataset.pointBorderWidth = 1;
+            		            });
+
+            		            // Update the chart
+            		            window.myLine.update();
+            			}
+            		}
+            	});
             });
-
-            window.myLine.update();
-        });
-
-        $('#changeDataObject').click(function() {
-            config.data = {
-                labels: ["July", "August", "September", "October", "November", "December"],
-                datasets: [{
-                    label: "My First dataset",
-                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-                    fill: false,
-                }, {
-                    label: "My Second dataset",
-                    fill: false,
-                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
-                }]
-            };
-
-            $.each(config.data.datasets, function(i, dataset) {
-                dataset.borderColor = randomColor(0.4);
-                dataset.backgroundColor = randomColor(0.5);
-                dataset.pointBorderColor = randomColor(0.7);
-                dataset.pointBackgroundColor = randomColor(0.5);
-                dataset.pointBorderWidth = 1;
-            });
-
-            // Update the chart
-            window.myLine.update();
-        });
-
-        $('#addDataset').click(function() {
-            var newDataset = {
-                label: 'Dataset ' + config.data.datasets.length,
-                borderColor: randomColor(0.4),
-                backgroundColor: randomColor(0.5),
-                pointBorderColor: randomColor(0.7),
-                pointBackgroundColor: randomColor(0.5),
-                pointBorderWidth: 1,
-                data: [],
-            };
-
-            for (var index = 0; index < config.data.labels.length; ++index) {
-                newDataset.data.push(randomScalingFactor());
-            }
-
-            config.data.datasets.push(newDataset);
-            window.myLine.update();
-        });
-
-        $('#addData').click(function() {
-            if (config.data.datasets.length > 0) {
-                var month = MONTHS[config.data.labels.length % MONTHS.length];
-                config.data.labels.push(month);
-
-                $.each(config.data.datasets, function(i, dataset) {
-                    dataset.data.push(randomScalingFactor());
-                });
-
-                window.myLine.update();
-            }
-        });
-
-        $('#removeDataset').click(function() {
-            config.data.datasets.splice(0, 1);
-            window.myLine.update();
-        });
-
-        $('#removeData').click(function() {
-            config.data.labels.splice(-1, 1); // remove the label first
-
-            config.data.datasets.forEach(function(dataset, datasetIndex) {
-                dataset.data.pop();
-            });
-
-            window.myLine.update();
-        });
     </script>
 </body>
 

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
@@ -48,6 +49,37 @@ public class CommonUtils {
 		sb.append(", 点击下载App用户端:");
 		sb.append(downloadurl);
 		return sb.toString();
+	}
+	
+	/**
+	 * 获取指定日期上月的当前日期
+	 * getStartDate
+	 * @param date
+	 * @return
+	 * String
+	 */
+	public static String getPreDateStr(String date) {
+		String resultString;
+		try {
+			if (StringUtils.isEmpty(date)) {
+				return getEndDate();
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			int day = Integer
+					.parseInt(StringUtils.substring(date, StringUtils.lastIndexOf(date, "-") + 1, date.length()));
+			cal.set(Calendar.DATE, day);
+			String lastMonthStart = sdf.format(cal.getTime());// 上月开始
+			cal.clear();
+			resultString = lastMonthStart;
+		} catch (NumberFormatException e) {
+			return getEndDate();
+		}
+		return resultString;
+	}
+	//获取当前日期，返回字符串
+	private static String getEndDate() {
+		return sdf.format(new Date());// new Date()为获取当前系统时间
 	}
 	
 	/**

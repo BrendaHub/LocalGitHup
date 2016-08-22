@@ -375,7 +375,8 @@ public class PatientApi {
 	@RequestMapping(value="/initHZSFXX",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
 	public String initHzsfxx(@ApiParam(required = true, name = "hzid", value = "患者ID") @RequestParam(value="hzid",required=true) String hzid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
-			@ApiParam(required = true, name = "date", value = "添加对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+			@ApiParam(required = true, name = "date", value = "添加对应的日期，格式：yyyyMMdd") @RequestParam(value="date",required=true) String date,
+			@ApiParam(required = true, name = "mon", value = "月份，0：表示当月， -1：上一月， 1：下一月， 认此类推,默认为0,当月") @RequestParam(value="mon",required=false) int mon){
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(hzid+"")){
 			 result.put("_st", 0);//
@@ -401,10 +402,15 @@ public class PatientApi {
 			 }
 
 			 //查询sf的数据返回
+			String backStr = "";
+			 if(mon == 0){//日期不变
+				backStr = hzsfxxService.getCurrentDateTNB(Long.parseLong(hzid), date);
+			 }else{
+				 String cur_date = CommonUtils.getPreDateStr(date);
+				 backStr = hzsfxxService.getCurrentDateTNB(Long.parseLong(hzid), cur_date);
+			 }
 			 //暂不提供返回的数据。
-			 result.put("_st", 1);//
-			 result.put("_msg", "初始化成功");
-			 return result.toJSONString();
+			 return backStr;
 		} catch (Exception e) {
 			result.put("_st", 7);//
 			 result.put("_msg", "初始化失败");
