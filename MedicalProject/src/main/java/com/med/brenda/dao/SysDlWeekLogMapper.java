@@ -1,5 +1,8 @@
 package com.med.brenda.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.med.brenda.model.SysDlWeekLog;
 
 public interface SysDlWeekLogMapper {
@@ -14,4 +17,6 @@ public interface SysDlWeekLogMapper {
     int updateByPrimaryKeySelective(SysDlWeekLog record);
 
     int updateByPrimaryKey(SysDlWeekLog record);
+    
+    List<SysDlWeekLog> selectList(Map<String, Object> p );
 }

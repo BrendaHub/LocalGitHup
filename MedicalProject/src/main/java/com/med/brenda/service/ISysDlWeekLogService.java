@@ -1,5 +1,8 @@
 package com.med.brenda.service;
 
+import java.util.List;
+
+import com.med.brenda.model.SysDlDayLog;
 import com.med.brenda.model.SysDlWeekLog;
 
 public interface ISysDlWeekLogService {
@@ -14,4 +17,6 @@ public interface ISysDlWeekLogService {
 	int updateByPrimaryKeySelective(SysDlWeekLog record);
 
 	int updateByPrimaryKey(SysDlWeekLog record);
+	
+	List<SysDlWeekLog> selectList(int pageIndex, int pageSize);
 }

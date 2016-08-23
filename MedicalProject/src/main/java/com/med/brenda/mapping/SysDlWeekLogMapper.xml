@@ -16,6 +16,11 @@
   <sql id="Base_Column_List">
     id, sfzh, hzid, hzname, sex, mz, writedate, itemvalue
   </sql>
+  <select id="selectList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List" /> FROM t_dl_weeklog 
+  	WHERE sfzh IN 
+  	(SELECT t.sfzh FROM (SELECT sfzh FROM t_dl_daylog GROUP BY sfzh limit #{pageNo},#{pageSize}) AS t)
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

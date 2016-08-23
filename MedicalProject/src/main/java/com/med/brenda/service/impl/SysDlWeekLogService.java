@@ -1,5 +1,9 @@
 package com.med.brenda.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -7,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.med.brenda.dao.SysDlWeekLogMapper;
+import com.med.brenda.model.SysDlDayLog;
 import com.med.brenda.model.SysDlWeekLog;
 import com.med.brenda.service.ISysDlWeekLogService;
 
@@ -48,4 +53,12 @@ public class SysDlWeekLogService implements ISysDlWeekLogService {
 		return weeklogDao.updateByPrimaryKey(record);
 	}
 
+	@Override
+	public List<SysDlWeekLog> selectList(int pageIndex, int pageSize) {
+		Map<String,Object> p = new HashMap<>();
+		p.put("pageNo", pageIndex);
+		p.put("pageSize", pageSize);
+		List<SysDlWeekLog> list = weeklogDao.selectList(p);
+		return list;
+	}
 }
