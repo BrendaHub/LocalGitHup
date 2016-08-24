@@ -50,6 +50,13 @@ public class HzxxController extends BaseController {
 	@Autowired
 	private ISysDlWeekLogService dlWeekLogService;
 	
+	/**
+	 * 血糖数据综合分析， 有中值，平均值，和
+	 */
+	@RequestMapping(value="/sysfx/{defaultpagesize}",method=RequestMethod.GET)
+	public ModelAndView toSysFx(HttpServletRequest request, @PathVariable String defaultpagesize){
+		return new ModelAndView("hzxx/sysfx");
+	}
 	
 	/**
 	 * 去图表分析页面
