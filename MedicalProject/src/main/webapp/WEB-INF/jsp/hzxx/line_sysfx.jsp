@@ -24,13 +24,10 @@
         <canvas id="canvas"></canvas>
     </div>
     <br>
-    <br>
-    	<button id="gouppage">&gt;上一组（5人）</button>
-    	<button id="godownpage">下一组（5人）&lt;</button>
     
     <script>
     	//日期
-        var MONTHS = ["2016-13","2016-14","2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33","2016-34","2016-35"];
+        var MONTHS = ["2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33"];
         
         var randomScalingFactor = function() {
             return Math.round(Math.random() * 100);
@@ -46,7 +43,7 @@
         var config = {
             type: 'line',
             data: {
-                labels: ["2016-13","2016-14","2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33","2016-34","2016-35"],
+                labels: ["2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33"],
                 datasets: [
                    
                 ]
@@ -94,8 +91,6 @@
                             labelString: 'Month'
                         },
 	                    ticks: {
-	                        min: "2016/5/17",
-	                        max: "2016/9/17"
 	                    }
                     }],
                     yAxes: [{
@@ -106,7 +101,7 @@
                         },
                         ticks: {
                             suggestedMin: 3,
-                            suggestedMax: 15,
+                            suggestedMax: 11,
                             //max: 3,
                             //min: 15,
                             //stepSize: 3
@@ -131,297 +126,35 @@
             window.myLine = new Chart(ctx, config);
         };
         
-        $("#gouppage").click(function(){//上
-        	if(parseInt($("#pageNo").val()) == 1){
-        		alert("已是第一组了");
-        		return false;
-        	}
-        	$.ajax({
-        		type: "get",
-        		cache:false,
-        		url: "/HZXX/toWeekfenxi/5",
-        		data: {
-        			pageNo:	parseInt($("#pageNo").val()) - 1 ,
-        			pageSize:5
-        		},
-        		success: function (data) {
-        			if(data) {
-        				$("#pageNo").val(data.pageNo);
-        				var hzname0 = "";
-        				var itemvalue0 = new Array();
-        				var hzname1 = "";
-        				var itemvalue1 = new Array();
-        				var hzname2 = "";
-        				var itemvalue2 = new Array();
-        				var hzname3 = "";
-        				var itemvalue3 = new Array();
-        				var hzname4 = "";
-        				var itemvalue4 = new Array();
-        				var dataarray = data.result;
-        				for(var i = 0;i < dataarray.length; i++) {
-        					var _dataarray = dataarray[i].data;
-        					if(i == 0){
-        						hzname0 = dataarray[i].hzname;
-        					}
-        					if(i == 1){
-        						hzname1 = dataarray[i].hzname;
-        					}
-        					if(i == 2){
-        						hzname2 = dataarray[i].hzname;
-        					}
-        					if(i == 3){
-        						hzname3 = dataarray[i].hzname;
-        					}
-        					if(i == 4){
-        						hzname4 = dataarray[i].hzname;
-        					}
-        					for(var j = 0 ; j < _dataarray.length; j++){
-        						console.log(_dataarray[j].hzname);
-        						if(i == 0 ){
-        							itemvalue0.push(_dataarray[j].itemvalue);
-        						}if(i == 1 ){
-        							itemvalue1.push(_dataarray[j].itemvalue);
-        						}if(i == 2 ){
-        							itemvalue2.push(_dataarray[j].itemvalue);
-        						}if(i == 3 ){
-        							itemvalue3.push(_dataarray[j].itemvalue);
-        						}if(i == 4 ){
-        							itemvalue4.push(_dataarray[j].itemvalue);
-        						}
-        					}
-       					}
-        				
-        				config.data = {
-        						labels: ["2016-13","2016-14","2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33","2016-34","2016-35"],
-        		                datasets: [{
-        		                    label: hzname0,
-        		                    data: itemvalue0,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname1,
-        		                    data: itemvalue1,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname2,
-        		                    data: itemvalue2,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname3,
-        		                    data: itemvalue3,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname4,
-        		                    data: itemvalue4,
-        		                    fill: false,
-        		                },]
-        		            };
-
-        		            $.each(config.data.datasets, function(i, dataset) {
-        		                dataset.borderColor = randomColor(0.4);
-        		                dataset.backgroundColor = randomColor(0.5);
-        		                dataset.pointBorderColor = randomColor(0.7);
-        		                dataset.pointBackgroundColor = randomColor(0.5);
-        		                dataset.pointBorderWidth = 1;
-        		            });
-
-        		            // Update the chart
-        		            window.myLine.update();
-        			}
-        		}
-        	});
-        });
-        $("#godownpage").click(function(){//下
-        	if(parseInt($("#pageNo").val()) == 10){
-        		alert("已是最后一组了");
-        		return false;
-        	}
-        	$.ajax({
-        		type: "get",
-        		cache:false,
-        		url: "/HZXX/toWeekfenxi/5",
-        		data: {
-        			pageNo:	parseInt($("#pageNo").val()) + 1 ,
-        			pageSize:5
-        		},
-        		success: function (data) {
-        			if(data) {
-        				$("#pageNo").val(data.pageNo);
-        				var hzname0 = "";
-        				var itemvalue0 = new Array();
-        				var hzname1 = "";
-        				var itemvalue1 = new Array();
-        				var hzname2 = "";
-        				var itemvalue2 = new Array();
-        				var hzname3 = "";
-        				var itemvalue3 = new Array();
-        				var hzname4 = "";
-        				var itemvalue4 = new Array();
-        				var dataarray = data.result;
-        				for(var i = 0;i < dataarray.length; i++) {
-        					var _dataarray = dataarray[i].data;
-        					if(i == 0){
-        						hzname0 = dataarray[i].hzname;
-        					}
-        					if(i == 1){
-        						hzname1 = dataarray[i].hzname;
-        					}
-        					if(i == 2){
-        						hzname2 = dataarray[i].hzname;
-        					}
-        					if(i == 3){
-        						hzname3 = dataarray[i].hzname;
-        					}
-        					if(i == 4){
-        						hzname4 = dataarray[i].hzname;
-        					}
-        					for(var j = 0 ; j < _dataarray.length; j++){
-        						console.log(_dataarray[j].hzname);
-        						if(i == 0 ){
-        							itemvalue0.push(_dataarray[j].itemvalue);
-        						}if(i == 1 ){
-        							itemvalue1.push(_dataarray[j].itemvalue);
-        						}if(i == 2 ){
-        							itemvalue2.push(_dataarray[j].itemvalue);
-        						}if(i == 3 ){
-        							itemvalue3.push(_dataarray[j].itemvalue);
-        						}if(i == 4 ){
-        							itemvalue4.push(_dataarray[j].itemvalue);
-        						}
-        					}
-       					}
-        				
-        				config.data = {
-        						labels: ["2016-13","2016-14","2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33","2016-34","2016-35"],
-        		                datasets: [{
-        		                    label: hzname0,
-        		                    data: itemvalue0,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname1,
-        		                    data: itemvalue1,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname2,
-        		                    data: itemvalue2,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname3,
-        		                    data: itemvalue3,
-        		                    fill: false,
-        		                },{
-        		                    label: hzname4,
-        		                    data: itemvalue4,
-        		                    fill: false,
-        		                },]
-        		            };
-
-        		            $.each(config.data.datasets, function(i, dataset) {
-        		                dataset.borderColor = randomColor(0.4);
-        		                dataset.backgroundColor = randomColor(0.5);
-        		                dataset.pointBorderColor = randomColor(0.7);
-        		                dataset.pointBackgroundColor = randomColor(0.5);
-        		                dataset.pointBorderWidth = 1;
-        		            });
-
-        		            // Update the chart
-        		            window.myLine.update();
-        			}
-        		}
-        	});
-        });
-        
+       
         $(document).ready(function(){
-            	$.ajax({
-            		type: "get",
-            		cache:false,
-            		url: "/HZXX/toWeekfenxi/5",
-            		data: {
-            		},
-            		success: function (data) {
-            			if(data) {
-            				$("#pageNo").val(data.pageNo);
-            				var hzname0 = "";
-            				var itemvalue0 = new Array();
-            				var hzname1 = "";
-            				var itemvalue1 = new Array();
-            				var hzname2 = "";
-            				var itemvalue2 = new Array();
-            				var hzname3 = "";
-            				var itemvalue3 = new Array();
-            				var hzname4 = "";
-            				var itemvalue4 = new Array();
-            				var dataarray = data.result;
-            				for(var i = 0;i < dataarray.length; i++) {
-            					var _dataarray = dataarray[i].data;
-            					if(i == 0){
-            						hzname0 = dataarray[i].hzname;
-            					}
-            					if(i == 1){
-            						hzname1 = dataarray[i].hzname;
-            					}
-            					if(i == 2){
-            						hzname2 = dataarray[i].hzname;
-            					}
-            					if(i == 3){
-            						hzname3 = dataarray[i].hzname;
-            					}
-            					if(i == 4){
-            						hzname4 = dataarray[i].hzname;
-            					}
-            					for(var j = 0 ; j < _dataarray.length; j++){
-            						console.log(_dataarray[j].hzname);
-            						if(i == 0 ){
-            							itemvalue0.push(_dataarray[j].itemvalue);
-            						}if(i == 1 ){
-            							itemvalue1.push(_dataarray[j].itemvalue);
-            						}if(i == 2 ){
-            							itemvalue2.push(_dataarray[j].itemvalue);
-            						}if(i == 3 ){
-            							itemvalue3.push(_dataarray[j].itemvalue);
-            						}if(i == 4 ){
-            							itemvalue4.push(_dataarray[j].itemvalue);
-            						}
-            					}
-           					}
-            				
-            				config.data = {
-            						labels: ["2016-13","2016-14","2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33","2016-34","2016-35"],
-            		                datasets: [{
-            		                    label: hzname0,
-            		                    data: itemvalue0,
-            		                    fill: false,
-            		                },{
-            		                    label: hzname1,
-            		                    data: itemvalue1,
-            		                    fill: false,
-            		                },{
-            		                    label: hzname2,
-            		                    data: itemvalue2,
-            		                    fill: false,
-            		                },{
-            		                    label: hzname3,
-            		                    data: itemvalue3,
-            		                    fill: false,
-            		                },{
-            		                    label: hzname4,
-            		                    data: itemvalue4,
-            		                    fill: false,
-            		                },]
-            		            };
+     				config.data = {
+     						labels: ["2016-15","2016-16","2016-17","2016-18","2016-19","2016-20","2016-21","2016-22","2016-23","2016-24","2016-25","2016-26","2016-27","2016-28","2016-29","2016-30","2016-31","2016-32","2016-33"],
+     		                datasets: [{
+     		                    label: "周均值",
+     		                    data: [6.6,8.6,7.3,7.6,7.7,7.4,7.6,7.4,7.5,7.4,7.4,7.4,7.7,7.7,7.4,7.4,7.6,7.4,7.4],
+     		                    fill: false,
+     		                },{
+     		                    label: "中值",
+     		                    data: [6.6,8.7,7.1,7.2,7.8,7.2,7.1,7.0,7.6,7.2,7.4,7.2,7.5,7.5,7.1,6.9,7.5,7.2,6.9],
+     		                    fill: false,
+     		                },{
+     		                    label: "众值",
+     		                    data: [9.2,9.1,8.1,8.3,8.8,6.2,7  ,7  ,7.6,7.2,6.9,6.3,7.3,7.7,8.3,6.5,7.2,7.1,6.4],
+     		                    fill: false,
+     		                }]
+     		            };
 
-            		            $.each(config.data.datasets, function(i, dataset) {
-            		                dataset.borderColor = randomColor(0.4);
-            		                dataset.backgroundColor = randomColor(0.5);
-            		                dataset.pointBorderColor = randomColor(0.7);
-            		                dataset.pointBackgroundColor = randomColor(0.5);
-            		                dataset.pointBorderWidth = 1;
-            		            });
+     		            $.each(config.data.datasets, function(i, dataset) {
+     		                dataset.borderColor = randomColor(0.4);
+     		                dataset.backgroundColor = randomColor(0.5);
+     		                dataset.pointBorderColor = randomColor(0.7);
+     		                dataset.pointBackgroundColor = randomColor(0.5);
+     		                dataset.pointBorderWidth = 1;
+     		            });
 
-            		            // Update the chart
-            		            window.myLine.update();
-            			}
-            		}
-            	});
+     		            // Update the chart
+     		            window.myLine.update();
             });
     </script>
 </body>

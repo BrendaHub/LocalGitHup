@@ -25,8 +25,8 @@
     </div>
     <br>
     <br>
-    	<button id="gouppage">&gt;上一组（5人）</button>
-    	<button id="godownpage">下一组（5人）&lt;</button>
+    	<button id="gouppage">&lt;上一组（5人）</button>
+    	<button id="godownpage">下一组（5人）&gt;</button>
     
     <script>
     	//日期
@@ -213,7 +213,7 @@
         		                    label: hzname4,
         		                    data: itemvalue4,
         		                    fill: false,
-        		                },]
+        		                }]
         		            };
 
         		            $.each(config.data.datasets, function(i, dataset) {
@@ -312,7 +312,7 @@
         		                    label: hzname4,
         		                    data: itemvalue4,
         		                    fill: false,
-        		                },]
+        		                }]
         		            };
 
         		            $.each(config.data.datasets, function(i, dataset) {
@@ -406,7 +406,7 @@
             		                    label: hzname4,
             		                    data: itemvalue4,
             		                    fill: false,
-            		                },]
+            		                }]
             		            };
 
             		            $.each(config.data.datasets, function(i, dataset) {

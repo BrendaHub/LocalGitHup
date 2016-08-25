@@ -50,7 +50,7 @@ BUI.use('common/main',function(){
       									{id:'9',text:'患者列表',href:'/HZXX/list'},
       									{id:'91',text:'血糖月数据',href:'/HZXX/tofenxi1/5'},
       									{id:'92',text:'血糖周数据',href:'/HZXX/toweekfenxi1/5'},
-      									{id:'93',text:'血糖综合分析',href:'/HZXX/sysfx/5'}
+      									{id:'93',text:'血糖综合分析',href:'/HZXX/sysfx'}
       									]}
       									]}
       				];
