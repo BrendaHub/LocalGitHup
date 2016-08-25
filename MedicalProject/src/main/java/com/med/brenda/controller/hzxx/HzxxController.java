@@ -57,6 +57,20 @@ public class HzxxController extends BaseController {
 	public ModelAndView toSysFx(HttpServletRequest request){
 		return new ModelAndView("hzxx/line_sysfx");
 	}
+	/**
+	 * 血糖数据综合分析， meen
+	 */
+	@RequestMapping(value="/sysavg",method=RequestMethod.GET)
+	public ModelAndView sysavg(HttpServletRequest request){
+		return new ModelAndView("hzxx/line_avg");
+	}
+	/**
+	 * 血糖数据综合分析， 中值
+	 */
+	@RequestMapping(value="/sysmed",method=RequestMethod.GET)
+	public ModelAndView sysmed(HttpServletRequest request){
+		return new ModelAndView("hzxx/line_med");
+	}
 	
 	/**
 	 * 去图表分析页面
