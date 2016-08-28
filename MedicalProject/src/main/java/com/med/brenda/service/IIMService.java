@@ -1,12 +1,11 @@
-package com.med.brenda.dao;
+package com.med.brenda.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.med.brenda.model.Im;
 
-public interface ImMapper {
-    int deleteByPrimaryKey(Long id);
+public interface IIMService {
+	int deleteByPrimaryKey(Long id);
 
     int insert(Im record);
 
@@ -18,5 +17,5 @@ public interface ImMapper {
 
     int updateByPrimaryKey(Im record);
     
-    List<Im> selectByHzid_Ysid(Map<String,Object> param);
+    List<Im> selectByYsid_Hzid(Long ysid, Long hzid);
 }

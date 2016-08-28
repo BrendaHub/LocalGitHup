@@ -26,6 +26,19 @@
     from S_IM
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByHzid_Ysid" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from S_IM
+    where 1=1
+    <if test="ysid != null">
+    	and ysid = #{ysid,jdbcType=BIGINT}
+    </if>
+    <if test="hzid != null">
+    	and hzid = #{hzid,jdbcType=BIGINT}
+    </if>
+    order by tztime 
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from S_IM
     where id = #{id,jdbcType=BIGINT}

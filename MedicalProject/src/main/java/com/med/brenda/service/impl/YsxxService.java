@@ -28,4 +28,39 @@ public class YsxxService implements IYsxxService {
 		return ysxxDao.ysLogon(param);
 	}
 
+	@Override
+	public int deleteByPrimaryKey(Long id) {
+		return ysxxDao.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int insert(Ysxx record) {
+		return ysxxDao.insert(record);
+	}
+
+	@Override
+	public int insertSelective(Ysxx record) {
+		return ysxxDao.insertSelective(record);
+	}
+
+	@Override
+	public Ysxx selectByPrimaryKey(Long id) {
+		return ysxxDao.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(Ysxx record) {
+		return ysxxDao.updateByPrimaryKeySelective(record);
+	}
+
+	@Override
+	public int updateByPrimaryKey(Ysxx record) {
+		return ysxxDao.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public Ysxx ysLogon(Map<String, String> map) {
+		return ysxxDao.ysLogon(map);
+	}
+
 }

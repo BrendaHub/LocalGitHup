@@ -1,12 +1,12 @@
-package com.med.brenda.dao;
+package com.med.brenda.service;
 
 import java.util.List;
 import java.util.Map;
 
 import com.med.brenda.model.Mz;
 
-public interface MzMapper {
-    int deleteByPrimaryKey(Long id);
+public interface IMzService {
+	int deleteByPrimaryKey(Long id);
 
     int insert(Mz record);
 
@@ -18,5 +18,5 @@ public interface MzMapper {
 
     int updateByPrimaryKey(Mz record);
     
-    List<Mz> selectByYsid(Map<String,Object> param);
+    List<Mz> selectByYsid(Long ysid);
 }
