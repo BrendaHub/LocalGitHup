@@ -446,7 +446,7 @@ public class HzsfxxService implements IHzsfxxService {
 		 * 当前接口需要做的事情有：
 		 * 1、处理 date 前10，后 10 日期的数据 
 		 */
-		JSONArray _Mon = new JSONArray();//???????????????????????????
+		JSONArray _Mon = new JSONArray();//?
 		JSONObject _jsonMon = new JSONObject();
 		try {
 			_jsonMon.put("Mon", CommonUtils.parseLongDatetoJson(CommonUtils.getTimeInMillisByDate(date)).get("Mon"));
@@ -455,7 +455,7 @@ public class HzsfxxService implements IHzsfxxService {
 		}
 		_Mon.add(_jsonMon);
 		List<Long> list = CommonUtils.get_10Date(date);
-		JSONArray _date = new JSONArray();//？？？？？？？？？？？？？？？？？
+		JSONArray _date = new JSONArray();//？？
 		JSONArray _datalist = new JSONArray();
 		if(list != null && list.size() > 0 ){
 			for(Iterator it = list.iterator(); it.hasNext(); ){
@@ -480,7 +480,7 @@ public class HzsfxxService implements IHzsfxxService {
 					hzdata.put("Type", hzsfxx.getTEMP2());
 					hzdata.put("Zdorcode", hzsfxx.getITEMCODE());
 					StringBuilder contents = new StringBuilder();
-					if("015".equals(hzsfxx.getITEMCODE())){
+					if("015".equals(hzsfxx.getITEMCODE())){//血糖
 						Map<String, Object> p = new HashMap<>();
 						p.put("hzid", hzid);
 						p.put("date", CommonUtils.transferLongToDate(_long));
@@ -503,12 +503,18 @@ public class HzsfxxService implements IHzsfxxService {
 									contents.append("|");
 								}
 							}
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}else{
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}
 					}
-					if("016".equals(hzsfxx.getITEMCODE())){
+					if("016".equals(hzsfxx.getITEMCODE())){//胰岛素
 						Map<String, Object> p = new HashMap<>();
 						p.put("hzid", hzid);
 						p.put("date", CommonUtils.transferLongToDate(_long));
@@ -533,12 +539,18 @@ public class HzsfxxService implements IHzsfxxService {
 									contents.append("|");
 								}
 							}
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}else{
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}
 					}
-					if("022".equals(hzsfxx.getITEMCODE())){
+					if("022".equals(hzsfxx.getITEMCODE())){//运动
 						Map<String, Object> p = new HashMap<>();
 						p.put("hzid", hzid);
 						p.put("date", CommonUtils.transferLongToDate(_long));
@@ -559,12 +571,18 @@ public class HzsfxxService implements IHzsfxxService {
 								contents.append("高重强度运动  ");
 							}
 							contents.append(tnbs.getYdcxsj());
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}else{
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}
 					}
-					if("023".equals(hzsfxx.getITEMCODE())){
+					if("023".equals(hzsfxx.getITEMCODE())){//症状
 						Map<String, Object> p = new HashMap<>();
 						p.put("hzid", hzid);
 						p.put("date", CommonUtils.transferLongToDate(_long));
@@ -586,12 +604,18 @@ public class HzsfxxService implements IHzsfxxService {
 							if(zzqt.indexOf("1") != -1){
 								contents.append("低血糖症状");
 							}
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}else{
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}
 					}
-					if("021".equals(hzsfxx.getITEMCODE())){
+					if("021".equals(hzsfxx.getITEMCODE())){//饮食
 						Map<String, Object> p = new HashMap<>();
 						p.put("hzid", hzid);
 						p.put("temp5", CommonUtils.transferLongToDate(_long));
@@ -601,8 +625,14 @@ public class HzsfxxService implements IHzsfxxService {
 							sb.append(hzsfxx.getTEMP1());
 							sb.append(",");
 							contents.append("目标:1435千卡 当前:511.29千卡");
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}else{
+							contents.append(hzsfxx.getITEMVALUE());
+							hzdata.put("Content", contents.toString());
+							_datalist.add(hzdata);
 							continue;
 						}
 					}

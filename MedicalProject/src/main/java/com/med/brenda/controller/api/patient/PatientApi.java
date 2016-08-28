@@ -419,7 +419,6 @@ public class PatientApi {
 			 result.put("_msg", "初始化失败");
 			 return result.toJSONString();
 		}
-		 
 	}
 	
 	
