@@ -45,7 +45,7 @@
     from S_TNB_YINSHI
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="getYinshiListByHzid_date" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="getYinshiListByHzid_date" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from S_TNB_YINSHI
@@ -58,6 +58,21 @@
     </if>
     <if test="itemcode != null">
     	and itemcode like CONCAT('${itemcode}','%' )
+    </if>
+  </select>
+  <select id="getYinshiListByInFatherId" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from S_TNB_YINSHI
+    where 1=1 
+    <if test="hzid != null">
+    	and hzid = #{hzid,jdbcType=BIGINT}
+    </if>
+    <if test="fartherids != null">
+    	and fatherid in 
+    	<foreach item="item" index="index" collection="fartherids" open="(" separator="," close=")">  
+		  #{item}  
+		 </foreach> 
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

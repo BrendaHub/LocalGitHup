@@ -63,4 +63,9 @@ public interface IHzsfxxService {
     Long addCost(Hzxx hzxx, String date, String cost, String desc, String[] images);
   //拼接出患者某天的所有数据，返回JSON格式串
   	String getCurrentDateTNB(Long hzid, String date);
+  	
+  	List<Hzsfxx> findByListDateRang(Long hzid, String itemcode, Long startDate, Long endDate);
+  	
+  	//查询hzsfxx表中的一般数据记录信息
+  	List<Hzsfxx> findListDateRangByTemp3(Long hzid, String temp3, Long startDate, Long endDate);
 }

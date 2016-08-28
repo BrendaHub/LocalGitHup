@@ -18,4 +18,6 @@ public interface IYinshiService {
 	int updateByPrimaryKey(TnbYinshi record);
 	
 	List<TnbYinshi> getYinshiListByHzid_date(Long hzid, String itemcodeprefix, String date);
+	
+	List<TnbYinshi> getYinshilistByDateRang(Long hzid, Long startDate, Long enddate);
 }

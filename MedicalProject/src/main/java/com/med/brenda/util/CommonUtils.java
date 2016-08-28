@@ -41,6 +41,40 @@ public class CommonUtils {
 		return longDate;
 	}
 	
+	public static int getAge(Date birthDay) throws Exception { 
+        //获取当前系统时间
+        Calendar cal = Calendar.getInstance(); 
+        //如果出生日期大于当前时间，则抛出异常
+        if (cal.before(birthDay)) { 
+            throw new IllegalArgumentException( 
+                "The birthDay is before Now.It's unbelievable!"); 
+        } 
+        //取出系统当前时间的年、月、日部分
+        int yearNow = cal.get(Calendar.YEAR); 
+        int monthNow = cal.get(Calendar.MONTH); 
+        int dayOfMonthNow = cal.get(Calendar.DAY_OF_MONTH); 
+         
+        //将日期设置为出生日期
+        cal.setTime(birthDay); 
+        //取出出生日期的年、月、日部分  
+        int yearBirth = cal.get(Calendar.YEAR); 
+        int monthBirth = cal.get(Calendar.MONTH); 
+        int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH); 
+        //当前年份与出生年份相减，初步计算年龄
+        int age = yearNow - yearBirth; 
+        //当前月份与出生日期的月份相比，如果月份小于出生月份，则年龄上减1，表示不满多少周岁
+        if (monthNow <= monthBirth) { 
+            //如果月份相等，在比较日期，如果当前日，小于出生日，也减1，表示不满多少周岁
+            if (monthNow == monthBirth) { 
+                if (dayOfMonthNow < dayOfMonthBirth) age--; 
+            }else{ 
+                age--; 
+            } 
+        } 
+        logger.debug("age:"+age);
+        return age; 
+    }
+	
 	public static String getSendSMS(String sfzcode, String downloadurl){
 		StringBuilder sb = new StringBuilder("欢迎使用糖宝随访系统，您的用户名为：");
 		sb.append(sfzcode);
@@ -201,7 +235,7 @@ public class CommonUtils {
 		return result;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 //		List<Long> list = new CommonUtils().get_10Date("20180812");
 //		System.out.println("===========================================");
 //		list.stream().forEach(a ->{
@@ -209,12 +243,16 @@ public class CommonUtils {
 //			System.out.println(CommonUtils.transferLongToDate(a));
 //		});
 //		CommonUtils.parseLongDatetoJson(1470931200000l);
-		 try {
-			System.out.println( CommonUtils.parseLongDatetoJson(CommonUtils.getTimeInMillisByDate("20160812")).get("Mon"));
-			//System.out.println(CommonUtils.getTimeInMillisByDate("20160812"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		 try {
+//			System.out.println( CommonUtils.parseLongDatetoJson(CommonUtils.getTimeInMillisByDate("20160812")).get("Mon"));
+//			//System.out.println(CommonUtils.getTimeInMillisByDate("20160812"));
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		Long birthday = getTimeInMillisByDate("20121202");
+		Date date= new Date(birthday);
+		System.out.println(getAge(date));
+		
 	}
 }

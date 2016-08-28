@@ -3,6 +3,7 @@ package com.med.brenda.controller.api.patient;
 import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -349,7 +350,9 @@ public class PatientApi {
 					Long _birthday =  perfectJsoninfo.getLong("birthday");
 					Long _diagnosisdate = perfectJsoninfo.getLong("diagnosisdate");
 					String _sex = perfectJsoninfo.getString("sex");
-					hzxx.setCSRQ(_birthday);
+					hzxx.setCSRQ(_birthday);//根据生日计算出年龄
+					int age = CommonUtils.getAge(new Date(_birthday));
+					hzxx.setAGE(String.valueOf(age));
 					hzxx.setNFMQZSJ(String.valueOf(_diagnosisdate));
 					hzxx.setMZ(_nation);
 					hzxx.setSEX(_sex);

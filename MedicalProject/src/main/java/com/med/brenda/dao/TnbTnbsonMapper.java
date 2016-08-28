@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.med.brenda.model.TnbTnbson;
+import com.med.brenda.model.TnbYinshi;
 
 public interface TnbTnbsonMapper {
     int deleteByPrimaryKey(Long id);
@@ -21,4 +22,6 @@ public interface TnbTnbsonMapper {
     List<TnbTnbson> findFeedListByHzid_Date(Map<String, Object> param);
     
     int findFeedListByHzid_DateCount(Map<String, Object> param);
+    
+    List<TnbTnbson> getTnbsonListByInFatherId(Map<String, Object> param);
 }

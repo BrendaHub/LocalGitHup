@@ -21,6 +21,25 @@ public class GlobalVariables {
 	public static String strPwd = "YTIAKBRB";                 //密码（由华兴软通提供）
 	public static String strSourceAdd = "";                   //子通道号，可为空（预留参数一般为空）
 	public static final int DEFAULT_PAGE_SIZE = 20;		//系统默认翻页每页多少条
+	
+	public static String YINSHI_ITEMCODE = "021";//饮食
+	public static String YUNDONG_ITEMCODE = "022";//运行
+	public static String ZHENGZHUANG_ITEMCODE  = "023";//症状
+	public static String XUETANG_ITEMCODE = "015";//血糖
+	public static String YITAOSU_ITEMCODE = "016"; //胰岛素
+	public static String COMMON_ITEMCODE = "014";// 一般清况，itemcode的值
+	public static String TIWEN_TEMP5_SUB = "014002";//体温标识， temp3的值
+	public static String XUEYA_TEMP5_SUB = "014003";//血压标识， temp3的值
+	public static String SUIMIAN_TEMP5_SUB = "014001";//睡眠标识， temp3的值
+	public static String SHENGZHANGSHUQU_ITEMCODE = "001";//生长数据， 身高，体重，头围，胸围，上臂围， 肱三厚度
+	public static String HEIGHT_TMPE5_SUB = "001001";//身高
+	public static String WEIGHT_TMPE5_SUB = "001002";//体重
+	public static String TOUWEI_TMPE5_SUB = "001003";//头围
+	public static String XONGWEI_TMPE5_SUB = "001004";//胸围
+	public static String SHANGBIWEI_TMPE5_SUB = "001005";//上臂围
+	public static String GONGSANHOUTU_TMPE5_SUB = "001006";//肱三厚度
+	
+	
 
 	static Map<String,String> bloodSugar  = new HashMap<>() ;
 	{

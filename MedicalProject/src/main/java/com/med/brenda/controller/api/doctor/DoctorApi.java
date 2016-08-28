@@ -119,7 +119,7 @@ public class DoctorApi {
 		}
 	}
 
-	@RequestMapping(value="/FeedTNBHEData",produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@RequestMapping(value="/addPatient",produces = "application/json; charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	@ApiOperation(value = "医生注册新患者", httpMethod = "POST", response = JSONObject.class, notes = "医生注册新患者")
 	public String addPatient(@ApiParam(required = true, name = "ysid", value = "医生ID (long类型)") @RequestParam(value="ysid",required=true)Long ysid,

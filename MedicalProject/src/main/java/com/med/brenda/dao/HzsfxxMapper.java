@@ -25,4 +25,9 @@ public interface HzsfxxMapper {
     Hzsfxx findByHzidDataItemCode(Map<String,Object> param);
     
     Hzsfxx findByHzidDateTemp3(Map<String, Object> param);
+    
+    List<Hzsfxx> findByListDateRang(Map<String, Object> param);
+    
+    List<Hzsfxx> findListDateRangByTemp3(Map<String, Object> param);
+    
 }

@@ -19,4 +19,6 @@ public interface TnbYinshiMapper {
     int updateByPrimaryKey(TnbYinshi record);
     
     List<TnbYinshi> getYinshiListByHzid_date(Map<String, Object> param);
+    
+    List<TnbYinshi> getYinshiListByInFatherId(Map<String, Object> param);
 }

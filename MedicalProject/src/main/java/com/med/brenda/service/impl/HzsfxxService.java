@@ -631,5 +631,29 @@ public class HzsfxxService implements IHzsfxxService {
 		return result.toJSONString();
 	}
 
+
+
+	@Override
+	public List<Hzsfxx> findByListDateRang(Long hzid, String itemcode, Long startDate, Long endDate) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("hzid", hzid);
+		param.put("itemcode", itemcode);
+		param.put("startdate", startDate);
+		param.put("enddate", endDate);
+		return hzsfxxDao.findByListDateRang(param);
+	}
+
+
+
+	@Override
+	public List<Hzsfxx> findListDateRangByTemp3(Long hzid, String temp3, Long startDate, Long endDate) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("hzid", hzid);
+		param.put("itemcode", temp3);
+		param.put("startdate", startDate);
+		param.put("enddate", endDate);
+		return hzsfxxDao.findListDateRangByTemp3(param);
+	}
+
 	
 }

@@ -3,6 +3,7 @@ package com.med.brenda.service;
 import java.util.List;
 
 import com.med.brenda.model.TnbTnbson;
+import com.med.brenda.model.TnbYinshi;
 
 public interface ITnbTnbsonService {
 	int deleteByPrimaryKey(Long id);
@@ -19,4 +20,6 @@ public interface ITnbTnbsonService {
 	
 	List<TnbTnbson> findFeedList(Long hzid, String itemcode, String date);
 	int findByHzidDate(Long hzid, Long date, String itemcode);
+	
+	List<TnbTnbson> getTnbsonlistByDateRang(Long hzid,String itemcode, Long startDate, Long enddate);
 }
