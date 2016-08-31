@@ -54,6 +54,14 @@ public class DoctorApi {
 	@Autowired
 	private IAppDlLogService appService;
 	
+	/**
+	 * 医生引荐的患者下载
+	 * dlapp
+	 * @param phone
+	 * @param sfcode
+	 * @return
+	 * ModelAndView
+	 */
 	@RequestMapping(value="/dlapp/{phone}/{sfcode}", method = RequestMethod.GET)
 	@ApiOperation(value = "App下载专用跳转Action", httpMethod = "GET", response = JSONObject.class, notes = "App下载专用跳转Action")
 	public ModelAndView dlapp(@ApiParam(required = true, name = "phone", value = "手机号 (String类型)") @PathVariable String phone,
@@ -80,6 +88,20 @@ public class DoctorApi {
 			//提示错识
 			return new ModelAndView("error");
 		}
+	}
+	
+	/**
+	 * 患者
+	 * dlapp
+	 * @param phone
+	 * @param sfcode
+	 * @return
+	 * ModelAndView
+	 */
+	@RequestMapping(value="/dlapp", method = RequestMethod.GET)
+	@ApiOperation(value = "App下载专用跳转Action", httpMethod = "GET", response = JSONObject.class, notes = "App下载专用跳转Action")
+	public ModelAndView dlappnp(){
+		return new ModelAndView("dl/appdl");
 	}
 	
 	@RequestMapping(value="/DoctorLogin/{ysdlh}/{yspwd}", method = RequestMethod.POST)
