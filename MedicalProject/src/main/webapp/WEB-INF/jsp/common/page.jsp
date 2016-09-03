@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div>
-	    <div>
+<div class="pages">
+	    <div class="pagination">
 	    <c:if test="${pageIndex < pageCount}">
             <a onclick="toPage(${pageIndex+1})" class="next" href="#this;">
             	下一页 &gt;
@@ -32,7 +32,7 @@
                 </c:if>
                 <li>
                     <a onclick="toPage(${pageCount})">${pageCount} </a>
-                </li>
+                <>
             </c:when>
             <c:when test="${pageIndex==10 and pageCount < 13 }">
             	<a onclick="toPage(1)">1 </a>

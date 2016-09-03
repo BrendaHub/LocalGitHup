@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,13 +19,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.med.brenda.controller.common.BaseController;
 import com.med.brenda.controller.common.Query;
+import com.med.brenda.model.AppDlLog;
 import com.med.brenda.model.Hzxx;
 import com.med.brenda.model.SysDlDayLog;
 import com.med.brenda.model.SysDlWeekLog;
+import com.med.brenda.service.IAppDlLogService;
 import com.med.brenda.service.IHzxxService;
 import com.med.brenda.service.ISysDlDayLogService;
 import com.med.brenda.service.ISysDlWeekLogService;
+import com.med.brenda.util.CommonUtils;
 import com.med.brenda.util.GlobalVariables;
+import com.med.brenda.util.HttpSend;
+import com.med.brenda.util.MD5;
 
 /**
  * 患者信息业务业
@@ -49,6 +55,8 @@ public class HzxxController extends BaseController {
 	private ISysDlDayLogService dlDayLogService;
 	@Autowired
 	private ISysDlWeekLogService dlWeekLogService;
+	@Autowired
+	private IAppDlLogService appService;
 	
 	/**
 	 * 血糖数据综合分析， 有中值，平均值，和
@@ -309,10 +317,18 @@ public class HzxxController extends BaseController {
 		return resultMap;
 	}
 
-	@RequestMapping(value="/list", method=RequestMethod.GET)
-	public ModelAndView hzlist(HttpServletRequest request){
+	@RequestMapping(value="/list")
+	public ModelAndView hzlist(HttpServletRequest request , String pageNo, String keyworld){
+		
+		System.out.println(">>>>>>>>>>>>>>>"+pageNo);
+		System.out.println(">>>>>>>>>>keyworld>>>>>"+keyworld);
 		//创建出一个查询对象
 		Query query = new Query();
+		if(StringUtils.isBlank(keyworld)){
+			;
+		}else{
+			query.setKeywords(keyworld);
+		}
 		int count = hzxxService.findListCount(query);
 		//初始化翻页参数
 		initPageFlag(request, query, GlobalVariables.DEFAULT_PAGE_SIZE);
@@ -325,9 +341,71 @@ public class HzxxController extends BaseController {
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("pageCount", pageCount);
         resultMap.put("pageSize", query.getPageSize());
-        resultMap.put("pageIndex", query.getPageIndex());
+        resultMap.put("pageIndex", query.getPageNo());
         resultMap.put("pageTotal", count);
+        resultMap.put("pageNo", query.getPageNo());
         resultMap.put("result", list);
+        resultMap.put("keyworld", query.getKeywords());
 		return new ModelAndView("hzxx/index",resultMap);
+	}
+	
+	//去添加用户
+	@RequestMapping(value="/toAddUser", method=RequestMethod.GET)
+	public ModelAndView toAddUser(HttpServletRequest request){
+		return new ModelAndView("hzxx/add");
+	}
+	//去添加用户
+	@RequestMapping(value="/AddHZ", method=RequestMethod.POST)
+	public ModelAndView AddHZ(HttpServletRequest request, Hzxx hzxx){
+		System.out.println(hzxx.getHZNAME());
+		System.out.println(hzxx.getPHONE());
+		System.out.println(hzxx.getSFZCODE());
+		System.out.println(hzxx.getTEMP1());
+		System.out.println(hzxx.getTEMP3());
+		Map<String, Object> resultMap = new HashMap<>();
+	    //执行添加患者操作， 先得到初始密码
+		String init_pwd = "";
+		if(!StringUtils.isEmpty(hzxx.getSFZCODE()) && hzxx.getSFZCODE().length() > 6){
+			init_pwd = hzxx.getSFZCODE().substring(0,6);
+		}
+		if(StringUtils.isNotBlank(init_pwd)){
+			init_pwd = MD5.GetMD5Code(init_pwd);
+		}
+		hzxx.setPASSWORD(init_pwd);
+		
+		int rowid = hzxxService.insert(hzxx);
+		
+		if(rowid > 0 ){
+			//添加成功后，向新的患者下发短信
+			String replaseStr  = hzxx.getSFZCODE().length()>17?hzxx.getSFZCODE().substring(9, 15):"";
+			String _sfzCode = hzxx.getSFZCODE().replace(replaseStr,"*******");
+			String dlUrl = GlobalVariables.WEBSITE_URL+"/api/doctor/dlapp/"+hzxx.getPHONE()+"/"+_sfzCode;
+			String smsContent = CommonUtils.getSendSMS(_sfzCode, dlUrl);
+			String strTim = null;//HttpSend.paraTo16("2012-2-16 12:00:00"); //定时发送时间
+			String strSchSmsParam = "reg=" + GlobalVariables.strReg + "&pwd=" + GlobalVariables.strPwd + "&sourceadd=" +
+					GlobalVariables.strSourceAdd + "&tim=" + strTim + "&phone=" + hzxx.getPHONE() + "&content=" + smsContent;
+			//定时短信
+			String strRes = HttpSend.postSend(GlobalVariables.strSchSmsUrl, strSchSmsParam);
+			if(strRes.startsWith("result=0")){
+				;
+			}else{
+				//添加短信发送失败的日志
+				AppDlLog appl = new AppDlLog();
+				appl.setMobile(hzxx.getPHONE());
+				appl.setSfzcode(hzxx.getSFZCODE()+"短信下发失败");
+				appl.setCreatetime(System.currentTimeMillis());
+				
+				rowid = appService.insert(appl);
+			}
+			return new ModelAndView("redirect:/HZXX/list?ff="+Math.random());
+		}else{
+			resultMap.put("message", "新增患者失败！");
+			return new ModelAndView("/HZXX/toAddUser", resultMap);
+		}
+	}
+	//去修改用户
+	@RequestMapping(value="/toEditUser", method=RequestMethod.GET)
+	public ModelAndView toEditUser(HttpServletRequest request){
+		return new ModelAndView("hzxx/edit");
 	}
 }

@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="inline pull-right page">
-	${pageCount } 条记录 ${pageIndex }/${pageCount } 页
+	${pageTotal } 条记录 ${pageIndex }/${pageCount } 页
 	<c:if test="${pageIndex>=2}">
-            <a onclick="toPage(${pageIndex-1})" class="current prev" href="#this;">
+            <a onclick="toPage(${pageIndex-1})" class="current prev" href="##">
                 <i></i>
                 &lt;上一页 
             </a>
@@ -14,7 +14,7 @@
                         <a href="#" class="current">${index}</a>
                     </c:if>
                     <c:if test="${pageIndex!=index}">
-                        <a onclick="toPage(${index})">${index} </a>
+                        <a href="javascript:toPage('${index}')">${index} </a>
                     </c:if>
                 </c:forEach>
             </c:when>
@@ -79,7 +79,7 @@
             </c:otherwise>
         </c:choose>   
         <c:if test="${pageIndex < pageCount}">
-            <a onclick="toPage(${pageIndex+1})" class="next" href="#this;">
+            <a onclick="toPage(${pageIndex+1})" class="next" href="##">
             	下一页 &gt;
                 <i></i>
             </a>

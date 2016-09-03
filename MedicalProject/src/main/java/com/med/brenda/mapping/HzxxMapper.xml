@@ -67,11 +67,12 @@
       <arg column="TEMP10" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
-  <!-- sql id="query_where" >
+  <sql id="query_where" >
 		<trim prefix="where" prefixOverrides="and">
-			<if test="userId  !=null">
-				userId =#{userId}
+			<if test="keyworld  !=null">
+				HZNAME like CONCAT('%',#{keyworld},'%')
 			</if>
+			<!-- 
 			<if test="collectionType != null  ">
 				and  CollectionType =#{collectionType}
 			</if>
@@ -87,8 +88,9 @@
 			<if test="startTime != null">
 				and AddTime  &lt;=  #{startTime}
 			</if>
+			 -->
 		</trim>
-	</sql -->
+	</sql>
   <sql id="Base_Column_List">
     ID, HZNAME, SEX, AGE, SFZCODE, PHONE, JZSID, GMSID, JYYYID, WDBSID, DLH, PASSWORD, 
     MZ, CSRQ, XX, RHXX, LXRNAME, GX, YX, QQ, WX, CSTZ, CSSC, CSYZ, CSJG, ZZYCBC, MQYQBCCS, 
@@ -118,14 +120,14 @@
   <select id="findListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
   	select 
     count(1)
-    from s_hzxx
-    <!--include refid="query_where"/--> 
+    from s_hzxx 
+    <include refid="query_where"/> 
   </select>
   <select id="findList" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from s_hzxx
-    <!--include refid="query_where"/--> order by id desc limit #{pageNo},#{pageSize}
+    <include refid="query_where"/> order by id desc limit #{pageNo},#{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from s_hzxx

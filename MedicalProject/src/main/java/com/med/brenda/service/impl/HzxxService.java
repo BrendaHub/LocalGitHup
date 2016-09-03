@@ -60,11 +60,13 @@ public class HzxxService implements IHzxxService {
 	@Override
 	public int findListCount(Query query) {
 		Map<String,Object> conditionMap = new HashMap<>();
+		conditionMap.put("keyworld", query.getKeywords());
 		return hzxxDao.findListCount(conditionMap);
 	}
 	@Override
 	public List<Hzxx> findList(Query query) {
 		Map<String,Object> conditionMap = new HashMap<>();
+		conditionMap.put("keyworld", query.getKeywords());
 		conditionMap.put("pageNo", query.getPageIndex());
 		conditionMap.put("pageSize", query.getPageSize());
 		return hzxxDao.findList(conditionMap);

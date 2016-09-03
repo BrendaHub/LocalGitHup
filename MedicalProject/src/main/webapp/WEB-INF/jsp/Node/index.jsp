@@ -62,7 +62,7 @@
     $(function () {
         
 		$('#addnew').click(function(){
-				window.location.href="add.html";
+				window.location.href="/user/toNodeAdd?f="+Math.random();
 		 });
     });
 	function del(id)
@@ -72,7 +72,7 @@
 		if(confirm("确定要删除吗？"))
 		{
 		
-			var url = "index.html";
+			var url = "/user/toNodeList?f="+Math.random();
 			
 			window.location.href=url;		
 		

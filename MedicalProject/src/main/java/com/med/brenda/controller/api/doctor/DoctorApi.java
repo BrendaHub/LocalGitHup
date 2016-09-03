@@ -217,7 +217,7 @@ public class DoctorApi {
 				long gzysxxid = gzysxxService.addGzysxx(yshz);
 			}
 			//添加成功后，向新的患者下发短信
-			String dlUrl = "http://api.doctor330.com/api/doctor/dlapp/"+modile+"/"+dlhCode;
+			String dlUrl = GlobalVariables.WEBSITE_URL+"/api/doctor/dlapp/"+modile+"/"+dlhCode;
 			String smsContent = CommonUtils.getSendSMS(dlhCode, dlUrl);
 			String strTim = null;//HttpSend.paraTo16("2012-2-16 12:00:00"); //定时发送时间
 			String strSchSmsParam = "reg=" + GlobalVariables.strReg + "&pwd=" + GlobalVariables.strPwd + "&sourceadd=" +

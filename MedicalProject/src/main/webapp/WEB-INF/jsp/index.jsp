@@ -11,7 +11,7 @@
 <body>
 <div class="header">
     <div class="dl-title">
-        <img src="/Images/top.png" height="35" width="100"/>
+    	<p>糖尿病随访系统</p>
     </div>
     <div class="dl-log">
     	欢迎您，<span class="dl-log-user">${user.username }</span>
@@ -22,8 +22,8 @@
     <div class="dl-main-nav">
         <div class="dl-inform"><div class="dl-inform-title"><s class="dl-inform-icon dl-up"></s></div></div>
         <ul id="J_Nav"  class="nav-list ks-clear">
-            <li class="nav-item dl-selected"><div class="nav-item-inner nav-home">系统管理</div></li>		
-            <li class="nav-item dl-selected"><div class="nav-item-inner nav-order">业务管理</div></li>
+            <li class="nav-item dl-selected"><div class="nav-item-inner nav-home">业务管理</div></li>	
+            <li class="nav-item dl-selected"><div class="nav-item-inner nav-user">系统管理</div></li>
         </ul>
     </div>
     <ul id="J_NavContent" class="dl-tab-conten">
@@ -33,28 +33,36 @@
 <script type="text/javascript" src="/Js/bui-min.js"></script>
 <script type="text/javascript" src="/Js/main-min.js"></script>
 <script type="text/javascript" src="/Js/config-min.js"></script>
+<!-- 
+
+      							//{id:'12',text:'机构管理',href:'Node/index.html'},
+      							//{id:'3',text:'角色管理',href:'Role/index.html'},
+      							//{id:'4',text:'用户管理',href:'User/index.html'},
+      							//{id:'6',text:'菜单管理',href:'Menu/index.html'}
+ -->
 <script>
 BUI.use('common/main',function(){
     var config = [
-      			{id:'1',menu:[
+					{id:'7',homePage : '9',menu:[{text:'业务管理',items:[
+               									{id:'9',text:'患者列表',href:'/HZXX/list'},
+               									{id:'91',text:'血糖月数据',href:'/HZXX/tofenxi1/5'},
+               									{id:'92',text:'血糖周数据',href:'/HZXX/toweekfenxi1/5'},
+               									{id:'93',text:'血糖综合分析',href:'/HZXX/sysfx'},
+               									{id:'94',text:'平均值',href:'/HZXX/sysavg'},
+               									{id:'95',text:'中位值',href:'/HZXX/sysmed'}
+               									]}
+               									]},
+      				{id:'1',homePage : '4',menu:[
       						{text:'系统管理',items:[
-      							{id:'12',text:'机构管理',href:'Node/index.html'},
-      							{id:'3',text:'角色管理',href:'Role/index.html'},
-      							{id:'4',text:'用户管理',href:'User/index.html'},
-      							{id:'6',text:'菜单管理',href:'Menu/index.html'}
+      			      				{id:'4',text:'用户管理',href:'/user/toUserList?pageNo=1&ff='+Math.random()},
+								  {id:'11',text:'修改密码',href:'/user/tomodifypwd'},
+								  {id:'12',text:'机构管理',href:'/user/toNodeList'},
+	      							{id:'6',text:'菜单管理',href:'/user/toMenuList'}
       							]
       						}
       						]
-      					},
-      					{id:'7',homePage : '9',menu:[{text:'业务管理',items:[
-      									{id:'9',text:'患者列表',href:'/HZXX/list'},
-      									{id:'91',text:'血糖月数据',href:'/HZXX/tofenxi1/5'},
-      									{id:'92',text:'血糖周数据',href:'/HZXX/toweekfenxi1/5'},
-      									{id:'93',text:'血糖综合分析',href:'/HZXX/sysfx'},
-      									{id:'94',text:'平均值',href:'/HZXX/sysavg'},
-      									{id:'95',text:'中位值',href:'/HZXX/sysmed'}
-      									]}
-      									]}
+      					}
+      					
       				];
     new PageUtil.MainPage({
         modulesConfig : config
