@@ -20,7 +20,7 @@ public class GlobalVariables {
 	public static String strReg = "101100-WEB-HUAX-082478";   //注册号（由华兴软通提供）
 	public static String strPwd = "YTIAKBRB";                 //密码（由华兴软通提供）
 	public static String strSourceAdd = "";                   //子通道号，可为空（预留参数一般为空）
-	public static final int DEFAULT_PAGE_SIZE = 2;		//系统默认翻页每页多少条
+	public static final int DEFAULT_PAGE_SIZE = 12;		//系统默认翻页每页多少条
 	
 	public static final String WEBSITE_URL = "http://api.doctor330.com/";
 	
