@@ -141,7 +141,8 @@ public class PatientApi {
 			subbody.put("Name", hz.getHZNAME());
 			subbody.put("Sex", hz.getSEX());
 			subbody.put("Date", hz.getCSRQ());
-			subbody.put("Headurl", hz.getDLH());
+//			subbody.put("Headurl", hz.getDLH());
+			subbody.put("Headurl",hz.getTEMP2());
 			subbody.put("Bjflag", "对应不上什么值");
 			body.put("_data", subbody);
 			result.put("_body", body);
@@ -373,7 +374,7 @@ public class PatientApi {
 	}
 	
 	@ResponseBody
-	@ApiOperation(value = "用户每天成功登录系统后的初始化数据+【获取主页数据接口（暂为实现）】 ，｜  发布时间： 2016-08-11 23:45 ", httpMethod = "POST", response = String.class, notes = "")
+	@ApiOperation(value = "用户每天成功登录系统后的初始化数据+【获取主页数据接口（功能已实现）】 ，｜  发布时间： 2016-08-11 23:45 ", httpMethod = "POST", response = String.class, notes = "")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
 	@RequestMapping(value="/initHZSFXX",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
 	public String initHzsfxx(@ApiParam(required = true, name = "hzid", value = "患者ID") @RequestParam(value="hzid",required=true) String hzid,
@@ -404,7 +405,7 @@ public class PatientApi {
 				 hzsfxxService.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(date));
 			 }
 
-			 //查询sf的数据返回
+			 //查询当前用户的随访数据，
 			String backStr = "";
 			 if(mon == 0){//日期不变
 				backStr = hzsfxxService.getCurrentDateTNB(Long.parseLong(hzid), date);

@@ -62,7 +62,7 @@ public interface IHzsfxxService {
     Long addInspectData(Hzxx hzxx, String date);
     Long addCost(Hzxx hzxx, String date, String cost, String desc, String[] images);
   //拼接出患者某天的所有数据，返回JSON格式串
-  	String getCurrentDateTNB(Long hzid, String date);
+  	String getCurrentDateTNB(Long hzid, String date) throws Exception;
   	
   	List<Hzsfxx> findByListDateRang(Long hzid, String itemcode, Long startDate, Long endDate);
   	

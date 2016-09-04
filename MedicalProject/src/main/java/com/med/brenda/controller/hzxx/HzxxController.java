@@ -372,6 +372,7 @@ public class HzxxController extends BaseController {
 			init_pwd = MD5.GetMD5Code(init_pwd);
 		}
 		hzxx.setPASSWORD(init_pwd);
+		hzxx.setDLH(hzxx.getSFZCODE());
 		
 		int rowid = hzxxService.insert(hzxx);
 		
