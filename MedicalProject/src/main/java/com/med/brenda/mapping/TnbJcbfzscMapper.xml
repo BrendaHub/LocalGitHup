@@ -60,6 +60,21 @@
     delete from S_TNB_JCBFZSC
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  <select id="findHzidItemCodeDate"  parameterType="java.util.Map"  resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from S_TNB_JCBFZSC
+    where 1=1
+    <if test="hzid != null">
+    	and hzid = #{hzid,jdbcType=BIGINT}
+    </if>
+    <if test="itemcode != null">
+    	and itemcode = #{itemcode,jdbcType=VARCHAR}
+    </if>
+    <if test="_date != null">
+    	and datarq = #{_date,jdbcType=VARCHAR}
+    </if>
+  </select>
   <insert id="insert" parameterType="com.med.brenda.model.TnbJcbfzsc">
   <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 		SELECT LAST_INSERT_ID() AS id

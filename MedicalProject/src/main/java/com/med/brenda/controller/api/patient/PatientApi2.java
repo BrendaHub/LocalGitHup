@@ -1,6 +1,7 @@
 package com.med.brenda.controller.api.patient;
 
 import java.text.ParseException;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,7 @@ import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.service.IHzxxService;
 import com.med.brenda.service.ITnbJcbfzscService;
 import com.med.brenda.service.ITnbTnbsonService;
+import com.med.brenda.service.impl.HzsfxxService;
 import com.med.brenda.util.CommonUtils;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -640,6 +642,27 @@ public class PatientApi2 {
 		}
 	}
 	
+	/**
+	 * 获取某个用户的生长数据
+	 * @param hzid
+	 * @param token
+	 * @param itemcode
+	 * @param jsondata
+	 * @param date
+	 * @return
+	 */
+	@ResponseBody
+	@ApiOperation(value = "获取某个指定的生长数据，暂不用｜  发布时间： 2016-09-04 14:10 ", httpMethod = "GET", response = String.class, notes = "获取某个指定的生长数据，暂不用｜  发布时间： 2016-09-04 14:10 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/GETGrowthData/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String GETGrowthData(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "itemcode", value = "添加项目编号：睡眠：014001；体温：014002；血压：014003") @RequestParam(value="itemcode",required=true) String itemcode,
+			@ApiParam(required = true, name = "date", value = "添加症状对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		return result.toJSONString();
+	}
+	
 	//添加用户药信息
 	@ResponseBody
 	@ApiOperation(value = "添加用药信息数据，｜  发布时间： 2016-08-17 15:10 ", httpMethod = "POST", response = String.class, notes = "添加用户药信息数据，｜  发布时间： 2016-08-17 15:10 ")
@@ -760,6 +783,70 @@ public class PatientApi2 {
 		}
 	}
 	
+
+	/**
+	 * 获取某个用户的用户药数据
+	 * @param hzid
+	 * @param token
+	 * @param itemcode
+	 * @param jsondata
+	 * @param date
+	 * @return
+	 */
+	@ResponseBody
+	@ApiOperation(value = "获取某个用户的用户药数据｜  发布时间： 2016-09-04 14:10 ", httpMethod = "GET", response = String.class, notes = "获取某个用户的用户药数据｜  发布时间： 2016-09-04 14:10 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/GETUserDrugData/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String GETUserDrugData(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "itemcode", value = "添加项目编号：用药：003；") @RequestParam(value="itemcode",required=true) String itemcode,
+			@ApiParam(required = true, name = "date", value = "添加症状对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(hzid)){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		}
+		if(StringUtils.isBlank(itemcode)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "itemcode无效");
+			 return result.toJSONString();
+		}
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 4);//
+			 result.put("_msg", "日期无效");
+			 return result.toJSONString();
+		}
+		List<Hzsfxx> userDrugList = null;
+		try {
+			userDrugList = hzsfxxService.findListByHzidTemp3Date(Long.parseLong(hzid), itemcode, CommonUtils.getTimeInMillisByDate(date));
+			JSONArray arr = new JSONArray();
+			if(userDrugList != null && userDrugList.size() > 0){
+				JSONObject yy = new JSONObject();
+				for(Iterator<Hzsfxx> it = userDrugList.iterator(); it.hasNext(); ){
+					Hzsfxx ud = (Hzsfxx)it.next();
+					yy.put("YYDATE", CommonUtils.transferLongToDate(ud.getSFDATE()));
+					yy.put("YYTIME", ud.getYYTIME());
+					yy.put("YWNAME", ud.getYWNAME());
+					yy.put("YWJL", ud.getYWJL());
+					yy.put("YYTJ", ud.getYYTJ());
+					arr.add(yy);
+					yy = null;
+					yy = new JSONObject();
+				}
+			}
+			result.put("_st", 1);
+			result.put("_msg", "操作成功");
+			result.put("_date", arr.toJSONString());
+			return result.toJSONString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("_st", 5);//
+			 result.put("_msg", "操作失败");
+			 return result.toJSONString();
+		}
+	}
+	
 	//添加检查化验数据
 	@ResponseBody
 	@ApiOperation(value = "添加检查化验数据，｜  发布时间： 2016-08-17 15:10 ", httpMethod = "POST", response = String.class, notes = "添加检查化验数据，｜  发布时间： 2016-08-17 15:10 ")
@@ -855,6 +942,62 @@ public class PatientApi2 {
 			result.put("_st", 5);//
 			result.put("_msg", "修改失败");
 			return result.toJSONString();
+		}
+	}
+	
+	/**
+	 * 获取检查化验数据
+	 * @param hzid
+	 * @param token
+	 * @param itemcode
+	 * @param jsondata
+	 * @param date
+	 * @return
+	 */
+	@ResponseBody
+	@ApiOperation(value = "获取检查化验数据｜  发布时间： 2016-09-04 14:10 ", httpMethod = "GET", response = String.class, notes = "获取检查化验数据｜  发布时间： 2016-09-04 14:10 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/GETInspectData/{hzid}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String GETInspectData(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
+			@ApiParam(required = true, name = "itemcode", value = "添加项目编号：检查化验：018；") @RequestParam(value="itemcode",required=true) String itemcode,
+			@ApiParam(required = true, name = "date", value = "添加症状对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(hzid)){
+			 result.put("_st", 0);//
+			 result.put("_msg", "患者ID无效");
+			 return result.toJSONString();
+		}
+		if(StringUtils.isBlank(itemcode)){
+			 result.put("_st", 2);//
+			 result.put("_msg", "itemcode无效");
+			 return result.toJSONString();
+		}
+		if(StringUtils.isBlank(date)){
+			 result.put("_st", 4);//
+			 result.put("_msg", "日期无效");
+			 return result.toJSONString();
+		}
+		List<TnbJcbfzsc> userDrugList = null;
+		try {
+			userDrugList = TnbJcbfzscService.findHzidItemCodeDate(Long.parseLong(hzid), itemcode, date);
+			JSONArray arr = new JSONArray();
+			if(userDrugList != null && userDrugList.size() > 0){
+				for(Iterator<TnbJcbfzsc> it = userDrugList.iterator(); it.hasNext(); ){
+					TnbJcbfzsc jcb = (TnbJcbfzsc)it.next();
+					String _json = JSON.toJSONString(jcb);
+					arr.add(_json);
+				}
+			}
+			result.put("_st", 1);
+			result.put("_msg", "操作成功");
+			result.put("_date", arr.toJSONString());
+			return result.toJSONString();
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("_st", 5);
+			 result.put("_msg", "操作失败");
+			 return result.toJSONString();
 		}
 	}
 }

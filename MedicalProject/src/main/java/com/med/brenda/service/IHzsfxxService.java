@@ -68,4 +68,7 @@ public interface IHzsfxxService {
   	
   	//查询hzsfxx表中的一般数据记录信息
   	List<Hzsfxx> findListDateRangByTemp3(Long hzid, String temp3, Long startDate, Long endDate);
+  	
+  	//根据患者ＩＤ ， temp3 , 日期查询出用户的随访信息
+  	List<Hzsfxx> findListByHzidTemp3Date(Long hzid, String temp3, Long date);
 }

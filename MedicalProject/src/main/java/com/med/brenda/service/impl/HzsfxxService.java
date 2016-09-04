@@ -773,5 +773,16 @@ public class HzsfxxService implements IHzsfxxService {
 		return hzsfxxDao.findListDateRangByTemp3(param);
 	}
 
+
+
+	@Override
+	public List<Hzsfxx> findListByHzidTemp3Date(Long hzid, String temp3, Long date) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("hzid", hzid);
+		param.put("temp3", temp3);
+		param.put("_date", date);
+		return null;
+	}
+
 	
 }

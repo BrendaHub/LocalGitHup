@@ -1,5 +1,9 @@
 package com.med.brenda.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -7,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.med.brenda.dao.HzsfxxMapper;
 import com.med.brenda.dao.TnbJcbfzscMapper;
 import com.med.brenda.model.TnbJcbfzsc;
 import com.med.brenda.service.ITnbJcbfzscService;
@@ -175,6 +178,15 @@ public class TnbJcbfzscService implements ITnbJcbfzscService {
 		}else{
 			return false;
 		}
+	}
+
+	@Override
+	public List<TnbJcbfzsc> findHzidItemCodeDate(Long hzid, String itemcode, String date) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("hzid", hzid);
+		param.put("itemcode", itemcode);
+		param.put("_date", date);
+		return tnbJcbfzscDao.findHzidItemCodeDate(param);
 	}
 	
 	

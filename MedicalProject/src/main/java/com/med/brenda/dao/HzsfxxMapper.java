@@ -30,4 +30,7 @@ public interface HzsfxxMapper {
     
     List<Hzsfxx> findListDateRangByTemp3(Map<String, Object> param);
     
+    //根据患者ＩＤ ， temp3 , 日期查询出用户的随访信息
+  	List<Hzsfxx> findListByHzidTemp3Date(Map<String, Object> param);
+    
 }

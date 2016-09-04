@@ -75,6 +75,7 @@ public class YinshiService implements IYinshiService {
 			int index = 0 ; 
 			for(Iterator<Hzsfxx> it = hzsfxxList.iterator(); it.hasNext(); ){
 				fartherids[index] = it.next().getID();
+				index++;
 			}
 			Map<String, Object> param = new HashMap<>();
 			param.put("hzid", hzid);
