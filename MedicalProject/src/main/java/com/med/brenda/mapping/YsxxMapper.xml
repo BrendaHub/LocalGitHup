@@ -43,6 +43,18 @@
     	and password = #{password,jdbcType=VARCHAR}
     </if>
   </select>
+  <select id="findYsxxByHzidAndType" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from S_YSXX
+    where 1=1
+    <if test="ystype != null">
+    	and ssksid = #{ystype,jdbcType=BIGINT}
+    </if>
+    <if test="_status != null">
+    	and temp2 = #{_status,jdbcType=VARCHAR}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from S_YSXX
     where id = #{id,jdbcType=BIGINT}

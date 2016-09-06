@@ -3,6 +3,7 @@ package com.med.brenda.controller.api.patient;
 import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.service.IHzxxService;
 import com.med.brenda.service.ITnbJcbfzscService;
 import com.med.brenda.service.ITnbTnbsonService;
-import com.med.brenda.service.impl.HzsfxxService;
 import com.med.brenda.util.CommonUtils;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
@@ -43,6 +43,8 @@ import com.wordnik.swagger.annotations.ApiResponse;
 @Controller
 @RequestMapping(value="/api/patient")
 public class PatientApi2 {
+	
+	Logger logger = Logger.getLogger(PatientApi2.class);
 
 	@Autowired
 	private ITnbTnbsonService tnbsonService;
@@ -820,25 +822,30 @@ public class PatientApi2 {
 		List<Hzsfxx> userDrugList = null;
 		try {
 			userDrugList = hzsfxxService.findListByHzidTemp3Date(Long.parseLong(hzid), itemcode, CommonUtils.getTimeInMillisByDate(date));
+			logger.debug("##########  userDrugList = " + JSON.toJSONString(userDrugList));
+			
 			JSONArray arr = new JSONArray();
 			if(userDrugList != null && userDrugList.size() > 0){
-				JSONObject yy = new JSONObject();
 				for(Iterator<Hzsfxx> it = userDrugList.iterator(); it.hasNext(); ){
 					Hzsfxx ud = (Hzsfxx)it.next();
+					JSONObject yy = new JSONObject();
 					yy.put("YYDATE", CommonUtils.transferLongToDate(ud.getSFDATE()));
 					yy.put("YYTIME", ud.getYYTIME());
 					yy.put("YWNAME", ud.getYWNAME());
 					yy.put("YWJL", ud.getYWJL());
 					yy.put("YYTJ", ud.getYYTJ());
 					arr.add(yy);
-					yy = null;
-					yy = new JSONObject();
 				}
+				result.put("_st", 1);
+				result.put("_msg", "操作成功");
+				result.put("_data", arr.toJSONString());
+				return result.toJSONString();
+			}else{
+				result.put("_st", 6);//
+				 result.put("_msg", "没有数据");
+				 return result.toJSONString();
 			}
-			result.put("_st", 1);
-			result.put("_msg", "操作成功");
-			result.put("_date", arr.toJSONString());
-			return result.toJSONString();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("_st", 5);//

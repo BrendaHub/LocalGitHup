@@ -1,6 +1,7 @@
 package com.med.brenda.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -61,6 +62,14 @@ public class YsxxService implements IYsxxService {
 	@Override
 	public Ysxx ysLogon(Map<String, String> map) {
 		return ysxxDao.ysLogon(map);
+	}
+
+	@Override
+	public List<Ysxx> findYsxxByHzidAndType(Long type, String status) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("ystype", type);
+		param.put("_status", status);
+		return ysxxDao.findYsxxByHzidAndType(param);
 	}
 
 }

@@ -254,7 +254,7 @@ public class CommonUtils {
 		Date date= new Date(birthday);
 		System.out.println(getAge(date));
 		
-		System.out.println(transferLongToDate(1470931200000l));
+		System.out.println(transferLongToDate(1470807735323l));
 		
 	}
 }

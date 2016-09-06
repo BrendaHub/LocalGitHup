@@ -781,7 +781,7 @@ public class HzsfxxService implements IHzsfxxService {
 		param.put("hzid", hzid);
 		param.put("temp3", temp3);
 		param.put("_date", date);
-		return null;
+		return hzsfxxDao.findListByHzidTemp3Date(param);
 	}
 
 	

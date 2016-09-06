@@ -810,3 +810,4 @@
 [DEBUG] [2016-09-03 11:03:16][org.springframework.beans.factory.support.DisposableBeanAdapter]Invoking destroy method 'close' on bean with name 'dataSource'
 [DEBUG] [2016-09-03 11:03:16][org.springframework.beans.factory.support.DefaultListableBeanFactory]Retrieved dependent beans for bean '(inner bean)': [org.springframework.web.servlet.handler.MappedInterceptor#1]
 [DEBUG] [2016-09-03 11:03:16][org.springframework.beans.factory.support.DefaultListableBeanFactory]Retrieved dependent beans for bean 'com.med.brenda.interceptor.SessionTimeoutInterceptor#0': [org.springframework.web.servlet.handler.MappedInterceptor#0]
+[DEBUG] [2016-09-05 18:58:46][com.med.brenda.util.CommonUtils]age:3
