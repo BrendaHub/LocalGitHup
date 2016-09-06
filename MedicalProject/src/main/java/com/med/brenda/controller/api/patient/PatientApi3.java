@@ -87,7 +87,7 @@ public class PatientApi3 {
 	@ResponseBody
 	@ApiOperation(value = "获取医生的信息，｜  发布时间： 2016-09-06 09:28 ", httpMethod = "GET", response = String.class, notes = "获取医生的信息，｜  发布时间： 2016-09-06 09:28")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	@RequestMapping(value = "/GetDoctorList/{hzid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
+	@RequestMapping(value = "/getDocList/{hzid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
 	public String GetDoctorList(@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value = "token", required = true) String token) {
 		JSONObject result = new JSONObject();
 		
@@ -124,7 +124,7 @@ public class PatientApi3 {
 	@ResponseBody
 	@ApiOperation(value = "获取医生的信息，包含了生的门诊信息，｜  发布时间： 2016-08-28 09:28 ", httpMethod = "GET", response = String.class, notes = "获取医生的信息，包含了生的门诊信息｜  发布时间： 2016-08-28 09:28")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	@RequestMapping(value = "/getDoctorInfo/{ysid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
+	@RequestMapping(value = "/getDocInfo/{ysid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
 	public String AddMovement(@ApiParam(required = true, name = "ysid", value = "医生ID") @PathVariable String ysid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value = "token", required = true) String token) {
 		JSONObject result = new JSONObject();
@@ -400,7 +400,7 @@ public class PatientApi3 {
 	@ResponseBody
 	@ApiOperation(value = "获取患者日志信息，｜  发布时间： 2016-08-28 09:28 ", httpMethod = "GET", response = String.class, notes = "获取患者日志信息，｜  发布时间： 2016-08-28 09:28")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	@RequestMapping(value = "/getHzxxLog/{hzid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
+	@RequestMapping(value = "/getLog/{hzid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
 	public String getHzxxLog(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value = "token", required = true) String token,
 			@ApiParam(required = true, name = "startdate", value = "开始日期，格式：yyyymmdd") @RequestParam(value = "startdate", required = true) String startdate,
@@ -646,4 +646,6 @@ public class PatientApi3 {
 			return result.toJSONString();
 		}
 	}
+	
+	
 }

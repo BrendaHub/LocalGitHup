@@ -23,4 +23,8 @@ public interface HzxxMapper {
     int findListCount(Map<String, Object> conditionMap);
     
     List<Hzxx> findList(Map<String, Object> conditionMap);
+
+    int findHzxxByTemp7Count(Map<String, Object> conditionMap);
+    
+    List<Hzxx> findHzxxByTemp7(Map<String, Object> conditionMap);
 }

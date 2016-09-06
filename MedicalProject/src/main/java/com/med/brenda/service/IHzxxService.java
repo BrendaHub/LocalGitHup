@@ -48,4 +48,7 @@ public interface IHzxxService {
 	int findListCount(Query query);
 	
 	List<Hzxx> findList(Query query);
+	//根据temp7字段的值查询出参加第二次科研的用户信息, temp7为1时表示参于，否则不参与；
+	int findHzxxByTemp7Count(String temp7, Query query);
+	List<Hzxx> findHzxxByTemp7(String temp7, Query query);
 }

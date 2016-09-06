@@ -71,5 +71,20 @@ public class HzxxService implements IHzxxService {
 		conditionMap.put("pageSize", query.getPageSize());
 		return hzxxDao.findList(conditionMap);
 	}
+	
+	@Override
+	public int findHzxxByTemp7Count(String temp7, Query query) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("temp7", temp7);
+		return hzxxDao.findHzxxByTemp7Count(param);
+	}
+	@Override
+	public List<Hzxx> findHzxxByTemp7(String temp7, Query query) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("temp7", temp7);
+		param.put("pageNo", query.getPageIndex());
+		param.put("pageSize", query.getPageSize());
+		return hzxxDao.findHzxxByTemp7(param);
+	}
 
 }

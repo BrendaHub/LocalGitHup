@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.med.brenda.controller.common.Query;
 import com.med.brenda.exception.BusinessException;
 import com.med.brenda.model.Hzsfxx;
 import com.med.brenda.model.Hzxx;
@@ -143,7 +144,8 @@ public class PatientApi {
 			subbody.put("Date", hz.getCSRQ());
 //			subbody.put("Headurl", hz.getDLH());
 			subbody.put("Headurl",hz.getTEMP2());
-			subbody.put("Bjflag", "对应不上什么值");
+			subbody.put("Bjflag", "");
+			subbody.put("LogonTime", System.currentTimeMillis());
 			body.put("_data", subbody);
 			result.put("_body", body);
 			return result.toJSONString();
@@ -152,6 +154,86 @@ public class PatientApi {
 			result.put("_msg", "身份证号OR密码错误");
 			return result.toJSONString();
 		}
+	}
+	
+	/**
+	 * 获取患者列表，如果传和temp7参数时表示查询参加第二次科研的患者集合，带分页参数
+	 * @param hzid
+	 * @param date
+	 * @return
+	 */
+	@ResponseBody
+	@ApiOperation(value = "获取患者列表，如果传和temp7参数时表示查询参加第二次科研的患者集合，带分页参数，｜  发布时间： 2016-09-06 15:26 ", httpMethod = "GET", response = String.class, notes = "获取患者列表，如果传和temp7参数时表示查询参加第二次科研的患者集合，带分页参数，｜  发布时间： 2016-09-06 15:26")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/findHzxxList/{temp7}/{pageNo}/{pageSize}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String findHzxxList(@ApiParam(required = true, name = "temp7", value = "标记是否要取参加第二次科研的用户集合，需要就传1,否则就是不需要")  @PathVariable String temp7,
+			@ApiParam(required = true, name = "pageNo", value = "页码（第几页）") @PathVariable int pageNo,
+			@ApiParam(required = true, name = "pageSize", value = "每页条数") @PathVariable int pageSize){
+		 JSONObject result = new JSONObject();
+		 if(pageNo <= 0 ){
+			 pageNo = 1;
+		 }
+		 if(StringUtils.isBlank(temp7)){
+			 temp7 = "2";
+		 }
+		 
+		 if("1".equals(temp7)){//查询参加第二科研的患者集合
+			 Query query = new Query();
+			 int count = hzxxService.findHzxxByTemp7Count(temp7, query);
+			 int mode = count % query.getPageSize();
+	         int pageCount = count / query.getPageSize();
+	         if (mode > 0) {
+	            pageCount = pageCount + 1;
+	         }
+			 query.setPageNo(pageNo);
+			 query.setPageSize(pageSize);
+			 query.setPageIndex(pageNo);
+			 List<Hzxx> hzlist = hzxxService.findHzxxByTemp7(temp7, query);
+			 
+			 if(hzlist != null && hzlist.size() > 0){
+				result.put("_st", 1);//
+	    		result.put("_msg", "获取数据成功");
+	    		result.put("_data", JSON.toJSON(hzlist));
+	    		result.put("_pageNo", query.getPageNo());
+	    		result.put("_pageCount", pageCount);
+	    		result.put("_pageSize", pageSize);
+	    		result.put("_pageTotal", count);
+	    		result.put("_temp7", temp7);
+	    		return result.toJSONString();
+			 }else{
+				 result.put("_st", 2);//
+		    	 result.put("_msg", "暂无数据"); 
+		    	 return result.toJSONString();
+			 }
+			 
+		 }else{//查询所有的患者集合
+			 Query query = new Query();
+			 int count =  hzxxService.findListCount(query);
+			 int mode = count % query.getPageSize();
+	         int pageCount = count / query.getPageSize();
+	         if (mode > 0) {
+	            pageCount = pageCount + 1;
+	         }
+	         query.setPageNo(pageNo);
+			 query.setPageSize(pageSize);
+			 query.setPageIndex(pageNo);
+			 List<Hzxx> hzlist =  hzxxService.findList(query);
+			 if(hzlist != null && hzlist.size() > 0){
+				result.put("_st", 1);//
+	    		result.put("_msg", "获取数据成功");
+	    		result.put("_data", JSON.toJSON(hzlist));
+	    		result.put("_pageNo", query.getPageNo());
+	    		result.put("_pageCount", pageCount);
+	    		result.put("_pageSize", pageSize);
+	    		result.put("_pageTotal", count);
+	    		result.put("_temp7", temp7);
+	    		return result.toJSONString();
+			 }else{
+				 result.put("_st", 2);//
+		    	 result.put("_msg", "暂无数据"); 
+		    	 return result.toJSONString();
+			 }
+		 }
 	}
 	
 	@RequestMapping(value="/uploadImage",produces = "application/json; charset=utf-8",method=RequestMethod.POST)  

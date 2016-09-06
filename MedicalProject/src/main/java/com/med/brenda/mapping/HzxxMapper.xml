@@ -72,6 +72,9 @@
 			<if test="keyworld  !=null">
 				HZNAME like CONCAT('%',#{keyworld},'%')
 			</if>
+			<if test="temp7  !=null">
+				TEMP7 = #{temp7}
+			</if>
 			<!-- 
 			<if test="collectionType != null  ">
 				and  CollectionType =#{collectionType}
@@ -124,6 +127,18 @@
     <include refid="query_where"/> 
   </select>
   <select id="findList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from s_hzxx
+    <include refid="query_where"/> order by id desc limit #{pageNo},#{pageSize}
+  </select>
+  <select id="findHzxxByTemp7Count" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    count(1)
+    from s_hzxx
+    <include refid="query_where"/>
+  </select>
+  <select id="findHzxxByTemp7" parameterType="java.util.Map" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from s_hzxx
