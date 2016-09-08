@@ -834,11 +834,56 @@ public class PatientApi2 {
 					yy.put("YWNAME", ud.getYWNAME());
 					yy.put("YWJL", ud.getYWJL());
 					yy.put("YYTJ", ud.getYYTJ());
+					yy.put("YYID", ud.getID());
 					arr.add(yy);
 				}
 				result.put("_st", 1);
 				result.put("_msg", "操作成功");
 				result.put("_data", arr.toJSONString());
+				return result.toJSONString();
+			}else{
+				result.put("_st", 6);//
+				 result.put("_msg", "没有数据");
+				 return result.toJSONString();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("_st", 5);//
+			 result.put("_msg", "操作失败");
+			 return result.toJSONString();
+		}
+	}
+	
+	//根据用药记录ＩＤ 获取用药信息
+	@ResponseBody
+	@ApiOperation(value = "根据用药记录ＩＤ 获取用药信息｜  发布时间： 2016-09-08 12:10 ", httpMethod = "GET", response = String.class, notes = "根据用药记录ＩＤ 获取用药信息｜  发布时间： 2016-09-08 12:10 ")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	@RequestMapping(value="/getDrugById/{yyid}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
+	public String getDrugById(@ApiParam(required = true, name = "yyid", value = "用药记录ID")  @PathVariable String yyid,
+			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token){
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(yyid)){
+			 result.put("_st", 0);//
+			 result.put("_msg", "用药ID无效");
+			 return result.toJSONString();
+		}
+		Hzsfxx ud= null;
+		try {
+			ud = hzsfxxService.selectByPrimaryKey(Long.parseLong(yyid));
+			logger.debug("##########  userdrug = " + JSON.toJSONString(ud));
+			if(ud != null){
+				JSONObject yy = new JSONObject();
+				yy.put("YYDATE", CommonUtils.transferLongToDate(ud.getSFDATE()));
+				yy.put("YYTIME", ud.getYYTIME());
+				yy.put("YWNAME", ud.getYWNAME());
+				yy.put("YWJL", ud.getYWJL());
+				yy.put("YYTJ", ud.getYYTJ());
+				yy.put("YYID", ud.getID());
+				
+				result.put("_st", 1);
+				result.put("_msg", "操作成功");
+				result.put("_data", yy.toJSONString());
 				return result.toJSONString();
 			}else{
 				result.put("_st", 6);//

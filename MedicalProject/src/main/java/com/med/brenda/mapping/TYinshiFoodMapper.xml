@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.TYinshiFoodMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.TYinshiFood">
+    <constructor>
+      <arg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="food_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="weight" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="hot" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="protein" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="fat" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="sugar" javaType="java.lang.Float" jdbcType="REAL" />
+      <arg column="dietaryfiber" javaType="java.lang.Float" jdbcType="REAL" />
+    </constructor>
+  </resultMap>
+  <insert id="insert" parameterType="com.med.brenda.model.TYinshiFood">
+  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into t_yinshi_food ( food_name, weight, 
+      hot, protein, fat, sugar, 
+      dietaryfiber)
+    values (#{food_name,jdbcType=VARCHAR}, #{weight,jdbcType=REAL}, 
+      #{hot,jdbcType=REAL}, #{protein,jdbcType=REAL}, #{fat,jdbcType=REAL}, #{sugar,jdbcType=REAL}, 
+      #{dietaryfiber,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.TYinshiFood">
+    insert into t_yinshi_food
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="food_name != null">
+        food_name,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="hot != null">
+        hot,
+      </if>
+      <if test="protein != null">
+        protein,
+      </if>
+      <if test="fat != null">
+        fat,
+      </if>
+      <if test="sugar != null">
+        sugar,
+      </if>
+      <if test="dietaryfiber != null">
+        dietaryfiber,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="food_name != null">
+        #{food_name,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=REAL},
+      </if>
+      <if test="hot != null">
+        #{hot,jdbcType=REAL},
+      </if>
+      <if test="protein != null">
+        #{protein,jdbcType=REAL},
+      </if>
+      <if test="fat != null">
+        #{fat,jdbcType=REAL},
+      </if>
+      <if test="sugar != null">
+        #{sugar,jdbcType=REAL},
+      </if>
+      <if test="dietaryfiber != null">
+        #{dietaryfiber,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

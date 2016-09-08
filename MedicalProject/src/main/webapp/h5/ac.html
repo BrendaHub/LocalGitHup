@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>北京儿童医院内分泌科专家爱心义诊</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<style>
+	.button_color
+	{
+	    font-weight:normal;
+	    background-color: #6bbd65;
+	}
+</style>
+</head>
+<body>
+
+<div data-role="page">
+  <div>
+    <img src="/Images/h5/top.jpg" width="100%"/>
+  </div>
+
+  <div data-role="main" class="ui-content">
+  	<p style="align:center;"><h4>秋季开学糖宝快乐成长义诊</h4></p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;秋季刚刚开学，无论是幼儿园，还是小升初对很多糖宝宝来说是新的开始，糖爸糖妈们或许有很多顾虑和疑问。没关系！</p>
+	<p>&nbsp;&nbsp;&nbsp;&nbsp;9月17日，北京儿童医院内分泌遗传代谢科&nbsp;<b>巩纯秀教授</b>&nbsp;带领团队将在东区儿童医院进行儿童生长发育问题的科普讲座和儿童内分泌科 糖尿病 矮小 生长发育的专家爱心义诊，现场还会有爱心赠书活动。机会难得，大家积极参与！</p>
+		<p><strong><font color="green">&nbsp;&nbsp;&nbsp;&nbsp;
+		时间：2016年9月17日8:00-12:00</font></strong></p>
+		<p><strong><font color="green">&nbsp;&nbsp;&nbsp;&nbsp;
+		地点：北京东区儿童医院朝阳区东三环南路42号</font></strong></p>
+    <p>
+    	<div style="margin: auto 0; text-align:center;">
+    	<img src="/Images/h5/sun.png" width="240px" height="240px"/>
+    	</div>
+    </p>
+    <p>
+    	欢迎各位糖爸糖妈前来参与
+    </p>
+ 	<p>
+    	<font color="#ff6699">活动内容：</font>
+    </p>
+    <p>
+    	<font color="blue">8:30-10:00 现场赠书和糖宝宝才艺表演--长城脚下甜蜜公社</font>
+    </p>
+    <p>
+    	<font color="blue">10:00-11:00 “儿童生长发育问题科普讲座”--巩纯秀</font>
+    </p>
+    <p>
+    	<font color="blue">11:00-12:30  糖尿病及内分泌科专家义诊---巩纯秀及专家团队</font>
+    </p>
+  	<p>
+    	<div style="margin: auto 0; text-align:center;">
+    	<img src="/Images/h5/fenline.png" width="100%"/>
+    	</div>
+    </p>
+  </div>
+ <div data-role="header" style="text-align:center;">
+  北京儿童医院内分泌科专家爱心义诊
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <form method="post" id="activityform">
+      <div class="ui-field-contain">
+        <label for="name">姓名：</label>
+        <input type="text" name="name" id="name" maxlength="30"/> 
+        <label for="phone">手机号：</label>
+        <input type="tel" name="phone" id="phone"/>
+	        <fieldset data-role="fieldcontain">
+	        <label for="age">年龄：</label>
+	        <select name="age" id="age">
+	         <option value="0">1岁以下</option>
+	         <option value="1">1岁</option>
+	         <option value="2">2岁</option>
+	         <option value="3">3岁</option>
+	         <option value="4">4岁</option>
+	         <option value="5">5岁</option>
+	         <option value="6">6岁</option>
+	         <option value="7">7岁</option>
+	         <option value="8">8岁</option>
+	         <option value="9">9岁</option>
+	         <option value="10">10岁</option>
+	         <option value="11">11岁</option>
+	         <option value="12">12岁</option>
+	         <option value="13">13岁</option>
+	         <option value="14">14岁</option>
+	         <option value="15">15岁</option>
+	         <option value="16">16岁</option>
+	         <option value="17">17岁</option>
+	         <option value="18">18岁</option>
+	         <option value="19">19岁</option>
+	         <option value="20">20岁</option>
+	        </select>
+	      </fieldset>
+      <input type="button" class="ui-btn button_color" data-role="button" color="red" value="提交申请" onclick="submitForm();"/>
+      </div>
+    </form>
+  </div>
+  
+  <div style="margin: auto 0; text-align:center;">
+    <img src="/Images/h5/recode2.png" width="100%"/>
+  </div>
+</div>
+</body>
+<script>
+	$(document).ready(function(){
+		
+	});
+	function submitForm(){
+		var _name = $("#name").val();
+		if(_name == "" || _name == undefined){
+			alert("请填写姓名。")
+			$("#name").focus();
+			return false;
+		}
+		var _phone = $("#phone").val();
+		if(_phone == "" || _phone == undefined){
+			alert("请填写手机号。");
+			$("#phone").focus();
+			return false;
+		}
+		var _age = $("#age").val();
+		if(_age == "" || _age == undefined){
+			alert("请选择年龄。");
+			$("#age").focus();
+			return false;
+		}
+		$.post("/api/doctor/saveActivityData",{name:_name,phone:_phone,age:_age},function(result){
+			var _json = JSON.parse(result);
+			if(_json._st == 1){
+				alert("恭喜，信息提交成功！");
+			}
+		  });
+	}
+</script>
+</html>
+

@@ -61,6 +61,7 @@
 						<value>/api/doctor</value>
 						<value>dl/appdl</value>
 						<value>/upload/</value>
+						<value>/h5</value>
 					</list>
 				</property>
 			</bean>
