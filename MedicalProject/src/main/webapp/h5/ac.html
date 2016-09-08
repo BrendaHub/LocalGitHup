@@ -41,13 +41,13 @@
     	<font color="#ff6699">活动内容：</font>
     </p>
     <p>
-    	<font color="blue">8:30-10:00 现场赠书和糖宝宝才艺表演--长城脚下甜蜜公社</font>
+    	<font color="＃3399ff">08:30--10:00&nbsp;&nbsp;&nbsp;&nbsp;现场赠书和糖宝宝才艺表演--长城脚下甜蜜公社</font>
     </p>
     <p>
-    	<font color="blue">10:00-11:00 “儿童生长发育问题科普讲座”--巩纯秀</font>
+    	<font color="＃3399ff">10:00--11:00&nbsp;&nbsp;&nbsp;&nbsp;"儿童生长发育问题科普讲座"--巩纯秀</font>
     </p>
     <p>
-    	<font color="blue">11:00-12:30  糖尿病及内分泌科专家义诊---巩纯秀及专家团队</font>
+    	<font color="＃3399ff">11:00--12:30&nbsp;&nbsp;&nbsp;&nbsp;糖尿病及内分泌科专家义诊---巩纯秀及专家团队</font>
     </p>
   	<p>
     	<div style="margin: auto 0; text-align:center;">
@@ -55,8 +55,8 @@
     	</div>
     </p>
   </div>
- <div data-role="header" style="text-align:center;">
-  北京儿童医院内分泌科专家爱心义诊
+ <div data-role="header1" style="text-align:center;height:40px;line-height:40px;background-color:#ccc;color:#000;" >
+  <h4>申请儿童医院内分泌科专家爱心义诊</h4>
   </div>
 
   <div data-role="main" class="ui-content">
@@ -128,7 +128,7 @@
 		$.post("/api/doctor/saveActivityData",{name:_name,phone:_phone,age:_age},function(result){
 			var _json = JSON.parse(result);
 			if(_json._st == 1){
-				alert("恭喜，信息提交成功！");
+				alert("恭喜您申请成功，预约码为："+_json._code);
 			}
 		  });
 	}

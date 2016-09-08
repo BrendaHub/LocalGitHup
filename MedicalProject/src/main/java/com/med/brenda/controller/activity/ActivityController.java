@@ -47,9 +47,9 @@ public class ActivityController extends BaseController {
 		logger.info("name = " + ac.getName());
 		logger.info("phone = " + ac.getPhone());
 		logger.info("age = "+ ac.getAge());
-		
-		ac.setCreatetime(System.currentTimeMillis());
-		ac.setModifytime(System.currentTimeMillis());
+		long longtime = System.currentTimeMillis();
+		ac.setCreatetime(longtime);
+		ac.setModifytime(longtime);
 		ac.setSource("controller");
 		ac.setStatus(0);
 		
@@ -58,6 +58,8 @@ public class ActivityController extends BaseController {
 		if(rowid > 0  && id != 0){
 			result.put("_st", 1);
 			result.put("_msg", "信息提交成功");
+			String strtime = String.valueOf(longtime);
+			result.put("_code", strtime.substring(strtime.length() - 7));
 			return result.toJSONString();
 		}else{
 			result.put("_st", 0);
