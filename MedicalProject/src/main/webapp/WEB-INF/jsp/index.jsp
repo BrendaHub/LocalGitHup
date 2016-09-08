@@ -23,6 +23,7 @@
         <div class="dl-inform"><div class="dl-inform-title"><s class="dl-inform-icon dl-up"></s></div></div>
         <ul id="J_Nav"  class="nav-list ks-clear">
             <li class="nav-item dl-selected"><div class="nav-item-inner nav-home">业务管理</div></li>	
+            <li class="nav-item dl-selected"><div class="nav-item-inner nav-product">饮食管理</div></li>
             <li class="nav-item dl-selected"><div class="nav-item-inner nav-user">系统管理</div></li>
         </ul>
     </div>
@@ -51,17 +52,20 @@ BUI.use('common/main',function(){
                									{id:'94',text:'平均值',href:'/HZXX/sysavg'},
                									{id:'95',text:'中位值',href:'/HZXX/sysmed'}
                									]}
-               									]},
+               						]},
+					{id:'8',homePage : '80',menu:[{text:'饮食管理',items:[
+               									{id:'80',text:'饮食分类',href:'/HZXX/list'},
+               									{id:'81',text:'饮食列表',href:'/HZXX/tofenxi1/5'}
+               									]}
+               								]},
       				{id:'1',homePage : '4',menu:[
       						{text:'系统管理',items:[
       			      				{id:'4',text:'用户管理',href:'/user/toUserList?pageNo=1&ff='+Math.random()},
 								  {id:'11',text:'修改密码',href:'/user/tomodifypwd'},
 								  {id:'12',text:'机构管理',href:'/user/toNodeList'},
 	      							{id:'6',text:'菜单管理',href:'/user/toMenuList'}
-      							]
-      						}
-      						]
-      					}
+      							]}
+      						]}
       					
       				];
     new PageUtil.MainPage({
