@@ -59,7 +59,7 @@
   <h4>申请儿童医院内分泌科专家爱心义诊</h4>
   </div>
 
-  <div data-role="main" class="ui-content">
+  <div data-role="main" class="ui-content" id="shenjinyz">
     <form method="post" id="activityform">
       <div class="ui-field-contain">
         <label for="name">姓名：</label>
@@ -128,7 +128,11 @@
 		$.post("/api/doctor/saveActivityData",{name:_name,phone:_phone,age:_age},function(result){
 			var _json = JSON.parse(result);
 			if(_json._st == 1){
-				alert("恭喜您申请成功，预约码为："+_json._code);
+				$("#shenjinyz").html("<div style='text-align:center;color:red;'><h3>恭喜您申请成功，预约码为："+_json._code+"。</h3></div>");
+			}else if(_json._st == 2){
+				$("#shenjinyz").html("<div style='text-align:center;color:red;'><h3>您已经成功申请了义诊活动，感谢参与！</h3></div>");
+			}else{
+				$("#shenjinyz").html("<div style='text-align:center;color:red;'><h3>抱歉操作错误，请联系：15988651191！</h3></div>");
 			}
 		  });
 	}

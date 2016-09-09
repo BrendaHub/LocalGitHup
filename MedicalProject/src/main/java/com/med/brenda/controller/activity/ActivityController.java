@@ -2,6 +2,7 @@ package com.med.brenda.controller.activity;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,25 +48,40 @@ public class ActivityController extends BaseController {
 		logger.info("name = " + ac.getName());
 		logger.info("phone = " + ac.getPhone());
 		logger.info("age = "+ ac.getAge());
-		long longtime = System.currentTimeMillis();
-		ac.setCreatetime(longtime);
-		ac.setModifytime(longtime);
-		ac.setSource("controller");
-		ac.setStatus(0);
 		
-		int rowid = acService.insert(ac);
-		long id = ac.getId();
-		if(rowid > 0  && id != 0){
-			result.put("_st", 1);
-			result.put("_msg", "信息提交成功");
-			String strtime = String.valueOf(longtime);
-			result.put("_code", strtime.substring(strtime.length() - 7));
-			return result.toJSONString();
+		String _phone = ac.getPhone();
+		if(StringUtils.isNotBlank(_phone)){
+			int count = acService.findActivityByPhone(_phone);
+			if(count > 0){
+				result.put("_st", 2);//已添加
+				return result.toJSONString();
+			}else{
+				long longtime = System.currentTimeMillis();
+				ac.setCreatetime(longtime);
+				ac.setModifytime(longtime);
+				ac.setSource("controller");
+				ac.setStatus(0);
+				
+				int rowid = acService.insert(ac);
+				long id = ac.getId();
+				if(rowid > 0  && id != 0){
+					result.put("_st", 1);
+					result.put("_msg", "信息提交成功");
+					String strtime = String.valueOf(longtime);
+					result.put("_code", strtime.substring(strtime.length() - 7));
+					return result.toJSONString();
+				}else{
+					result.put("_st", 0);
+					result.put("_msg", "信息提交失败");
+					return result.toJSONString();
+				}
+			}
 		}else{
-			result.put("_st", 0);
-			result.put("_msg", "信息提交失败");
+			result.put("_st", 3);
 			return result.toJSONString();
 		}
+		
+		
 	}
 	
 }

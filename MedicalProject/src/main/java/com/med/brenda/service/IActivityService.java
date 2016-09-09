@@ -15,4 +15,6 @@ public interface IActivityService {
     int updateByPrimaryKeySelective(TActivity record);
 
     int updateByPrimaryKey(TActivity record);
+    
+    int findActivityByPhone(String _phone);
 }

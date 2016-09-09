@@ -1,5 +1,8 @@
 package com.med.brenda.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Repository;
@@ -41,6 +44,14 @@ public class ActivityService implements IActivityService {
 	@Override
 	public int updateByPrimaryKey(TActivity record) {
 		return activityDao.updateByPrimaryKey(record);
+	}
+
+	@Override
+	public int findActivityByPhone(String _phone) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("_phone", _phone);
+		int count = activityDao.findActivityByPhone(param);
+		return count;
 	}
 
 }

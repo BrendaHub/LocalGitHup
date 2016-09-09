@@ -22,6 +22,15 @@
     from t_activity
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="findActivityByPhone" parameterType="java.util.Map"  resultType="java.lang.Integer">
+  	select 
+    count(1)
+    from t_activity
+    where 1=1 
+    <if test="_phone != null">
+    	and phone = #{_phone,jdbcType=VARCHAR}
+    </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_activity
     where id = #{id,jdbcType=BIGINT}
