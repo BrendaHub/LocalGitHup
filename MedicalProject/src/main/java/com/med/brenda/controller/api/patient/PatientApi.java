@@ -433,8 +433,11 @@ public class PatientApi {
 				logger.info(">>perfectinfo json >> "+ JSON.toJSONString(perfectJsoninfo));
 				if(perfectJsoninfo != null && hzxx != null){
 					String _nation = perfectJsoninfo.getString("nation");
-					Long _birthday =  perfectJsoninfo.getLong("birthday");
-					Long _diagnosisdate = perfectJsoninfo.getLong("diagnosisdate");
+					//Long _birthday =  perfectJsoninfo.getLong("birthday");
+					String _birthday_str = perfectJsoninfo.getString("birthday");
+					Long _birthday = CommonUtils.getTimeInMillisByDate(_birthday_str);
+					String _diagnosisdate_str = perfectJsoninfo.getString("diagnosisdate");
+					Long _diagnosisdate = CommonUtils.getTimeInMillisByDate(_diagnosisdate_str);
 					String _sex = perfectJsoninfo.getString("sex");
 					hzxx.setCSRQ(_birthday);//根据生日计算出年龄
 					int age = CommonUtils.getAge(new Date(_birthday));
@@ -445,7 +448,7 @@ public class PatientApi {
 					//设备完善信息的标记，即temp10  = 2;
 					hzxx.setTEMP10("2");
 					//联系人名称：
-					String _contactname = perfectJsoninfo.getString("perfectJsoninfo");
+					String _contactname = perfectJsoninfo.getString("contactname");
 					hzxx.setLXRNAME(_contactname);
 					String _lxrgx = perfectJsoninfo.getString("nexus");
 					hzxx.setGX(_lxrgx);
