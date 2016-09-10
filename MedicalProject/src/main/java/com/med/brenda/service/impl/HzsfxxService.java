@@ -219,6 +219,7 @@ public class HzsfxxService implements IHzsfxxService {
 				hzsfxx.setSFDATE(longTime);
 				hzsfxx.setITEMTYPE("生长数据");
 				String itemcode = jsono.getString("itemcode");
+				hzsfxx.setITEMNAME(CommonUtils.getBloodSugarByItemCode(itemcode));
 				String itemcode_prifex = itemcode.substring(0,3);
 				hzsfxx.setITEMCODE(itemcode_prifex);
 				hzsfxx.setTEMP1(jsono.getString("img"));//图片

@@ -57,6 +57,7 @@
 						<value>/verifycode</value>
 						<value>/swagger</value>
 						<value>/api-docs</value>
+						<value>/api/paitent/getHzxxLog</value>
 						<value>/api/patient</value>
 						<value>/api/doctor</value>
 						<value>dl/appdl</value>

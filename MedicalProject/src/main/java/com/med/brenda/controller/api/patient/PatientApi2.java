@@ -101,6 +101,7 @@ public class PatientApi2 {
 		bs.setHzid(Long.parseLong(hzid));
 		bs.setItemcode(itemcode);
 		bs.setItemname(CommonUtils.getBloodSugarByItemCode(itemcode));
+		logger.info(">>>>>>  jsondata =  " + jsondata );
 		JSONObject json = JSONObject.parseObject(jsondata);
 		if(json != null){
 			bs.setYdlx(json.getString("movementtype").trim());

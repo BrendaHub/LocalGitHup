@@ -85,7 +85,7 @@ public class PatientApi3 {
 	
 	//获取医信列表
 	@ResponseBody
-	@ApiOperation(value = "获取医生的信息，｜  发布时间： 2016-09-06 09:28 ", httpMethod = "GET", response = String.class, notes = "获取医生的信息，｜  发布时间： 2016-09-06 09:28")
+	@ApiOperation(value = "获取医生的列表，｜  发布时间： 2016-09-06 09:28 ", httpMethod = "GET", response = String.class, notes = "获取医生的信息，｜  发布时间： 2016-09-06 09:28")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
 	@RequestMapping(value = "/getDocList/{hzid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
 	public String GetDoctorList(@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value = "token", required = true) String token) {
@@ -106,6 +106,18 @@ public class PatientApi3 {
 				oj.put("yszyjs", a.getYszyjs());
 				oj.put("ysll", a.getYsll());
 				oj.put("ysheader", a.getTemp1());
+				List<Mz> list = mzService.selectByYsid(a.getId());
+				if (list != null && list.size() > 0) {
+					JSONArray mzArray = new JSONArray();
+					for (Iterator<Mz> it = list.iterator(); it.hasNext();) {
+						JSONObject submz = new JSONObject();
+						Mz mz = it.next();
+						submz.put("zj", mz.getZj());
+						submz.put("qj", mz.getQj());
+						mzArray.add(submz);
+					}
+					oj.put("mzlist", mzArray);
+				}
 				array.add(oj);
 			});
 			result.put("_st", 1);//
@@ -122,7 +134,7 @@ public class PatientApi3 {
 
 	// 获取医生的信息
 	@ResponseBody
-	@ApiOperation(value = "获取医生的信息，包含了生的门诊信息，｜  发布时间： 2016-08-28 09:28 ", httpMethod = "GET", response = String.class, notes = "获取医生的信息，包含了生的门诊信息｜  发布时间： 2016-08-28 09:28")
+	@ApiOperation(value = "获取医生的信息，包含医生的门诊信息，｜  发布时间： 2016-08-28 09:28 ", httpMethod = "GET", response = String.class, notes = "获取医生的信息，包含了生的门诊信息｜  发布时间： 2016-08-28 09:28")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
 	@RequestMapping(value = "/getDocInfo/{ysid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
 	public String AddMovement(@ApiParam(required = true, name = "ysid", value = "医生ID") @PathVariable String ysid,
@@ -398,10 +410,10 @@ public class PatientApi3 {
 	 
 	//处理最后一个功能栏目接口，获取患者日志数据
 	@ResponseBody
-	@ApiOperation(value = "获取患者日志信息，｜  发布时间： 2016-08-28 09:28 ", httpMethod = "GET", response = String.class, notes = "获取患者日志信息，｜  发布时间： 2016-08-28 09:28")
+	@ApiOperation(value = "获取患者日志信息，｜  发布时间： 2016-08-28 09:28 ", httpMethod = "POST", response = String.class, notes = "获取患者基本信息，｜  发布时间： 2016-08-28 09:28")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
-	@RequestMapping(value = "/getLog/{hzid}", produces = "application/json; charset=utf-8", method = RequestMethod.GET)
-	public String getHzxxLog(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid,
+	@RequestMapping(value = "/findHzxxLog/{hzid}", produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	public String findHzxxLog(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value = "token", required = true) String token,
 			@ApiParam(required = true, name = "startdate", value = "开始日期，格式：yyyymmdd") @RequestParam(value = "startdate", required = true) String startdate,
 			@ApiParam(required = true, name = "enddate", value = "截止日期，格式：yyyymmdd") @RequestParam(value = "enddate", required = true) String enddate,
@@ -427,6 +439,12 @@ public class PatientApi3 {
 			result.put("_msg", "itemcode值无效");
 			return result.toJSONString();
 		}
+		logger.info(" itemcode = =========== " + itemcode);
+		logger.info(" hzid = =========== " + hzid);
+		logger.info(" token = =========== " + token);
+		logger.info(" startdate = =========== " + startdate);
+		logger.info(" enddate = =========== " + enddate);
+		
 		if(itemcode.equals(GlobalVariables.YINSHI_ITEMCODE)){//如果是饮食
 			try{
 				List<TnbYinshi> list = yinshiService.getYinshilistByDateRang(Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
@@ -442,6 +460,9 @@ public class PatientApi3 {
 				}
 			}catch(Exception e){
 				e.printStackTrace();
+				result.put("_st", 6);
+				result.put("_msg", "获取失败");
+				return result.toJSONString();
 			}
 		}
 		if(itemcode.equals(GlobalVariables.YUNDONG_ITEMCODE)){//如果是运动
@@ -645,6 +666,7 @@ public class PatientApi3 {
 			result.put("_msg", "itemcode错误，请检查");
 			return result.toJSONString();
 		}
+		
 	}
 	
 	

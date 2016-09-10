@@ -35,12 +35,13 @@ public class SessionTimeoutInterceptor implements HandlerInterceptor {
 		 String requestUrl = request.getRequestURI().replace(request.getContextPath(), ""); 
 		 logger.info(new Date() + "SessionTimeoutInterceptor start.....");
 		 logger.info(new Date() + "requestUrl >>>>> "+ requestUrl);
-	        if(null != allowUrls && allowUrls.length>=1)  
+	        if(null != allowUrls && allowUrls.length>=1){  
 	            for(String url : allowUrls) {
 	            	if(requestUrl.startsWith(url)){
 	            		return true;
 	            	}
 	            }
+	        }
 	        User user = (User) request.getSession().getAttribute("_userinfo"); 
 	        if(user != null) {
 	            return true;  //返回true，则这个方面调用后会接着调用postHandle(),  afterCompletion()  
