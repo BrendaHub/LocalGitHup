@@ -33,7 +33,8 @@ public class SessionTimeoutInterceptor implements HandlerInterceptor {
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse arg1, Object arg2) throws Exception {
 		 String requestUrl = request.getRequestURI().replace(request.getContextPath(), ""); 
-		 logger.debug(new Date() + "SessionTimeoutInterceptor start.....");
+		 logger.info(new Date() + "SessionTimeoutInterceptor start.....");
+		 logger.info(new Date() + "requestUrl >>>>> "+ requestUrl);
 	        if(null != allowUrls && allowUrls.length>=1)  
 	            for(String url : allowUrls) {
 	            	if(requestUrl.startsWith(url)){

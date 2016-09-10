@@ -41,7 +41,7 @@ public class CommonUtils {
 		return longDate;
 	}
 	
-	public static int getAge(Date birthDay) throws Exception { 
+	public static String getAge1(Date birthDay) throws Exception { 
         //获取当前系统时间
         Calendar cal = Calendar.getInstance(); 
         //如果出生日期大于当前时间，则抛出异常
@@ -62,17 +62,53 @@ public class CommonUtils {
         int dayOfMonthBirth = cal.get(Calendar.DAY_OF_MONTH); 
         //当前年份与出生年份相减，初步计算年龄
         int age = yearNow - yearBirth; 
+        System.out.println("age  = "+ age);
         //当前月份与出生日期的月份相比，如果月份小于出生月份，则年龄上减1，表示不满多少周岁
+        int _month = 0;
         if (monthNow <= monthBirth) { 
             //如果月份相等，在比较日期，如果当前日，小于出生日，也减1，表示不满多少周岁
             if (monthNow == monthBirth) { 
                 if (dayOfMonthNow < dayOfMonthBirth) age--; 
             }else{ 
                 age--; 
-            } 
-        } 
+            }
+            if(age == 0 )
+            	_month = monthBirth - monthNow + 10;
+            else
+            	_month = monthBirth - monthNow;
+            
+        }else{
+        	_month = monthNow - monthBirth;
+        }
         logger.debug("age:"+age);
-        return age; 
+        logger.info("_month = " + _month);
+        StringBuilder sb = new StringBuilder();
+        sb.append(age);
+        sb.append(".");
+        sb.append(_month);
+        return sb.toString(); 
+    }
+	//计算出日期
+	public static String getAge(Date birthDay) throws Exception {
+        Date date1=birthDay;
+        Date date2=new Date();
+        long time1=date1.getTime();
+        long time2=date2.getTime();
+        long time=(time2-time1)/1000;
+        long year=time/(24*3600*365);
+        long month=time%(24*3600*365)/(24*3600*30);
+        StringBuilder sb = new StringBuilder();
+        if(year>0){
+        	sb.append(year);
+        	sb.append(".");
+        	sb.append(month);
+            System.out.println(year+"年"+month+"月");
+        }else{
+        	sb.append("0.");
+        	sb.append(month);
+            System.out.println(month+"月");
+        }
+        return sb.toString();
     }
 	
 	public static String getSendSMS(String sfzcode, String downloadurl){
@@ -250,12 +286,15 @@ public class CommonUtils {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		Long birthday = getTimeInMillisByDate("20160907");
-		System.out.println(birthday);
+//		Long birthday = getTimeInMillisByDate("20160907");
+//		System.out.println(birthday);
 //		Date date= new Date(birthday);
 //		System.out.println(getAge(date));
 //		
 //		System.out.println(transferLongToDate(1470807735323l));
+		Long _l = CommonUtils.getTimeInMillisByDate("20170909");
+		Date d = new Date(_l);
+		System.out.println(getAge(d));
 		
 	}
 }

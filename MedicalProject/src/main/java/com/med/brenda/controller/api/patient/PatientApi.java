@@ -440,8 +440,8 @@ public class PatientApi {
 					Long _diagnosisdate = CommonUtils.getTimeInMillisByDate(_diagnosisdate_str);
 					String _sex = perfectJsoninfo.getString("sex");
 					hzxx.setCSRQ(_birthday);//根据生日计算出年龄
-					int age = CommonUtils.getAge(new Date(_birthday));
-					hzxx.setAGE(String.valueOf(age));
+					String age = CommonUtils.getAge(new Date(_birthday));
+					hzxx.setAGE(age); 
 					hzxx.setNFMQZSJ(String.valueOf(_diagnosisdate));
 					hzxx.setMZ(_nation);
 					hzxx.setSEX(_sex);

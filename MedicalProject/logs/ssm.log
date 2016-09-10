@@ -811,3 +811,15 @@
 [DEBUG] [2016-09-03 11:03:16][org.springframework.beans.factory.support.DefaultListableBeanFactory]Retrieved dependent beans for bean '(inner bean)': [org.springframework.web.servlet.handler.MappedInterceptor#1]
 [DEBUG] [2016-09-03 11:03:16][org.springframework.beans.factory.support.DefaultListableBeanFactory]Retrieved dependent beans for bean 'com.med.brenda.interceptor.SessionTimeoutInterceptor#0': [org.springframework.web.servlet.handler.MappedInterceptor#0]
 [DEBUG] [2016-09-05 18:58:46][com.med.brenda.util.CommonUtils]age:3
+[DEBUG] [2016-09-10 13:07:05][com.med.brenda.util.CommonUtils]age:1
+[INFO] [2016-09-10 13:07:05][com.med.brenda.util.CommonUtils]_month = 1
+[DEBUG] [2016-09-10 13:07:55][com.med.brenda.util.CommonUtils]age:1
+[INFO] [2016-09-10 13:07:55][com.med.brenda.util.CommonUtils]_month = 0
+[DEBUG] [2016-09-10 13:08:11][com.med.brenda.util.CommonUtils]age:0
+[INFO] [2016-09-10 13:08:11][com.med.brenda.util.CommonUtils]_month = 1
+[DEBUG] [2016-09-10 13:11:31][com.med.brenda.util.CommonUtils]age:0
+[INFO] [2016-09-10 13:11:31][com.med.brenda.util.CommonUtils]_month = 1
+[DEBUG] [2016-09-10 13:12:31][com.med.brenda.util.CommonUtils]age:0
+[INFO] [2016-09-10 13:12:31][com.med.brenda.util.CommonUtils]_month = 11
+[DEBUG] [2016-09-10 13:12:46][com.med.brenda.util.CommonUtils]age:0
+[INFO] [2016-09-10 13:12:46][com.med.brenda.util.CommonUtils]_month = 13
