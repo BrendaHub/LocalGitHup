@@ -413,7 +413,7 @@ public class PatientApi {
 	}
 	 
 	@ResponseBody
-	@ApiOperation(value = "完善患者主要信息,用户信息以JSON格式串上传,本接口不步完善，第一步就只填写:1、名族,2、生日,3、确诊日期,4、性别; 格式为：{\"nation\":\"汉\",\"sex\":\"男\",\"birthday\":\"生日毫秒数（long）\",\"diagnosisdate\":\"确诊日期对应毫秒数（long）\"}｜发布时间：  2016-08-09 23:03", httpMethod = "POST", response = String.class, notes = "完善患者主要信息,用户信息以JSON格式串上传,本接口不步完善，第一步就只填写:1、名族,2、生日,3、确诊日期4、性别; 格式为：{\"nation\":\"汉\",\"sex\":\"男\",\"birthday\":\"生日毫秒数（long）\",\"diagnosisdate\":\"确诊日期对应毫秒数（long）\"}")
+	@ApiOperation(value = "完善患者主要信息,用户信息以JSON格式串上传,本接口不步完善，第一步就只填写:1、名族,2、生日,3、确诊日期,4、性别; 格式为：{\"nation\":\"汉\",\"sex\":\"男\",\"birthday\":\"生日毫秒数（long）\",\"diagnosisdate\":\"确诊日期对应毫秒数（long）\",\"contactname\":\"xxxxx\",\"nexus\":\"sss\",\"medicalcardno\":\"xxxxx\",\"sheng\":\"xxxxx\",\"shi\":\"xian\"}｜发布时间：  2016-08-09 23:03", httpMethod = "POST", response = String.class, notes = "完善患者主要信息,用户信息以JSON格式串上传,本接口不步完善，第一步就只填写:1、名族,2、生日,3、确诊日期4、性别; 格式为：{\"nation\":\"汉\",\"sex\":\"男\",\"birthday\":\"生日毫秒数（long）\",\"diagnosisdate\":\"确诊日期对应毫秒数（long）\"}")
 	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
 	@RequestMapping(value="/perfectHZXX",produces = "application/json; charset=utf-8",method=RequestMethod.POST)
 	public String perfectHzxx(@ApiParam(required = true, name = "hzid", value = "患者ID") @RequestParam(value="hzid",required=true) String hzid,
@@ -425,9 +425,12 @@ public class PatientApi {
 			 return result.toJSONString();
 		 }
 		try{
+			logger.info("get = " + hzid);
 			 Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
 			if(StringUtils.isNoneBlank(perfectinfo)){
+				logger.info(">>perfectinfo >> "+ perfectinfo);
 				JSONObject perfectJsoninfo = JSON.parseObject(perfectinfo);
+				logger.info(">>perfectinfo json >> "+ JSON.toJSONString(perfectJsoninfo));
 				if(perfectJsoninfo != null && hzxx != null){
 					String _nation = perfectJsoninfo.getString("nation");
 					Long _birthday =  perfectJsoninfo.getLong("birthday");
@@ -441,6 +444,24 @@ public class PatientApi {
 					hzxx.setSEX(_sex);
 					//设备完善信息的标记，即temp10  = 2;
 					hzxx.setTEMP10("2");
+					//联系人名称：
+					String _contactname = perfectJsoninfo.getString("perfectJsoninfo");
+					hzxx.setLXRNAME(_contactname);
+					String _lxrgx = perfectJsoninfo.getString("nexus");
+					hzxx.setGX(_lxrgx);
+					//门诊卡号
+					String _medicalcardno = perfectJsoninfo.getString("medicalcardno");
+					hzxx.setTEMP6(_medicalcardno);
+					//出生地址，省
+					String _sheng = perfectJsoninfo.getString("sheng");
+					//出生地址， 市
+					String _shi = perfectJsoninfo.getString("shi");
+					//出生地址： 县
+					String _xian = perfectJsoninfo.getString("xian");
+					hzxx.setSHENG(_sheng);
+					hzxx.setSHI(_shi);
+					hzxx.setXIAN(_xian);
+					
 					hzxxService.updateByPrimaryKeySelective(hzxx);
 				}
 			}

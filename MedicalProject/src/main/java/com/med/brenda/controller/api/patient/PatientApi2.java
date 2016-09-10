@@ -989,8 +989,8 @@ public class PatientApi2 {
 		}
 		logger.info("修改检查记录： 》》》 "+ modifyjsondata);
 		JSONObject jsondata = JSONObject.parseObject(modifyjsondata);
-		logger.info("转换后的对像为： " ＋ jsondata);
-		logger.info("转换后的对像为json： " ＋ JSON.toJSONString(jsondata));
+		logger.info(">>jsondata>>>> "+ jsondata);
+		logger.info("转换后的对像为json： "+JSON.toJSONString(jsondata));
 		boolean flag = TnbJcbfzscService.modifyInspectData(Long.parseLong(dataid), jsondata);
 		if(flag){
 			result.put("_st", 1);//
