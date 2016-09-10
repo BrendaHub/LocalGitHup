@@ -959,8 +959,11 @@ public class PatientApi2 {
 	public String ModifyInspectData(@ApiParam(required = true, name = "hzid", value = "患者ID")  @PathVariable String hzid,
 			@ApiParam(required = true, name = "token", value = "接口安全令牌,当下传入空值") @RequestParam(value="token",required=true) String token,
 			@ApiParam(required = true, name = "dataid", value = "修改的记录ID") @RequestParam(value="dataid",required=true) String dataid,
-			@ApiParam(required = true, name = "modifyjsondata", value = "修改用药数据,如样例json格式：{\"drugname\":\"用药名称\",\"drugtime\":\"12:23\","
-					+ "\"drugdose\":\"223\",\"drugchannel\":\"用药途径\"}") @RequestParam(value="modifyjsondata",required=true) String modifyjsondata,
+			@ApiParam(required = true, name = "modifyjsondata", value = "修改用药数据,如样例json格式：{\"ch2h\":\"0\",\"hbac\":\"1\",\"nt\":\"2\",\"ntt\":\"3\",\"ndb\":\"4\",\"xt\":\"5\",\"yds\":\"6\","+
+					 "\"ct\":\"7\",\"rs\":\"8\",\"xqpzc\":\"9\",\"cssxpzj\":\"10\",\"jgwx1\":\"11\",\"jgwx2\":\"12\",\"jgwx3\":\"13\","+
+					 "\"jgwx4\":\"14\",\"jgwx5\":\"15\",\"szs1\":\"16\",\"szs4\":\"17\",\"szs5\":\"18\",\"szs3\":\"19\",\"szs2\":\"20\","+
+					 "\"sgn1\":\"21\",\"sgn2\":\"22\",\"xz1\":\"23\",\"xz2\":\"24\",\"xz3\":\"25\",\"xz4\":\"26\",\"xz5\":\"27\","+
+					 "\"imageurl\":\"\",\"datarq\":\"20160303\"}") @RequestParam(value="modifyjsondata",required=true) String modifyjsondata,
 			@ApiParam(required = true, name = "date", value = "用药对应的日期，格式：yyyy-MM-dd") @RequestParam(value="date",required=true) String date){
 		JSONObject result = new JSONObject();
 		if(StringUtils.isBlank(hzid)){
@@ -984,7 +987,10 @@ public class PatientApi2 {
 			 result.put("_msg", "日期无效");
 			 return result.toJSONString();
 		}
+		logger.info("修改检查记录： 》》》 "+ modifyjsondata);
 		JSONObject jsondata = JSONObject.parseObject(modifyjsondata);
+		logger.info("转换后的对像为： " ＋ jsondata);
+		logger.info("转换后的对像为json： " ＋ JSON.toJSONString(jsondata));
 		boolean flag = TnbJcbfzscService.modifyInspectData(Long.parseLong(dataid), jsondata);
 		if(flag){
 			result.put("_st", 1);//

@@ -250,11 +250,12 @@ public class CommonUtils {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		Long birthday = getTimeInMillisByDate("20121202");
-		Date date= new Date(birthday);
-		System.out.println(getAge(date));
-		
-		System.out.println(transferLongToDate(1470807735323l));
+		Long birthday = getTimeInMillisByDate("20160907");
+		System.out.println(birthday);
+//		Date date= new Date(birthday);
+//		System.out.println(getAge(date));
+//		
+//		System.out.println(transferLongToDate(1470807735323l));
 		
 	}
 }

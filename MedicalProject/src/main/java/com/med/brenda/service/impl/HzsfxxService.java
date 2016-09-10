@@ -300,7 +300,7 @@ public class HzsfxxService implements IHzsfxxService {
 		hzsfxx.setSFDATE(date);
 		hzsfxx.setITEMCODE("003");
 		hzsfxx.setITEMNAME(CommonUtils.getBloodSugarByItemCode("003"));
-		hzsfxx.setITEMNAME(userDrug.getString("drugname"));//用药名称
+		//hzsfxx.setITEMNAME(userDrug.getString("drugname"));//用药名称
 		hzsfxx.setYWNAME(userDrug.getString("drugname"));//用药名称
 		hzsfxx.setYYTIME(userDrug.getString("drugtime"));//用药时间
 		hzsfxx.setYWJL(userDrug.getString("drugdose"));//用药剂量
