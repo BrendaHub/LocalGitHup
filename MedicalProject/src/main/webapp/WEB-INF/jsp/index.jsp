@@ -54,8 +54,9 @@ BUI.use('common/main',function(){
                									]}
                						]},
 					{id:'8',homePage : '80',menu:[{text:'饮食管理',items:[
-               									{id:'80',text:'饮食分类',href:'/HZXX/list'},
-               									{id:'81',text:'饮食列表',href:'/HZXX/tofenxi1/5'}
+               									{id:'80',text:'食材指标',href:'/tfood/tofoodlsit'},
+               									{id:'81',text:'饮食分类',href:'/tfood/tofoodcategory'},
+               									{id:'82',text:'饮食列表',href:'/tfood/toyinshilist'}
                									]}
                								]},
       				{id:'1',homePage : '4',menu:[

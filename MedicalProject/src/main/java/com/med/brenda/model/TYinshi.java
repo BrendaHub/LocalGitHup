@@ -5,7 +5,7 @@ public class TYinshi {
 
     private String title;
 
-    private String desc;
+    private String des;
 
     private Long createtime;
 
@@ -17,17 +17,23 @@ public class TYinshi {
 
     private String author;
 
+    private Long category;
+
+    private String categoryname;
+
     private String content;
 
-    public TYinshi(Long id, String title, String desc, Long createtime, Long modifytime, Integer status, Long author_id, String author, String content) {
+    public TYinshi(Long id, String title, String des, Long createtime, Long modifytime, Integer status, Long author_id, String author, Long category, String categoryname, String content) {
         this.id = id;
         this.title = title;
-        this.desc = desc;
+        this.des = des;
         this.createtime = createtime;
         this.modifytime = modifytime;
         this.status = status;
         this.author_id = author_id;
         this.author = author;
+        this.category = category;
+        this.categoryname = categoryname;
         this.content = content;
     }
 
@@ -51,12 +57,12 @@ public class TYinshi {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDes() {
+        return des;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setDes(String des) {
+        this.des = des == null ? null : des.trim();
     }
 
     public Long getCreatetime() {
@@ -97,6 +103,22 @@ public class TYinshi {
 
     public void setAuthor(String author) {
         this.author = author == null ? null : author.trim();
+    }
+
+    public Long getCategory() {
+        return category;
+    }
+
+    public void setCategory(Long category) {
+        this.category = category;
+    }
+
+    public String getCategoryname() {
+        return categoryname;
+    }
+
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname == null ? null : categoryname.trim();
     }
 
     public String getContent() {

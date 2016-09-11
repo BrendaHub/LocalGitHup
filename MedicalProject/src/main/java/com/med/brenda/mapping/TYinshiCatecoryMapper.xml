@@ -11,14 +11,50 @@
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
+  <sql id="query_where" >
+		<trim prefix="where" prefixOverrides="and">
+			<if test="keyworld  !=null">
+				food_name like CONCAT('%',#{keyworld},'%')
+			</if>
+			<!-- 
+			<if test="collectionType != null  ">
+				and  CollectionType =#{collectionType}
+			</if>
+			<if test="typeCode != null">
+				and typeCode = #{typeCode}
+			</if>
+			<if test="collectionName != null">
+				AND collectionName like CONCAT('%',#{collectionName},'%')
+			</if>
+			<if test="addTime != null">
+				and AddTime >= #{addTime}
+			</if>
+			<if test="startTime != null">
+				and AddTime  &lt;=  #{startTime}
+			</if>
+			 -->
+		</trim>
+	</sql>
   <sql id="Base_Column_List">
-    id, name, desc, createtime, modifytime, status
+    id, name, `desc`, createtime, modifytime, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_yinshicatecory
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select 
+    count(1)
+    from t_yinshicatecory 
+    <include refid="query_where"/> 
+  </select>
+  <select id="findList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_yinshicatecory
+    <include refid="query_where"/> order by id desc limit #{pageNo},#{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_yinshicatecory
@@ -28,7 +64,7 @@
   <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 		SELECT LAST_INSERT_ID() AS id
 		</selectKey>
-    insert into t_yinshicatecory (name, desc, 
+    insert into t_yinshicatecory (name, `desc`, 
       createtime, modifytime, status
       )
     values (#{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
@@ -45,7 +81,7 @@
         name,
       </if>
       <if test="desc != null">
-        desc,
+        `desc`,
       </if>
       <if test="createtime != null">
         createtime,
@@ -85,7 +121,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+        `desc` = #{desc,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         createtime = #{createtime,jdbcType=BIGINT},
@@ -102,7 +138,7 @@
   <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.TYinshiCatecory">
     update t_yinshicatecory
     set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      `desc` = #{desc,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=BIGINT},
       modifytime = #{modifytime,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER}

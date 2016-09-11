@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
 	<classPathEntry 
-		location="/Users/bg_cloud/Downloads/mysql-connector-java-5.1.26.jar" />
+		location="//Users/brenda/Desktop/mysql-connector-java-5.1.26.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		<property name="mergeable" value="false"></property>
 		<commentGenerator> 
@@ -35,6 +35,12 @@
 			targetPackage="com.med.brenda.dao" targetProject="src/main/java">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
+		<table tableName="t_yinshi" domainObjectName="TYinshi"
+			enableCountByExample="false" enableSelectByExample="false"
+			enableUpdateByExample="false" enableDeleteByExample="false"
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="true" />
+		</table>
 		<!--
 		<table tableName="t_activity" domainObjectName="TActivity"
 			enableCountByExample="false" enableSelectByExample="false"

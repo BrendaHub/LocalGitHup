@@ -67,6 +67,7 @@
             </c:when>
             <c:otherwise>
                 <a onclick="toPage(1)">1</a>
+                <c:if test="${pageCount>3 }">
                 <span class="pagination-break">...</span>
                 <c:forEach var="index" begin="${pageCount-3}" end="${pageCount}" step="1">
                     <c:if test="${pageIndex == index}">
@@ -76,6 +77,7 @@
                         <a onclick="toPage(${index})">${index} </a>
                     </c:if>
                 </c:forEach>
+                </c:if>
             </c:otherwise>
         </c:choose>
         <c:if test="${pageIndex>=2}">
