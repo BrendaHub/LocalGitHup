@@ -13,6 +13,30 @@
       <arg column="dietaryfiber" javaType="java.lang.Float" jdbcType="REAL" />
     </constructor>
   </resultMap>
+  <sql id="query_where" >
+		<trim prefix="where" prefixOverrides="and">
+			<if test="keyworld  !=null">
+				food_name like CONCAT('%',#{keyworld},'%')
+			</if>
+			<!-- 
+			<if test="collectionType != null  ">
+				and  CollectionType =#{collectionType}
+			</if>
+			<if test="typeCode != null">
+				and typeCode = #{typeCode}
+			</if>
+			<if test="collectionName != null">
+				AND collectionName like CONCAT('%',#{collectionName},'%')
+			</if>
+			<if test="addTime != null">
+				and AddTime >= #{addTime}
+			</if>
+			<if test="startTime != null">
+				and AddTime  &lt;=  #{startTime}
+			</if>
+			 -->
+		</trim>
+	</sql>
   <sql id="Base_Column_List">
     id, food_name, weight, hot, protein, fat, sugar, dietaryfiber
   </sql>
@@ -21,6 +45,18 @@
     <include refid="Base_Column_List" />
     from t_food
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select 
+    count(1)
+    from t_food 
+    <include refid="query_where"/> 
+  </select>
+  <select id="findList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_food
+    <include refid="query_where"/> order by id desc limit #{pageNo},#{pageSize}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_food

@@ -1,12 +1,13 @@
-package com.med.brenda.dao;
+package com.med.brenda.service;
 
 import java.util.List;
-import java.util.Map;
 
+import com.med.brenda.controller.common.Query;
 import com.med.brenda.model.Hzxx;
 import com.med.brenda.model.TFood;
 
-public interface TFoodMapper {
+public interface ITFoodService {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(TFood record);
@@ -20,7 +21,7 @@ public interface TFoodMapper {
     int updateByPrimaryKey(TFood record);
     
 
-    int findListCount(Map<String, Object> conditionMap);
-    
-    List<TFood> findList(Map<String, Object> conditionMap);
+	int findListCount(Query query);
+	
+	List<TFood> findList(Query query);
 }

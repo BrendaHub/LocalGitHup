@@ -5,29 +5,57 @@
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="des" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="createtime" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="modifytime" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="author_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="category" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="categoryname" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.med.brenda.model.TYinshi">
     <constructor>
       <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="title" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="desc" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="des" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="createtime" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="modifytime" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="author_id" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="category" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="categoryname" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="content" javaType="java.lang.String" jdbcType="LONGVARCHAR" />
     </constructor>
   </resultMap>
+  <sql id="query_where" >
+		<trim prefix="where" prefixOverrides="and">
+			<if test="keyworld  !=null">
+				title like CONCAT('%',#{keyworld},'%')
+			</if>
+			<!-- 
+			<if test="collectionType != null  ">
+				and  CollectionType =#{collectionType}
+			</if>
+			<if test="typeCode != null">
+				and typeCode = #{typeCode}
+			</if>
+			<if test="collectionName != null">
+				AND collectionName like CONCAT('%',#{collectionName},'%')
+			</if>
+			<if test="addTime != null">
+				and AddTime >= #{addTime}
+			</if>
+			<if test="startTime != null">
+				and AddTime  &lt;=  #{startTime}
+			</if>
+			 -->
+		</trim>
+	</sql>
   <sql id="Base_Column_List">
-    id, title, desc, createtime, modifytime, status, author_id, author
+    id, title, des, createtime, modifytime, status, author_id, author, category, categoryname
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -40,22 +68,36 @@
     from t_yinshi
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="findListCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+  	select 
+    count(1)
+    from t_yinshi 
+    <include refid="query_where"/> 
+  </select>
+  <select id="findList" parameterType="java.util.Map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_yinshi
+    <include refid="query_where"/> order by id desc limit #{pageNo},#{pageSize}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_yinshi
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.med.brenda.model.TYinshi">
-  <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
 		SELECT LAST_INSERT_ID() AS id
 		</selectKey>
-    insert into t_yinshi (title, desc, 
+    insert into t_yinshi (title, des, 
       createtime, modifytime, status, 
-      author_id, author, content
-      )
-    values (#{title,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+      author_id, author, category, 
+      categoryname, content)
+    values (#{title,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
       #{createtime,jdbcType=BIGINT}, #{modifytime,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
-      #{author_id,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR}
-      )
+      #{author_id,jdbcType=BIGINT}, #{author,jdbcType=VARCHAR}, #{category,jdbcType=BIGINT}, 
+      #{categoryname,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.med.brenda.model.TYinshi">
     insert into t_yinshi
@@ -66,8 +108,8 @@
       <if test="title != null">
         title,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="des != null">
+        des,
       </if>
       <if test="createtime != null">
         createtime,
@@ -84,6 +126,12 @@
       <if test="author != null">
         author,
       </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="categoryname != null">
+        categoryname,
+      </if>
       <if test="content != null">
         content,
       </if>
@@ -95,8 +143,8 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="des != null">
+        #{des,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         #{createtime,jdbcType=BIGINT},
@@ -113,6 +161,12 @@
       <if test="author != null">
         #{author,jdbcType=VARCHAR},
       </if>
+      <if test="category != null">
+        #{category,jdbcType=BIGINT},
+      </if>
+      <if test="categoryname != null">
+        #{categoryname,jdbcType=VARCHAR},
+      </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -124,8 +178,8 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="des != null">
+        des = #{des,jdbcType=VARCHAR},
       </if>
       <if test="createtime != null">
         createtime = #{createtime,jdbcType=BIGINT},
@@ -142,6 +196,12 @@
       <if test="author != null">
         author = #{author,jdbcType=VARCHAR},
       </if>
+      <if test="category != null">
+        category = #{category,jdbcType=BIGINT},
+      </if>
+      <if test="categoryname != null">
+        categoryname = #{categoryname,jdbcType=VARCHAR},
+      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -151,24 +211,28 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.med.brenda.model.TYinshi">
     update t_yinshi
     set title = #{title,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=BIGINT},
       modifytime = #{modifytime,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER},
       author_id = #{author_id,jdbcType=BIGINT},
       author = #{author,jdbcType=VARCHAR},
+      category = #{category,jdbcType=BIGINT},
+      categoryname = #{categoryname,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.TYinshi">
     update t_yinshi
     set title = #{title,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR},
       createtime = #{createtime,jdbcType=BIGINT},
       modifytime = #{modifytime,jdbcType=BIGINT},
       status = #{status,jdbcType=INTEGER},
       author_id = #{author_id,jdbcType=BIGINT},
-      author = #{author,jdbcType=VARCHAR}
+      author = #{author,jdbcType=VARCHAR},
+      category = #{category,jdbcType=BIGINT},
+      categoryname = #{categoryname,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

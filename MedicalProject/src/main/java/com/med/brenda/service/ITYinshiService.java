@@ -1,12 +1,13 @@
-package com.med.brenda.dao;
+package com.med.brenda.service;
 
 import java.util.List;
 import java.util.Map;
 
+import com.med.brenda.controller.common.Query;
 import com.med.brenda.model.TYinshi;
-import com.med.brenda.model.TYinshiCatecory;
 
-public interface TYinshiMapper {
+public interface ITYinshiService {
+
     int deleteByPrimaryKey(Long id);
 
     int insert(TYinshi record);
@@ -20,8 +21,8 @@ public interface TYinshiMapper {
     int updateByPrimaryKeyWithBLOBs(TYinshi record);
 
     int updateByPrimaryKey(TYinshi record);
+
+    int findListCount(Query query);
     
-    int findListCount(Map<String, Object> conditionMap);
-    
-    List<TYinshi> findList(Map<String, Object> conditionMap);
+    List<TYinshi> findList(Query query);
 }
