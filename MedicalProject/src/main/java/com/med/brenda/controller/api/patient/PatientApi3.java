@@ -528,37 +528,65 @@ public class PatientApi3 {
 		if(itemcode.equals(GlobalVariables.XUETANG_ITEMCODE)){//如果是血糖
 			try{
 				List<TnbTnbson> list = tnbsonService.getTnbsonlistByDateRang(Long.parseLong(hzid), GlobalVariables.XUETANG_ITEMCODE, CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
+				logger.info("list<<<<<< " + JSON.toJSONString(list));
 				if(list != null && list.size() > 0){
 					//这里需要按不同的日期处理结果集
-					Long old_fatherid = 0l;
-					JSONArray arr = new JSONArray();
-					JSONObject tmpson = null;
+					Long old_fatherid = new Long(0);
+					String old_date = "";
+					JSONArray arr = null;//new JSONArray();
+					JSONObject tmpson = new JSONObject();
+					JSONObject content = null;
+					StringBuilder sb = null;
 					for(int index = 0 ; index < list.size() ; index ++){
 						TnbTnbson tnbson = (TnbTnbson)list.get(index);
-						if(old_fatherid == 0l){
-							tmpson = new JSONObject();
+						if(old_fatherid.longValue() == new Long(0).longValue()){
+							logger.info(">>>>>>>>>>>>>>>>>>>>>");
+							arr = new JSONArray();
+							sb = new StringBuilder();
+							content = new JSONObject();
 						}
-						if(old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
-							arr.add(tmpson);
-							tmpson = null;
-							tmpson = new JSONObject();
+						
+						if(old_fatherid.longValue() != new Long(0).longValue() && old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
+							//在不同时，需要做的事情 1 完成 Ｃontent 的值， 2 将ＪＳＯＮ对象添加到 ＪＳＯＮＡrray 中， 3 以日期为ＫＥＹ 添加到ＪＳＯＮＯbject中去。
+							content.put("Content", sb.toString());
+							arr.add(content);
+							tmpson.put(old_date, arr);
+							sb = null;
+							sb = new StringBuilder();
+							content = null;
+							content = new JSONObject();
+							arr = null;
+							arr = new JSONArray();
+						}else{
+							if(old_fatherid.longValue() != new Long(0).longValue())
+								sb.append("|");
 						}
-						tmpson.put("id", tnbson.getId());
-						tmpson.put("fatherid", tnbson.getFatherid());
-						tmpson.put("hzid", tnbson.getHzid());
-						tmpson.put("itemcode", tnbson.getItemcode());
-						tmpson.put("itemname", tnbson.getItemname());
-						tmpson.put("itemvalue", tnbson.getItemvalue());
-						tmpson.put("time", tnbson.getTemp1());
-						tmpson.put("date", tnbson.getTemp5());
+
+						sb.append(tnbson.getItemvalue());
+						sb.append(";");
+						sb.append(tnbson.getItemcode());
+						sb.append(";");
+						sb.append(tnbson.getId());
+						sb.append(";");
+						sb.append(tnbson.getTemp1());
+
 						old_fatherid = tnbson.getFatherid();
+						old_date = tnbson.getTemp5();
+						
 					}
-					if(tmpson != null){
-						arr.add(tmpson);
+					
+					logger.info(");)))))))))))) = sb = "+ sb.toString());
+					logger.info("content = " + JSON.toJSONString(content));
+					logger.info("arrg = " + JSON.toJSONString(arr));
+					
+					if(sb != null && !"".equals(sb.toString())){
+						content.put("Content", sb.toString());
+						arr.add(content);
+						tmpson.put(old_date, arr);
 					}
 					result.put("_st", 1);
 					result.put("_msg", "获取成功");
-					result.put("_data", JSON.toJSONString(arr));
+					result.put("_data", tmpson);
 					return result.toJSONString();
 				}else {
 					result.put("_st", 6);
@@ -572,42 +600,126 @@ public class PatientApi3 {
 				return result.toJSONString();
 			}
 		}
+		
+//		if(itemcode.equals(GlobalVariables.XUETANG_ITEMCODE)){//如果是血糖
+//			try{
+//				List<TnbTnbson> list = tnbsonService.getTnbsonlistByDateRang(Long.parseLong(hzid), GlobalVariables.XUETANG_ITEMCODE, CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
+//				if(list != null && list.size() > 0){
+//					//这里需要按不同的日期处理结果集
+//					Long old_fatherid = 0l;
+//					JSONArray arr = new JSONArray();
+//					JSONObject tmpson = null;
+//					for(int index = 0 ; index < list.size() ; index ++){
+//						TnbTnbson tnbson = (TnbTnbson)list.get(index);
+//						if(old_fatherid == 0l){
+//							tmpson = new JSONObject();
+//						}
+//						if(old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
+//							arr.add(tmpson);
+//							tmpson = null;
+//							tmpson = new JSONObject();
+//						}
+//						tmpson.put("id", tnbson.getId());
+//						tmpson.put("fatherid", tnbson.getFatherid());
+//						tmpson.put("hzid", tnbson.getHzid());
+//						tmpson.put("itemcode", tnbson.getItemcode());
+//						tmpson.put("itemname", tnbson.getItemname());
+//						tmpson.put("itemvalue", tnbson.getItemvalue());
+//						tmpson.put("time", tnbson.getTemp1());
+//						tmpson.put("date", tnbson.getTemp5());
+//						old_fatherid = tnbson.getFatherid();
+//					}
+//					if(tmpson != null){
+//						arr.add(tmpson);
+//					}
+//					result.put("_st", 1);
+//					result.put("_msg", "获取成功");
+//					result.put("_data", JSON.toJSONString(arr));
+//					return result.toJSONString();
+//				}else {
+//					result.put("_st", 6);
+//					result.put("_msg", "获取失败");
+//					return result.toJSONString();
+//				}
+//			}catch(Exception e){
+//				e.printStackTrace();
+//				result.put("_st", 6);
+//				result.put("_msg", "获取失败,程序异常");
+//				return result.toJSONString();
+//			}
+//		}
+		
 		if(itemcode.equals(GlobalVariables.YITAOSU_ITEMCODE)){//如果是胰岛素
 			try{
 				List<TnbTnbson> list = tnbsonService.getTnbsonlistByDateRang(Long.parseLong(hzid), GlobalVariables.YITAOSU_ITEMCODE, CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
 				if(list != null && list.size() > 0){
 					//这里需要按不同的日期处理结果集
-					Long old_fatherid = 0l;
-					JSONArray arr = new JSONArray();
-					JSONObject tmpson = null;
+					Long old_fatherid = new Long(0);
+					String old_date = "";
+					JSONArray arr = null;//new JSONArray();
+					JSONObject tmpson = new JSONObject();
+					JSONObject content = null;
+					StringBuilder sb = null;
 					for(int index = 0 ; index < list.size() ; index ++){
 						TnbTnbson tnbson = (TnbTnbson)list.get(index);
-						if(old_fatherid == 0l){
-							tmpson = new JSONObject();
+						if(old_fatherid.longValue() == new Long(0).longValue()){
+							logger.info(">>>>>>>>>>>>>>>>>>>>>");
+							arr = new JSONArray();
+							sb = new StringBuilder();
+							content = new JSONObject();
 						}
-						if(old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
-							arr.add(tmpson);
-							tmpson = null;
-							tmpson = new JSONObject();
+						if(old_fatherid.longValue() != new Long(0).longValue() && old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
+							//在不同时，需要做的事情 1 完成 Ｃontent 的值， 2 将ＪＳＯＮ对象添加到 ＪＳＯＮＡrray 中， 3 以日期为ＫＥＹ 添加到ＪＳＯＮＯbject中去。
+							content.put("Content", sb.toString());
+							arr.add(content);
+							tmpson.put(old_date, arr);
+							sb = null;
+							sb = new StringBuilder();
+							content = null;
+							content = new JSONObject();
+							arr = null;
+							arr = new JSONArray();
+						}else{
+							if(old_fatherid.longValue() != new Long(0).longValue())
+								sb.append("|");
 						}
-						tmpson.put("id", tnbson.getId());
-						tmpson.put("fatherid", tnbson.getFatherid());
-						tmpson.put("hzid", tnbson.getHzid());
-						tmpson.put("itemcode", tnbson.getItemcode());
-						tmpson.put("itemname", tnbson.getItemname());
-						tmpson.put("yds", tnbson.getYds());
-						tmpson.put("ydsjl", tnbson.getYdsjl());
-						tmpson.put("ydsejsg", tnbson.getYdsejsg());
-						tmpson.put("time", tnbson.getTemp1());
-						tmpson.put("date", tnbson.getTemp5());
+						
+						sb.append(tnbson.getYds());
+						sb.append(";");
+						sb.append(tnbson.getYdsjl());
+						sb.append(";");
+						sb.append(tnbson.getYdsejsg());
+						sb.append(";");
+						sb.append(tnbson.getItemcode());
+						sb.append(";");
+						sb.append(tnbson.getId());
+
 						old_fatherid = tnbson.getFatherid();
+						old_date = tnbson.getTemp5();
+						
+//						tmpson.put("id", tnbson.getId());
+//						tmpson.put("fatherid", tnbson.getFatherid());
+//						tmpson.put("hzid", tnbson.getHzid());
+//						tmpson.put("itemcode", tnbson.getItemcode());
+//						tmpson.put("itemname", tnbson.getItemname());
+//						tmpson.put("yds", tnbson.getYds());
+//						tmpson.put("ydsjl", tnbson.getYds());
+//						tmpson.put("ydsejsg", tnbson.getYdsejsg());
+//						tmpson.put("time", tnbson.getTemp1());
+//						tmpson.put("date", tnbson.getTemp5());
 					}
-					if(tmpson != null){
-						arr.add(tmpson);
+					logger.info(");)))))))))))) = sb = "+ sb.toString());
+					logger.info("content = " + JSON.toJSONString(content));
+					logger.info("arrg = " + JSON.toJSONString(arr));
+					
+					if(sb != null && !"".equals(sb.toString())){
+						content.put("Content", sb.toString());
+						arr.add(content);
+						tmpson.put(old_date, arr);
 					}
 					result.put("_st", 1);
 					result.put("_msg", "获取成功");
-					result.put("_data", JSON.toJSONString(arr));
+					result.put("_data", tmpson);
 					return result.toJSONString();
 				}else {
 					result.put("_st", 6);
@@ -621,6 +733,56 @@ public class PatientApi3 {
 				return result.toJSONString();
 			}
 		}
+		
+//		if(itemcode.equals(GlobalVariables.YITAOSU_ITEMCODE)){//如果是胰岛素
+//			try{
+//				List<TnbTnbson> list = tnbsonService.getTnbsonlistByDateRang(Long.parseLong(hzid), GlobalVariables.YITAOSU_ITEMCODE, CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
+//				if(list != null && list.size() > 0){
+//					//这里需要按不同的日期处理结果集
+//					Long old_fatherid = 0l;
+//					JSONArray arr = new JSONArray();
+//					JSONObject tmpson = null;
+//					for(int index = 0 ; index < list.size() ; index ++){
+//						TnbTnbson tnbson = (TnbTnbson)list.get(index);
+//						if(old_fatherid == 0l){
+//							tmpson = new JSONObject();
+//						}
+//						if(old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
+//							arr.add(tmpson);
+//							tmpson = null;
+//							tmpson = new JSONObject();
+//						}
+//						tmpson.put("id", tnbson.getId());
+//						tmpson.put("fatherid", tnbson.getFatherid());
+//						tmpson.put("hzid", tnbson.getHzid());
+//						tmpson.put("itemcode", tnbson.getItemcode());
+//						tmpson.put("itemname", tnbson.getItemname());
+//						tmpson.put("yds", tnbson.getYds());
+//						tmpson.put("ydsjl", tnbson.getYdsjl());
+//						tmpson.put("ydsejsg", tnbson.getYdsejsg());
+//						tmpson.put("time", tnbson.getTemp1());
+//						tmpson.put("date", tnbson.getTemp5());
+//						old_fatherid = tnbson.getFatherid();
+//					}
+//					if(tmpson != null){
+//						arr.add(tmpson);
+//					}
+//					result.put("_st", 1);
+//					result.put("_msg", "获取成功");
+//					result.put("_data", JSON.toJSONString(arr));
+//					return result.toJSONString();
+//				}else {
+//					result.put("_st", 6);
+//					result.put("_msg", "获取失败");
+//					return result.toJSONString();
+//				}
+//			}catch(Exception e){
+//				e.printStackTrace();
+//				result.put("_st", 6);
+//				result.put("_msg", "获取失败,程序异常");
+//				return result.toJSONString();
+//			}
+//		}
 		if(itemcode.equals(GlobalVariables.SUIMIAN_TEMP5_SUB) || itemcode.equals(GlobalVariables.XUEYA_TEMP5_SUB) 
 				|| itemcode.equals(GlobalVariables.TIWEN_TEMP5_SUB) || itemcode.equals(GlobalVariables.HEIGHT_TMPE5_SUB)
 				|| itemcode.equals(GlobalVariables.WEIGHT_TMPE5_SUB)
