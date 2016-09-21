@@ -375,7 +375,7 @@ public class PatientApi {
 	 
 	 @ResponseBody
 	 @ApiOperation(value = "检查当前用户是否完善了信息 ｜  发布时间： 2016-08-09 22:33", httpMethod = "GET", response = String.class, notes = "检查当前用户是否完善了信息")
-	 @ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	 @ApiResponse(code = 0, message = "返回JSON串，_st = 1表示信息已完善，并不需要做别的事情直接进入主界面； _st=11 表示信息已完善，且要求强制进入量表调查页面；_st=111，表示信息已完善，且选择性的进入量表调查页面；")
 	 @RequestMapping(value="/perfectHZXX/{hzid}/{pushtoken}/{mobileversion}",produces = "application/json; charset=utf-8",method=RequestMethod.GET)
 	public String checkAboutPerfect(@ApiParam(required = true, name = "hzid", value = "患者ID") @PathVariable String hzid,
 			@ApiParam(required = false, name = "pushtoken", value = "手机用于推送的pushtoken") @PathVariable String pushtoken,
@@ -401,9 +401,16 @@ public class PatientApi {
 				 result.put("_msg", "需要完善信息");
 				 return result.toJSONString();
 			 }else{
-				 result.put("_st", 1);//
-				 result.put("_msg", "信息已完善");
-				 return result.toJSONString(); 
+				 String tmp7 = hzxx.getTEMP7();
+				 if(tmp7 != null && "1".equals(tmp7.trim())){
+					 result.put("_st", 11);//表示参与问卷量表的人
+					 result.put("_msg", "强制参加量表的人");
+					 return result.toJSONString(); 
+				 }else{
+					 result.put("_st", 1);//
+					 result.put("_msg", "信息已完善");
+					 return result.toJSONString(); 
+				 }
 			 }
 		 }else{
 			 result.put("_st", 3);//
