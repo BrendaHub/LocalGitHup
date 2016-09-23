@@ -32,12 +32,15 @@ import com.med.brenda.model.Hzxx;
 import com.med.brenda.model.TnbTnbson;
 import com.med.brenda.model.TnbYinshi;
 import com.med.brenda.model.User;
+import com.med.brenda.model.ＳmsＶerifＣode;
 import com.med.brenda.service.IHzsfxxService;
 import com.med.brenda.service.IHzxxService;
+import com.med.brenda.service.ISmsVerifCodeService;
 import com.med.brenda.service.ITnbTnbsonService;
 import com.med.brenda.service.IUserService;
 import com.med.brenda.service.IYinshiService;
 import com.med.brenda.util.CommonUtils;
+import com.med.brenda.util.SMS;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
@@ -69,6 +72,8 @@ public class PatientApi {
 	private ITnbTnbsonService tnbsonService;
 	@Autowired
 	private IYinshiService yinshiService;
+	@Autowired
+	private ISmsVerifCodeService smsVerifCodeService;
 	/**
 	 * 根据用户ID获取用户对象
 	 * @param name
@@ -89,6 +94,137 @@ public class PatientApi {
 	    }
 	}
 	
+	/**
+	 * 发送短信码证码
+	 * @param request
+	 * @param response
+	 * @param SFZCODE
+	 * @param PASSWORD
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/smsv",produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ApiOperation(value = "发送短信验证码接口，传入号码，验证码，匹对码", httpMethod = "POST", response = JSON.class, notes = "发送短信验证码接口，传入号码，验证码，匹对码")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	public String sendsmsvcode(HttpServletRequest request,HttpServletResponse response,@ApiParam(required = true, name = "sfzcode", value = "登录号") @RequestParam(value="sfzcode",required=true) String sfzcode,
+			@ApiParam(required = true, name = "vcode", value = "验证码6位") @RequestParam(value="vcode",required=true) String vcode,
+			@ApiParam(required = true, name = "paircode", value = "匹对码码6位字母") @RequestParam(value="paircode",required=true) String paircode){
+		response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(vcode)){
+			result.put("_st", 2);//
+			result.put("_msg", "验证码不能为空");
+			return result.toJSONString();
+		}
+		if(StringUtils.isBlank(paircode)){
+			result.put("_st", 3);//
+			result.put("_msg", "匹对码不能为空");
+			return result.toJSONString();
+		}
+		if(StringUtils.isBlank(sfzcode)){
+			result.put("_st", 5);//
+			result.put("_msg", "身份证不能为空");
+			return result.toJSONString();
+		}
+		//根据手机号找出患者记录
+		Hzxx hzxx = hzxxService.findHzxxBySFZH(sfzcode);
+		if(hzxx != null){
+			String mobile = hzxx.getPHONE();
+			StringBuilder smsc = new StringBuilder();
+			smsc.append("验证码：");
+			smsc.append(vcode);
+			smsc.append(", 匹配码：");
+			smsc.append(paircode);
+			int result_sms = SMS.smsV(mobile, smsc.toString(), "");
+			if(result_sms == 1){
+				//创建一个验证对象
+				ＳmsＶerifＣode svc = new ＳmsＶerifＣode();
+				svc.setPaircode(paircode);
+				svc.setRandcode(vcode);
+				int rowid = smsVerifCodeService.insert(svc);
+				if(rowid > 0){
+					result.put("_st", 1);//
+					result.put("_msg", "发送成功");
+					return result.toJSONString();
+				}else{
+					result.put("_st", 4);//
+					result.put("_msg", "发送失败");
+					return result.toJSONString();
+				}
+			}else{
+				result.put("_st", 4);//
+				result.put("_msg", "发送失败");
+				return result.toJSONString();
+			}
+		}else{
+			result.put("_st", 6);//
+			result.put("_msg", "登录号无效");
+			return result.toJSONString();
+		}
+	}
+	
+	/**
+	 * 患者修改密码
+	 * @param request
+	 * @param response
+	 * @param SFZCODE
+	 * @param PASSWORD
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/changeMM",produces = "application/json; charset=utf-8", method = RequestMethod.POST)
+	@ApiOperation(value = "患者修改密码，mobile, newpassword", httpMethod = "POST", response = JSON.class, notes = "患者修改密码，mobile, newpassword")
+	@ApiResponse(code = 0, message = "返回JSON串，请查看响应内容")
+	public String changeMM(HttpServletRequest request,HttpServletResponse response,@ApiParam(required = true, name = "sfzcode", value = "手机号码") @RequestParam(value="sfzcode",required=true) String sfzcode,
+			@ApiParam(required = true, name = "newcode", value = "新密码，要求，6位以上的数写，字符，ＭＤ5大写串") @RequestParam(value="newcode",required=true) String newcode,
+			@ApiParam(required = true, name = "paircode", value = "匹对码码6位字母") @RequestParam(value="paircode",required=true) String paircode,
+			@ApiParam(required = true, name = "vcode", value = "验证码") @RequestParam(value="vcode",required=true) String vcode){
+		response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
+		JSONObject result = new JSONObject();
+		if(StringUtils.isBlank(vcode)){
+			result.put("_st", 2);//
+			result.put("_msg", "验证码不能为空");
+			return result.toJSONString();
+		}
+		if(StringUtils.isBlank(paircode)){
+			result.put("_st", 3);//
+			result.put("_msg", "匹对码不能为空");
+			return result.toJSONString();
+		}
+		if(StringUtils.isBlank(sfzcode)){
+			result.put("_st", 5);//
+			result.put("_msg", "sfzcode不能为空");
+			return result.toJSONString();
+		}
+		if(StringUtils.isBlank(newcode)){
+			result.put("_st", 6);//
+			result.put("_msg", "新密码不能为空");
+			return result.toJSONString();
+		}
+		
+		//根据比对码选出验证码
+		ＳmsＶerifＣode _svc = smsVerifCodeService.selectByBiTuiCode(paircode);
+		if(_svc != null){//如果不等于ＮＵＬＬ，
+			String _db_vcode = _svc.getRandcode();
+			if(_db_vcode.equals(vcode)){//验证码如果相等，修改密码
+				//根据手机号找出患者记录
+				Hzxx hzxx = hzxxService.findHzxxBySFZH(sfzcode);
+				hzxx.setPASSWORD(newcode);
+				hzxxService.updateByPrimaryKeySelective(hzxx);
+				result.put("_st", 1);//
+				result.put("_msg", "修改成功");
+				return result.toJSONString();
+			}else{//不相等，提示前提不满足
+				result.put("_st", 7);//
+				result.put("_msg", "验证码错误");
+				return result.toJSONString();
+			}
+		}else{
+			result.put("_st", 7);//
+			result.put("_msg", "匹对码错误");
+			return result.toJSONString();
+		}
+	}
 	
 	
 	/**

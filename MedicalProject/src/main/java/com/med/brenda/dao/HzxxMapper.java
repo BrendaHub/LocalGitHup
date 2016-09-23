@@ -27,4 +27,6 @@ public interface HzxxMapper {
     int findHzxxByTemp7Count(Map<String, Object> conditionMap);
     
     List<Hzxx> findHzxxByTemp7(Map<String, Object> conditionMap);
+    
+    List<Hzxx> findHzxxBySFZH(Map<String, Object> conditionMap);
 }

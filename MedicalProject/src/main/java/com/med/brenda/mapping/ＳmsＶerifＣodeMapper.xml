@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.med.brenda.dao.ＳmsＶerifＣodeMapper">
+  <resultMap id="BaseResultMap" type="com.med.brenda.model.ＳmsＶerifＣode">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="randcode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="paircode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="tmp1" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, randcode, paircode, tmp1
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_smsverifcode
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByBiTuiCode" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_smsverifcode
+    where 1=1
+    <if test="paircode != null">
+    	and paircode = #{paircode,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_smsverifcode
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.med.brenda.model.ＳmsＶerifＣode">
+  	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+		SELECT LAST_INSERT_ID() AS id
+		</selectKey>
+    insert into t_smsverifcode (randcode, paircode, 
+      tmp1)
+    values (#{randcode,jdbcType=VARCHAR}, #{paircode,jdbcType=VARCHAR}, 
+      #{tmp1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.med.brenda.model.ＳmsＶerifＣode">
+    insert into t_smsverifcode
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="randcode != null">
+        randcode,
+      </if>
+      <if test="paircode != null">
+        paircode,
+      </if>
+      <if test="tmp1 != null">
+        tmp1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="randcode != null">
+        #{randcode,jdbcType=VARCHAR},
+      </if>
+      <if test="paircode != null">
+        #{paircode,jdbcType=VARCHAR},
+      </if>
+      <if test="tmp1 != null">
+        #{tmp1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.med.brenda.model.ＳmsＶerifＣode">
+    update t_smsverifcode
+    <set>
+      <if test="randcode != null">
+        randcode = #{randcode,jdbcType=VARCHAR},
+      </if>
+      <if test="paircode != null">
+        paircode = #{paircode,jdbcType=VARCHAR},
+      </if>
+      <if test="tmp1 != null">
+        tmp1 = #{tmp1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.med.brenda.model.ＳmsＶerifＣode">
+    update t_smsverifcode
+    set randcode = #{randcode,jdbcType=VARCHAR},
+      paircode = #{paircode,jdbcType=VARCHAR},
+      tmp1 = #{tmp1,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

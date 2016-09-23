@@ -86,5 +86,16 @@ public class HzxxService implements IHzxxService {
 		param.put("pageSize", query.getPageSize());
 		return hzxxDao.findHzxxByTemp7(param);
 	}
+	@Override
+	public Hzxx findHzxxBySFZH(String sfzcode) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("sfzh", sfzcode);
+		List<Hzxx> list = hzxxDao.findHzxxBySFZH(param);
+		if(list != null && list.size() > 0){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
 
 }
