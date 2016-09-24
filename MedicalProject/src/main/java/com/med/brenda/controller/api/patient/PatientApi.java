@@ -651,13 +651,18 @@ public class PatientApi {
 				 //初始化
 				 hzsfxxService.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(date));
 			 }
-
+			
+			System.out.println(">>>>>>>>>>>date = " + date);
 			 //查询当前用户的随访数据，
 			String backStr = "";
 			 if(mon == 0){//日期不变
 				backStr = hzsfxxService.getCurrentDateTNB(Long.parseLong(hzid), date);
 			 }else{
-				 String cur_date = CommonUtils.getPreDateStr(date);
+				 String cur_date = CommonUtils.getPreDateStr(date,mon);
+				 if(!hzsfxxService.checkHzxfxxBaseDB(Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(cur_date))){//CommonUtils.getTimeInMillisBy00_00_00())){
+					 //初始化
+					 hzsfxxService.addHzsfxxBeaseDB(new ArrayList<Hzsfxx>(), Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(cur_date));
+				 }
 				 backStr = hzsfxxService.getCurrentDateTNB(Long.parseLong(hzid), cur_date);
 			 }
 			 //暂不提供返回的数据。

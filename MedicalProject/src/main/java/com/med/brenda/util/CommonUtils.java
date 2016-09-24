@@ -141,7 +141,47 @@ public class CommonUtils {
 		sb.append(downloadurl);
 		return sb.toString();
 	}
-	
+	/**
+	 * 获取指定日期上月的当前日期
+	 * getStartDate
+	 * @param date
+	 * @return
+	 * String
+	 */
+	public static String getPreDateStr(String date, int mon) {
+		System.out.println("#############" + date);
+		String resultString;
+		try {
+			if (StringUtils.isEmpty(date)) {
+				return getEndDate();//当前日期
+			}
+			long _dateLong = 0l;
+			try {
+				_dateLong = getTimeInMillisByDate(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(_dateLong);
+			cal.add(Calendar.MONTH, mon);
+			int day = 0 ; 
+			if(date.indexOf("-") != -1){
+				day = Integer
+					.parseInt(StringUtils.substring(date, StringUtils.lastIndexOf(date, "-") + 1, date.length()));
+			}else{
+				day = Integer
+						.parseInt(StringUtils.substring(date, 6, date.length()));
+			}
+			System.out.println("day = "+ day);
+			cal.set(Calendar.DATE, day);
+			String lastMonthStart = sdf.format(cal.getTime());// 上月开始
+			cal.clear();
+			resultString = lastMonthStart;
+		} catch (NumberFormatException e) {
+			return getEndDate();
+		}
+		return resultString;
+	}
 	/**
 	 * 获取指定日期上月的当前日期
 	 * getStartDate
@@ -150,15 +190,18 @@ public class CommonUtils {
 	 * String
 	 */
 	public static String getPreDateStr(String date) {
+		System.out.println("#############" + date);
 		String resultString;
 		try {
 			if (StringUtils.isEmpty(date)) {
-				return getEndDate();
+				return getEndDate();//当前日期
 			}
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.MONTH, -1);
 			int day = Integer
 					.parseInt(StringUtils.substring(date, StringUtils.lastIndexOf(date, "-") + 1, date.length()));
+
+			System.out.println("day = "+ day);
 			cal.set(Calendar.DATE, day);
 			String lastMonthStart = sdf.format(cal.getTime());// 上月开始
 			cal.clear();
@@ -315,13 +358,15 @@ public class CommonUtils {
 //		System.out.println(transferLongToDate(1470807735323l));
 //		Long _l = CommonUtils.getTimeInMillisByDate("20170909");
 //		Date d = new Date(_l);
-//		System.out.println(getAge(d));
-		java.util.Random random=new java.util.Random();// 定义随机类
-		int result=random.nextInt(30);// 返回[0,10)集合中的整数，注意不包括10
-//		return result+1;              // +1后，[0,10)集合变为[1,11)集合，满足要求
-		System.out.println(BaseAH.length);
-		System.out.println(result);
-		System.out.println(CommonUtils.getPiTuiCode());
-		System.out.println(CommonUtils.getVerifCode());
+////		System.out.println(getAge(d));
+//		java.util.Random random=new java.util.Random();// 定义随机类
+//		int result=random.nextInt(30);// 返回[0,10)集合中的整数，注意不包括10
+////		return result+1;              // +1后，[0,10)集合变为[1,11)集合，满足要求
+//		System.out.println(BaseAH.length);
+//		System.out.println(result);
+//		System.out.println(CommonUtils.getPiTuiCode());
+//		System.out.println(CommonUtils.getVerifCode());
+		
+		System.out.println(CommonUtils.getPreDateStr("20160824",1));
 	}
 }
