@@ -1,5 +1,6 @@
 package com.med.brenda.controller.hzxx;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -383,9 +384,15 @@ public class HzxxController extends BaseController {
 			String dlUrl = GlobalVariables.WEBSITE_URL+"/api/doctor/dlapp/"+hzxx.getPHONE()+"/"+_sfzCode;
 			String smsContent = CommonUtils.getSendSMS(_sfzCode, dlUrl);
 			String strTim = null;//HttpSend.paraTo16("2012-2-16 12:00:00"); //定时发送时间
-			String strSchSmsParam = "reg=" + GlobalVariables.strReg + "&pwd=" + GlobalVariables.strPwd + "&sourceadd=" +
-					GlobalVariables.strSourceAdd + "&tim=" + strTim + "&phone=" + hzxx.getPHONE() + "&content=" + smsContent;
-			logger.info("短信发送："+strSchSmsParam );
+			String strSchSmsParam = "";
+			try {
+				strSchSmsParam = "reg=" + GlobalVariables.strReg + "&pwd=" + GlobalVariables.strPwd + "&sourceadd=" +
+						GlobalVariables.strSourceAdd + "&tim=" + strTim + "&phone=" + hzxx.getPHONE() + "&content=" + HttpSend.paraTo16(smsContent);
+				logger.info("短信发送："+strSchSmsParam );
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//定时短信
 			String strRes = HttpSend.postSend(GlobalVariables.strSchSmsUrl, strSchSmsParam);
 			if(strRes.startsWith("result=0")){

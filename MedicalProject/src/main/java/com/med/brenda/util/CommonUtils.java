@@ -19,6 +19,7 @@ public class CommonUtils {
 	
 	private static Logger logger = Logger.getLogger(CommonUtils.class);
 	private static String[] WEEKS = {"日","一","二","三","四","五","六"};
+	private static String[] BaseAH = {"a","b","c","d","e","f","g","k","l","m","n","p","q","r","s","t","u","v","w","x","y","x","h","8","7","3","4","5","2"};
 	// 先把字符串转成Date类型
 	static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	// 获取当天00:00:00时的毫秒数
@@ -29,6 +30,26 @@ public class CommonUtils {
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.MILLISECOND, 0);
 		return cal.getTimeInMillis();
+	}
+	
+	public static String getPiTuiCode(){
+		java.util.Random random=new java.util.Random();// 定义随机类
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0 ; i < 6; i ++){
+			int result=random.nextInt(29);// 返回[0,10)集合中的整数，注意不包括10
+			sb.append(BaseAH[result]);
+		}
+		return sb.toString();
+	}
+	
+	public static String getVerifCode(){
+		java.util.Random random=new java.util.Random();// 定义随机类
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0 ; i < 4; i ++){
+			int result=random.nextInt(10);// 返回[0,10)集合中的整数，注意不包括10
+			sb.append(String.valueOf(result));
+		}
+		return sb.toString();
 	}
 
 	// 根据指定的日期得到与这相对应的毫秒数
@@ -292,9 +313,15 @@ public class CommonUtils {
 //		System.out.println(getAge(date));
 //		
 //		System.out.println(transferLongToDate(1470807735323l));
-		Long _l = CommonUtils.getTimeInMillisByDate("20170909");
-		Date d = new Date(_l);
-		System.out.println(getAge(d));
-		
+//		Long _l = CommonUtils.getTimeInMillisByDate("20170909");
+//		Date d = new Date(_l);
+//		System.out.println(getAge(d));
+		java.util.Random random=new java.util.Random();// 定义随机类
+		int result=random.nextInt(30);// 返回[0,10)集合中的整数，注意不包括10
+//		return result+1;              // +1后，[0,10)集合变为[1,11)集合，满足要求
+		System.out.println(BaseAH.length);
+		System.out.println(result);
+		System.out.println(CommonUtils.getPiTuiCode());
+		System.out.println(CommonUtils.getVerifCode());
 	}
 }

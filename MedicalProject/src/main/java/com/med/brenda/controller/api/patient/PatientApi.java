@@ -111,16 +111,6 @@ public class PatientApi {
 			@ApiParam(required = true, name = "paircode", value = "匹对码码6位字母") @RequestParam(value="paircode",required=true) String paircode){
 		response.setContentType("application/json;charset=UTF-8");//防止数据传递乱码
 		JSONObject result = new JSONObject();
-		if(StringUtils.isBlank(vcode)){
-			result.put("_st", 2);//
-			result.put("_msg", "验证码不能为空");
-			return result.toJSONString();
-		}
-		if(StringUtils.isBlank(paircode)){
-			result.put("_st", 3);//
-			result.put("_msg", "匹对码不能为空");
-			return result.toJSONString();
-		}
 		if(StringUtils.isBlank(sfzcode)){
 			result.put("_st", 5);//
 			result.put("_msg", "身份证不能为空");
@@ -130,21 +120,27 @@ public class PatientApi {
 		Hzxx hzxx = hzxxService.findHzxxBySFZH(sfzcode);
 		if(hzxx != null){
 			String mobile = hzxx.getPHONE();
+			//产生批次号
+			String bzh = CommonUtils.getPiTuiCode();
+			//生成随机四位验证码
+			String rvcode = CommonUtils.getVerifCode();
 			StringBuilder smsc = new StringBuilder();
 			smsc.append("验证码：");
-			smsc.append(vcode);
-			smsc.append(", 匹配码：");
-			smsc.append(paircode);
+			smsc.append(rvcode);
+			smsc.append(", 对应批次");
+			smsc.append(bzh);
 			int result_sms = SMS.smsV(mobile, smsc.toString(), "");
 			if(result_sms == 1){
 				//创建一个验证对象
 				ＳmsＶerifＣode svc = new ＳmsＶerifＣode();
-				svc.setPaircode(paircode);
-				svc.setRandcode(vcode);
+				svc.setPaircode(bzh);
+				svc.setRandcode(rvcode);
 				int rowid = smsVerifCodeService.insert(svc);
 				if(rowid > 0){
 					result.put("_st", 1);//
 					result.put("_msg", "发送成功");
+					result.put("phone", mobile);
+					result.put("paricode", bzh);
 					return result.toJSONString();
 				}else{
 					result.put("_st", 4);//
@@ -211,6 +207,8 @@ public class PatientApi {
 				Hzxx hzxx = hzxxService.findHzxxBySFZH(sfzcode);
 				hzxx.setPASSWORD(newcode);
 				hzxxService.updateByPrimaryKeySelective(hzxx);
+				//删除对应批次号
+				smsVerifCodeService.deleteByPrimaryKey(_svc.getId());
 				result.put("_st", 1);//
 				result.put("_msg", "修改成功");
 				return result.toJSONString();

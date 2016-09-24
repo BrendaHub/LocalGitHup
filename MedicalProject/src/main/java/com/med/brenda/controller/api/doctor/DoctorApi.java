@@ -221,7 +221,7 @@ public class DoctorApi {
 			String smsContent = CommonUtils.getSendSMS(dlhCode, dlUrl);
 			String strTim = null;//HttpSend.paraTo16("2012-2-16 12:00:00"); //定时发送时间
 			String strSchSmsParam = "reg=" + GlobalVariables.strReg + "&pwd=" + GlobalVariables.strPwd + "&sourceadd=" +
-					GlobalVariables.strSourceAdd + "&tim=" + strTim + "&phone=" + modile + "&content=" + smsContent;
+					GlobalVariables.strSourceAdd + "&tim=" + strTim + "&phone=" + modile + "&content=" + HttpSend.paraTo16(smsContent);
 			//定时短信
 			String strRes = HttpSend.postSend(GlobalVariables.strSchSmsUrl, strSchSmsParam);
 			if(strRes.startsWith("result=0")){
