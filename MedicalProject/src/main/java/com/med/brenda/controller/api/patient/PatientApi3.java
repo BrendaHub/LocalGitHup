@@ -539,14 +539,17 @@ public class PatientApi3 {
 					StringBuilder sb = null;
 					for(int index = 0 ; index < list.size() ; index ++){
 						TnbTnbson tnbson = (TnbTnbson)list.get(index);
-						if(old_fatherid.longValue() == new Long(0).longValue()){
+						if(old_fatherid.longValue() == new Long(0).longValue()){//第一个
 							logger.info(">>>>>>>>>>>>>>>>>>>>>");
 							arr = new JSONArray();
 							sb = new StringBuilder();
 							content = new JSONObject();
 						}
+						logger.info(">>>>>>>>>>>>old_fatherid.longValue()>>>>>>>>>"+old_fatherid.longValue());
+						logger.info(">>>>>>>tnbson.getFatherid().longValue()>>>>>>>>>>>>>>"+tnbson.getFatherid().longValue());
+						logger.info(">>>>>>>false>>>>>>>>>>>>>>"+(old_fatherid.longValue() != tnbson.getFatherid().longValue()));
 						
-						if(old_fatherid.longValue() != new Long(0).longValue() && old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
+						if(old_fatherid.longValue() != new Long(0).longValue() && old_fatherid.longValue() != tnbson.getFatherid().longValue()){//表示换了一个新的数据
 							//在不同时，需要做的事情 1 完成 Ｃontent 的值， 2 将ＪＳＯＮ对象添加到 ＪＳＯＮＡrray 中， 3 以日期为ＫＥＹ 添加到ＪＳＯＮＯbject中去。
 							content.put("Content", sb.toString());
 							arr.add(content);
@@ -652,6 +655,7 @@ public class PatientApi3 {
 		if(itemcode.equals(GlobalVariables.YITAOSU_ITEMCODE)){//如果是胰岛素
 			try{
 				List<TnbTnbson> list = tnbsonService.getTnbsonlistByDateRang(Long.parseLong(hzid), GlobalVariables.YITAOSU_ITEMCODE, CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
+				logger.info("list<<<<<< " + JSON.toJSONString(list));
 				if(list != null && list.size() > 0){
 					//这里需要按不同的日期处理结果集
 					Long old_fatherid = new Long(0);
@@ -662,13 +666,18 @@ public class PatientApi3 {
 					StringBuilder sb = null;
 					for(int index = 0 ; index < list.size() ; index ++){
 						TnbTnbson tnbson = (TnbTnbson)list.get(index);
+						
 						if(old_fatherid.longValue() == new Long(0).longValue()){
 							logger.info(">>>>>>>>>>>>>>>>>>>>>");
 							arr = new JSONArray();
 							sb = new StringBuilder();
 							content = new JSONObject();
 						}
-						if(old_fatherid.longValue() != new Long(0).longValue() && old_fatherid != tnbson.getFatherid()){//表示换了一个新的数据
+						logger.info(">>>>>>>>>>>>old_fatherid.longValue()>>>>>>>>>"+old_fatherid.longValue());
+						logger.info(">>>>>>>tnbson.getFatherid().longValue()>>>>>>>>>>>>>>"+tnbson.getFatherid().longValue());
+						logger.info(">>>>>>>false>>>>>>>>>>>>>>"+(old_fatherid.longValue() != tnbson.getFatherid().longValue()));
+						
+						if(old_fatherid.longValue() != new Long(0).longValue() && old_fatherid.longValue() != tnbson.getFatherid().longValue()){//表示换了一个新的数据
 							//在不同时，需要做的事情 1 完成 Ｃontent 的值， 2 将ＪＳＯＮ对象添加到 ＪＳＯＮＡrray 中， 3 以日期为ＫＥＹ 添加到ＪＳＯＮＯbject中去。
 							content.put("Content", sb.toString());
 							arr.add(content);
