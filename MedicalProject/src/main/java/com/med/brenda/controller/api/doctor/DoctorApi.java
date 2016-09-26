@@ -91,6 +91,34 @@ public class DoctorApi {
 	}
 	
 	/**
+	 * 医生引荐的患者下载
+	 * dlapp
+	 * @param phone
+	 * @param sfcode
+	 * @return
+	 * ModelAndView
+	 */
+	@RequestMapping(value="/dlapp138", method = RequestMethod.GET)
+	@ApiOperation(value = "App下载专用跳转Action", httpMethod = "GET", response = JSONObject.class, notes = "App下载专用跳转Action")
+	public ModelAndView dlapp138(){
+		
+		
+		AppDlLog appl = new AppDlLog();
+		appl.setMobile("13800138000");
+		appl.setSfzcode("1380013800013800138000");
+		appl.setCreatetime(System.currentTimeMillis());
+		
+		int rowid = appService.insert(appl);
+		if(rowid > 0 ){
+			//跳转
+			return new ModelAndView("dl/appdl");
+		}else{
+			//提示错识
+			return new ModelAndView("error");
+		}
+	}
+	
+	/**
 	 * 患者
 	 * dlapp
 	 * @param phone

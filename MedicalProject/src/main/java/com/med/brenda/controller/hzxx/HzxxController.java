@@ -381,7 +381,7 @@ public class HzxxController extends BaseController {
 			//添加成功后，向新的患者下发短信
 			String replaseStr  = hzxx.getSFZCODE().length()>17?hzxx.getSFZCODE().substring(9, 15):"";
 			String _sfzCode = hzxx.getSFZCODE().replace(replaseStr,"*******");
-			String dlUrl = GlobalVariables.WEBSITE_URL+"/api/doctor/dlapp/"+hzxx.getPHONE()+"/"+_sfzCode;
+			String dlUrl = GlobalVariables.WEBSITE_URL+"api/doctor/dlapp/"+hzxx.getPHONE()+"/"+_sfzCode;
 			String smsContent = CommonUtils.getSendSMS(_sfzCode, dlUrl);
 			String strTim = null;//HttpSend.paraTo16("2012-2-16 12:00:00"); //定时发送时间
 			String strSchSmsParam = "";

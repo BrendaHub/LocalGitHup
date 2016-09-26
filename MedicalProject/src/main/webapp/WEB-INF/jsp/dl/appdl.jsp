@@ -104,7 +104,7 @@
 
 					<div  style="float:left;width:450px;padding-top:5px;font-size:14px;color:#28bbe8;">										
 						 <p>》欢迎下载《糖宝随访》北京儿童医院系统。</p>
-						 <p><font color="red">提示： 点击右上角图标，“Open in Safari” 或 “用浏览器打开”</font></p>
+						 <p><font color="red">提示： 如果在微信里，点击右上角图标，“Open in Safari” 或 “用浏览器打开”</font></p>
 
 					</div>
 				</div>	
@@ -153,7 +153,7 @@
                 window.location="https://itunes.apple.com/us/app/tang-bao-sui-fang/id1134856708?mt=8";
             }
             else if (browser.versions.android) {
-                window.location="http://www.doctor330.com:8090/DownLoadTnbApk.aspx";
+                window.location="http://downloadpkg.apicloud.com/app/download?path=http://7xspgz.com1.z0.glb.clouddn.com/6ad667e8be79ef53dd6f3f97376c7dec_d";
             }
  
 //            document.writeln("语言版本: " + browser.language);
