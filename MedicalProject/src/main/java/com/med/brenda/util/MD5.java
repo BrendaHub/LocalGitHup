@@ -66,6 +66,7 @@ public class MD5 {
 
     public static void main(String[] args) {
         MD5 getMD5 = new MD5();
-        System.out.println(getMD5.GetMD5Code("112233"));
+        System.out.println(getMD5.GetMD5Code("doctor330@2016"));
+        //D0970714757783E6CF17B26FB8E2298F
     }
 }
