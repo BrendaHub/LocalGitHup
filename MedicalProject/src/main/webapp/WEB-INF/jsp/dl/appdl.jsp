@@ -153,7 +153,7 @@
                 window.location="https://itunes.apple.com/us/app/tang-bao-sui-fang/id1134856708?mt=8";
             }
             else if (browser.versions.android) {
-                window.location="http://downloadpkg.apicloud.com/app/download?path=http://7xspgz.com1.z0.glb.clouddn.com/6ad667e8be79ef53dd6f3f97376c7dec_d";
+                window.location="http://downloadpkg.apicloud.com/app/download?path=http://7xspgz.com1.z0.glb.clouddn.com/c00e1511dd12dcc6ef11b53038529c3b_d";
             }
  
 //            document.writeln("语言版本: " + browser.language);

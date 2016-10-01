@@ -645,6 +645,10 @@ public class PatientApi {
 			 result.put("_msg", "患者不存在");
 			 return result.toJSONString();
 		 }
+		 logger.info("hzid ===============" + hzid);
+		 logger.info("date ===============" + date);
+		 logger.info("mon ===============" + mon);
+		 
 		 //检查当前用户有没有初始化当天的随防数据
 		 try {
 			if(!hzsfxxService.checkHzxfxxBaseDB(Long.parseLong(hzid), CommonUtils.getTimeInMillisByDate(date))){//CommonUtils.getTimeInMillisBy00_00_00())){
@@ -668,6 +672,7 @@ public class PatientApi {
 			 //暂不提供返回的数据。
 			 return backStr;
 		} catch (Exception e) {
+			e.printStackTrace();
 			result.put("_st", 7);//
 			 result.put("_msg", "初始化失败");
 			 return result.toJSONString();
