@@ -74,6 +74,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 	            <td style="text-align:center;">${h.SEX }</td>
 	            <td style="text-align:center;">${h.AGE }</td>
 	            <td style="text-align:center;">
+	            	<!-- 
 		            <c:if test="${h.TEMP1 eq '1'}">
 		            	I型
 		            </c:if>
@@ -86,9 +87,11 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 		            <c:if test="${h.TEMP1 eq '4'}">
 		            	其他
 		            </c:if>
+		             -->
+		             ${h.NFMJBMC }
 	            </td>
 	            <td style="text-align:center;">
-	                 <a href="edit.html">查看详情</a>
+	                 <a href="/HZXX/toDetailHzxx/${h.ID }">查看详情</a>
 	            </td>
 	        </tr>
     	</c:forEach>
@@ -108,6 +111,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 		$('#addnew').click(function(){
 				window.location.href="/HZXX/toAddUser?f="+Math.random();
 		 });
+		
     });
 	function del(id)
 	{

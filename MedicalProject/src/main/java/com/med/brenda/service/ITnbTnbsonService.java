@@ -2,8 +2,8 @@ package com.med.brenda.service;
 
 import java.util.List;
 
+import com.med.brenda.controller.common.Query;
 import com.med.brenda.model.TnbTnbson;
-import com.med.brenda.model.TnbYinshi;
 
 public interface ITnbTnbsonService {
 	int deleteByPrimaryKey(Long id);

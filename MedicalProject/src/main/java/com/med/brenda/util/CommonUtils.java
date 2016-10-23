@@ -7,13 +7,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.med.brenda.model.Hzxx;
+import com.med.brenda.model.TnbTnbson;
+import com.med.brenda.service.ITnbTnbsonService;
 
 public class CommonUtils {
 	
@@ -333,6 +339,161 @@ public class CommonUtils {
 			result.put("Day", day+"");
 			result.put("Week", WEEKS[week_index]);
 		return result;
+	}
+	
+	//添加一个处理年龄的方法
+	public static Hzxx parseAge(Hzxx h){
+		String _age = h.getAGE();
+		StringBuffer newAge = new StringBuffer();
+		if(_age != null && !"".equals(_age.trim())){
+			if(_age.indexOf(".") != -1){
+				String[] age_arr = _age.split("\\.");//小数点前面是年龄，后面是月份
+				if("0".equals(age_arr[0])){
+					;
+				}else{
+					newAge.append(age_arr[0]);
+					newAge.append("岁");
+				}
+				if("0".equals(age_arr[1])){
+					;
+				}else{
+					newAge.append(age_arr[1]);
+					newAge.append("个月");
+				}
+			}else{
+				newAge.append(_age);
+				newAge.append("岁");
+			}
+		}
+		h.setAGE(newAge.toString());
+		return h;
+	}
+	
+	//根据患者生日得到日期对象
+	public static Date parseByHzxxCSRQ(Hzxx hzxx){
+		return new Date(hzxx.getCSRQ()!=null?hzxx.getCSRQ():0l);
+	}
+	
+	public static Date parseByHzxxQZSJ(Hzxx hzxx){
+		try{
+			String qzsj = hzxx.getNFMQZSJ();
+			return new Date(getTimeInMillisByDate(qzsj));
+		}catch(Exception e){
+			return new Date();
+		}
+	}
+	//如果是血糖
+	public static String findxuetangByHzId(ITnbTnbsonService tnbsonService, String hzid, String startdate, String enddate){
+		JSONObject result = new JSONObject();
+		try{
+			List<TnbTnbson> list = tnbsonService.getTnbsonlistByDateRang(Long.parseLong(hzid), GlobalVariables.XUETANG_ITEMCODE, CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
+			logger.info("list<<<<<< " + JSON.toJSONString(list));
+			if(list != null && list.size() > 0){
+				//这里需要按不同的日期处理结果集
+				Long old_fatherid = new Long(0);
+				String old_date = "";
+				JSONArray arr = null;//new JSONArray();
+				JSONObject tmpson = new JSONObject();
+				JSONObject content = null;
+				StringBuilder sb = null;
+				for(int index = 0 ; index < list.size() ; index ++){
+					TnbTnbson tnbson = (TnbTnbson)list.get(index);
+					if(old_fatherid.longValue() == new Long(0).longValue()){//第一个
+						logger.info(">>>>>>>>>>>>>>>>>>>>>");
+						arr = new JSONArray();
+						sb = new StringBuilder();
+						content = new JSONObject();
+					}
+					logger.info(">>>>>>>>>>>>old_fatherid.longValue()>>>>>>>>>"+old_fatherid.longValue());
+					logger.info(">>>>>>>tnbson.getFatherid().longValue()>>>>>>>>>>>>>>"+tnbson.getFatherid().longValue());
+					logger.info(">>>>>>>false>>>>>>>>>>>>>>"+(old_fatherid.longValue() != tnbson.getFatherid().longValue()));
+					
+					if(old_fatherid.longValue() != new Long(0).longValue() && old_fatherid.longValue() != tnbson.getFatherid().longValue()){//表示换了一个新的数据
+						//在不同时，需要做的事情 1 完成 Ｃontent 的值， 2 将ＪＳＯＮ对象添加到 ＪＳＯＮＡrray 中， 3 以日期为ＫＥＹ 添加到ＪＳＯＮＯbject中去。
+						content.put("Content", sb.toString());
+						arr.add(content);
+						tmpson.put(old_date, arr);
+						sb = null;
+						sb = new StringBuilder();
+						content = null;
+						content = new JSONObject();
+						arr = null;
+						arr = new JSONArray();
+					}else{
+						if(old_fatherid.longValue() != new Long(0).longValue())
+							sb.append("|");
+					}
+	
+					sb.append(tnbson.getItemvalue());
+					sb.append(";");
+					sb.append(tnbson.getItemcode());
+					sb.append(";");
+					sb.append(tnbson.getId());
+					sb.append(";");
+					sb.append(tnbson.getTemp1());
+	
+					old_fatherid = tnbson.getFatherid();
+					old_date = tnbson.getTemp5();
+					
+				}
+				
+				logger.info(");)))))))))))) = sb = "+ sb.toString());
+				logger.info("content = " + JSON.toJSONString(content));
+				logger.info("arrg = " + JSON.toJSONString(arr));
+				
+				if(sb != null && !"".equals(sb.toString())){
+					content.put("Content", sb.toString());
+					arr.add(content);
+					tmpson.put(old_date, arr);
+				}
+				result.put("_st", 1);
+				result.put("_msg", "获取成功");
+				result.put("_data", tmpson);
+				return result.toJSONString();
+			}else {
+				result.put("_st", 6);
+				result.put("_msg", "获取失败");
+				return result.toJSONString();
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			result.put("_st", 6);
+			result.put("_msg", "获取失败,程序异常");
+			return result.toJSONString();
+		}
+	}
+	
+	//添加一个处理年龄的方法
+	public static List<Hzxx> parseAge(List<Hzxx> list){
+		if(list != null && list.size() > 0){
+			for(Iterator<Hzxx> it = list.iterator(); it.hasNext();){
+				Hzxx h = (Hzxx)it.next();
+				String _age = h.getAGE();
+				StringBuffer newAge = new StringBuffer();
+				if(_age != null && !"".equals(_age.trim())){
+					if(_age.indexOf(".") != -1){
+						String[] age_arr = _age.split("\\.");//小数点前面是年龄，后面是月份
+						if("0".equals(age_arr[0])){
+							;
+						}else{
+							newAge.append(age_arr[0]);
+							newAge.append("岁");
+						}
+						if("0".equals(age_arr[1])){
+							;
+						}else{
+							newAge.append(age_arr[1]);
+							newAge.append("个月");
+						}
+					}else{
+						newAge.append(_age);
+						newAge.append("岁");
+					}
+				}
+				h.setAGE(newAge.toString());
+			}
+		}
+		return list;
 	}
 	
 	public static void main(String[] args) throws Exception{

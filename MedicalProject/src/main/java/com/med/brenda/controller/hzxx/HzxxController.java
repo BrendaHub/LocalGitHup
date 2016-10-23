@@ -1,10 +1,13 @@
 package com.med.brenda.controller.hzxx;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.controller.common.BaseController;
 import com.med.brenda.controller.common.Query;
 import com.med.brenda.model.AppDlLog;
@@ -28,10 +34,12 @@ import com.med.brenda.service.IAppDlLogService;
 import com.med.brenda.service.IHzxxService;
 import com.med.brenda.service.ISysDlDayLogService;
 import com.med.brenda.service.ISysDlWeekLogService;
+import com.med.brenda.service.ITnbTnbsonService;
 import com.med.brenda.util.CommonUtils;
 import com.med.brenda.util.GlobalVariables;
 import com.med.brenda.util.HttpSend;
 import com.med.brenda.util.MD5;
+import com.med.brenda.vo.xuetangVo;
 
 /**
  * 患者信息业务业
@@ -58,6 +66,8 @@ public class HzxxController extends BaseController {
 	private ISysDlWeekLogService dlWeekLogService;
 	@Autowired
 	private IAppDlLogService appService;
+	@Autowired
+	private ITnbTnbsonService tnbsonService;
 	
 	/**
 	 * 血糖数据综合分析， 有中值，平均值，和
@@ -317,7 +327,157 @@ public class HzxxController extends BaseController {
         resultMap.put("result", result1);
 		return resultMap;
 	}
-
+	
+	@RequestMapping(value="/toDetailHzxx/{hzId}")
+	public ModelAndView toDetailByHzxx(HttpServletRequest request , @PathVariable String hzId){
+		
+		Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzId));
+		hzxx = CommonUtils.parseAge(hzxx);
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("hzId", hzId);
+		resultMap.put("result", hzxx);
+		resultMap.put("hzcsrq", CommonUtils.parseByHzxxCSRQ(hzxx));
+		resultMap.put("hzqcsj", CommonUtils.parseByHzxxQZSJ(hzxx));
+		return new ModelAndView("hzxx/detail",resultMap);
+	}
+	
+	//获取患者血糖数据
+	@RequestMapping(value="/loadhzxuetangdata/{hzid}")
+	@ResponseBody
+	public String loadhzxuetangdata(HttpServletRequest request , @PathVariable String hzid){
+		String begdate = StringUtils.isBlank(request.getParameter("begindate"))?"":request.getParameter("begindate");
+		String enddate = StringUtils.isBlank(request.getParameter("enddate"))?"":request.getParameter("enddate");
+		
+		logger.debug("hzid = " + hzid);
+		logger.debug("begdate = " + begdate);
+		logger.debug("enddate = " + enddate);
+		if(!"".equals(begdate)){
+			begdate = begdate.replace("-", "");
+		}
+		if(!"".equals(enddate)){
+			enddate = enddate.replace("-", "");
+		}
+		
+		String jsonString = CommonUtils.findxuetangByHzId(tnbsonService, hzid, begdate, enddate);
+		//在java里面解析这个json串
+		JSONObject jsono = JSON.parseObject(jsonString);
+		JSONArray resultarr = new JSONArray();
+		if(jsono != null){
+			String flag = jsono.getString("_st");
+			if("1".equals(flag)){
+				////////////////////////
+				JSONObject xtDataList = jsono.getJSONObject("_data");
+				Set keyset = xtDataList.keySet();
+				for(Iterator it = keyset.iterator(); it.hasNext();){//在这里循环查询出来的所有血糖值
+					String key = (String)it.next();
+					JSONObject returnvalue = new JSONObject();//返回的对象值
+					JSONArray dayXt = xtDataList.getJSONArray(key);
+					JSONObject curday_xt  = (JSONObject)dayXt.get(0);//得到了当前的血糖值， 这个血糖是以|线分隔的
+					//将每天的数据解析出来，首以以|线分隔出数组
+					String values = curday_xt.getString("Content");
+					Map<String, String> savetmpxt = new HashMap<String, String>();
+					xuetangVo xtvo = new xuetangVo();
+					xtvo.setTime(key);//时间
+					float xutotal = 0;//累加当天所有的血糖值
+					int xutindex = 0 ; //记录当天记录血糖的个数
+					if(values != null){
+						String[] vals = values.split("\\|");
+						for(String v : vals){
+							if(v != null && !"".equals(v)){
+								String[] sub_vals = v.split(";");
+								String itemcode = sub_vals[1];
+								String itemvalue = sub_vals[0];
+								String itemTime = sub_vals[3];
+								xutotal += Float.parseFloat(itemvalue);
+								xutindex ++;
+								//在这里处理数据的显示颜色
+								float xtvalue = 0;
+								try{
+									xtvalue = Float.parseFloat(itemvalue);
+									if(xtvalue < 4.0){
+										itemvalue = "<font color='yello'>"+itemvalue+"</font>";
+									}else if(xtvalue > 4.0 && xtvalue < 9.0){
+										itemvalue = "<font color='green'>"+itemvalue+"</font>";
+									}else{
+										itemvalue = "<font color='red'>"+itemvalue+"</font>";
+									}
+								}catch(Exception e){
+									
+								}
+								savetmpxt.put(itemcode, itemTime+","+itemvalue);
+							}
+						}
+					}
+					xtvo.setAvg(xutotal/xutindex);
+					//反复的遍历上面的map用来填充不时的血糖值
+					/**
+					015001   凌晨
+					015002001	早餐前
+					015002002	早餐后
+					015003001	午餐前
+					015003002	午餐后
+					015004001	晚餐前
+					015004001	晚餐后
+					015005		睡前
+					015006001	随机
+					015006002	随机
+					015006003	随机
+					015006004	随机
+					015006005	随机
+				*/
+					Set xtkeyset = savetmpxt.keySet();
+					for(Iterator it0 = xtkeyset.iterator(); it0.hasNext();){
+						String itemcode = (String)it0.next();
+						if("015001".equals(itemcode)){
+							xtvo.setT_lingcheng(savetmpxt.get(itemcode));
+						}
+						if("015002001".equals(itemcode)){
+							xtvo.setT_zzq(savetmpxt.get(itemcode));
+						}
+						if("015002002".equals(itemcode)){
+							xtvo.setT_zzh(savetmpxt.get(itemcode));
+						}
+						if("015003001".equals(itemcode)){
+							xtvo.setT_czq(savetmpxt.get(itemcode));
+						}
+						if("015003002".equals(itemcode)){
+							xtvo.setT_czh(savetmpxt.get(itemcode));
+						}
+						if("015004001".equals(itemcode)){
+							xtvo.setT_wzq(savetmpxt.get(itemcode));
+						}
+						if("015004002".equals(itemcode)){
+							xtvo.setT_wzh(savetmpxt.get(itemcode));
+						}
+						if("015005".equals(itemcode)){
+							xtvo.setT_sq(savetmpxt.get(itemcode));
+						}
+						if("015006001".equals(itemcode)){
+							xtvo.setT_rand1(savetmpxt.get(itemcode));
+						}
+						if("015006002".equals(itemcode)){
+							xtvo.setT_rand2(savetmpxt.get(itemcode));
+						}
+						if("015006003".equals(itemcode)){
+							xtvo.setT_rand3(savetmpxt.get(itemcode));
+						}
+						if("015006004".equals(itemcode)){
+							xtvo.setT_rand4(savetmpxt.get(itemcode));
+						}
+						if("015006005".equals(itemcode)){
+							xtvo.setT_rand5(savetmpxt.get(itemcode));
+						}
+					}
+					String json = JSONObject.toJSONString(xtvo);
+					resultarr.add(json);
+				}
+			}
+		}
+		return resultarr.toJSONString();
+	}
+	
+	
+	
 	@RequestMapping(value="/list")
 	public ModelAndView hzlist(HttpServletRequest request , String pageNo, String keyworld){
 		
@@ -339,6 +499,7 @@ public class HzxxController extends BaseController {
             pageCount = pageCount + 1;
         }
 		List<Hzxx> list = hzxxService.findList(query);
+		list = CommonUtils.parseAge(list);
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("pageCount", pageCount);
         resultMap.put("pageSize", query.getPageSize());
@@ -349,6 +510,8 @@ public class HzxxController extends BaseController {
         resultMap.put("keyworld", query.getKeywords());
 		return new ModelAndView("hzxx/index",resultMap);
 	}
+	
+	
 	
 	//去添加用户
 	@RequestMapping(value="/toAddUser", method=RequestMethod.GET)
