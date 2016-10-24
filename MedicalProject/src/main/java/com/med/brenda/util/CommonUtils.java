@@ -383,7 +383,7 @@ public class CommonUtils {
 		}
 	}
 	//如果是血糖
-	public static String findxuetangByHzId(ITnbTnbsonService tnbsonService, String hzid, String startdate, String enddate){
+	public static JSONObject findxuetangByHzId(ITnbTnbsonService tnbsonService, String hzid, String startdate, String enddate){
 		JSONObject result = new JSONObject();
 		try{
 			List<TnbTnbson> list = tnbsonService.getTnbsonlistByDateRang(Long.parseLong(hzid), GlobalVariables.XUETANG_ITEMCODE, CommonUtils.getTimeInMillisByDate(startdate), CommonUtils.getTimeInMillisByDate(enddate));
@@ -449,17 +449,17 @@ public class CommonUtils {
 				result.put("_st", 1);
 				result.put("_msg", "获取成功");
 				result.put("_data", tmpson);
-				return result.toJSONString();
+				return result;
 			}else {
 				result.put("_st", 6);
 				result.put("_msg", "获取失败");
-				return result.toJSONString();
+				return result;
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 			result.put("_st", 6);
 			result.put("_msg", "获取失败,程序异常");
-			return result.toJSONString();
+			return result;
 		}
 	}
 	

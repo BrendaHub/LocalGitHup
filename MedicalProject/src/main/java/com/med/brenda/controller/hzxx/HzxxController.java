@@ -358,9 +358,9 @@ public class HzxxController extends BaseController {
 			enddate = enddate.replace("-", "");
 		}
 		
-		String jsonString = CommonUtils.findxuetangByHzId(tnbsonService, hzid, begdate, enddate);
+		JSONObject jsono = CommonUtils.findxuetangByHzId(tnbsonService, hzid, begdate, enddate);
+		System.out.println("jsonString  = " + jsono.toJSONString());
 		//在java里面解析这个json串
-		JSONObject jsono = JSON.parseObject(jsonString);
 		JSONArray resultarr = new JSONArray();
 		if(jsono != null){
 			String flag = jsono.getString("_st");
@@ -404,7 +404,7 @@ public class HzxxController extends BaseController {
 								}catch(Exception e){
 									
 								}
-								savetmpxt.put(itemcode, itemTime+","+itemvalue);
+								savetmpxt.put(itemcode, itemvalue);
 							}
 						}
 					}

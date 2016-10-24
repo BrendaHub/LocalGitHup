@@ -54,7 +54,8 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
     <c:if test="${!empty result.TEMP2}">
     	<img src="<%=_realPath %>${result.TEMP2 }" width="35px" height="35px"/>
     </c:if>
-    ${result.HZNAME }, ${result.AGE }
+    ${result.HZNAME }, ${result.AGE } 
+    <button type="button" class="btn btn-primary" onclick="gotoHzlist();">返回列表</button>
 </div>
 <div class="container">
 	<div class="row clearfix">
@@ -71,10 +72,10 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 						 <a href="#panel-289934" data-toggle="tab">基本信息</a>
 					</li>
 					<li>
-						 <a href="#panel-335159" data-toggle="tab" id="loadhzxuetang">血糖信息</a>
+						 <a href="#panel-335159" data-toggle="tab" id="loadhzxuetang">血糖数据</a>
 					</li>
 					<li>
-						 <a href="#panel-335621" data-toggle="tab">胰岛素信息</a>
+						 <a href="#panel-335621" data-toggle="tab">血糖图表</a>
 					</li>
 				</ul>
 				<div class="tab-content">
@@ -217,21 +218,6 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 										睡前
 									</th>
 									<th>
-										随机1
-									</th>
-									<th>
-										随机2
-									</th>
-									<th>
-										随机3
-									</th>
-									<th>
-										随机4
-									</th>
-									<th>
-										随机5
-									</th>
-									<th>
 										平均值
 									</th>
 								</tr>
@@ -268,21 +254,6 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 									<th>
 										&nbsp;
 									</th>
-									<th>
-										&nbsp;
-									</th>
-									<th>
-										&nbsp;
-									</th>
-									<th>
-										&nbsp;
-									</th>
-									<th>
-										&nbsp;
-									</th>
-									<th>
-										&nbsp;
-									</th>
 								</tr>
 							</thead>
 							<tbody id="_tdobyinner">
@@ -309,7 +280,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 		$("#inputbegindate").val(_preDate);
 		$("#inputenddate").val(_date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate());
 	   //这里就需要加载血糖数据出来 , 患者ID， 开始日期， 结止日期
-	   loadxutangdata($("#hzID_hidden").val(), _preDate, _date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate());
+	   loadxutangdata($("#hzID_hidden").val());
 	});
 	//患者ID ， 第一页， 共多少条
 	/**
@@ -341,95 +312,100 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
         		if(data){
         			var innerhtml = "";
         			var _jsono = JSON.parse(data);
-        			var index = 1 ; 
-        			for(var o in _jsono){  
-        				if(index%2 == 1){
-            				innerhtml += "<tr class='info'>"
-        				}else{
-            				innerhtml += "<tr>"
-        				}
-        				var tmpjson = JSON.parse(_jsono[o]);
-        				if(tmpjson.time != undefined){
-        					innerhtml += "<td>"+tmpjson.time+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_lingcheng != undefined){
-        					innerhtml += "<td>"+tmpjson.t_lingcheng+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_czq != undefined){
-        					innerhtml += "<td>"+tmpjson.t_czq+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_czh != undefined){
-        					innerhtml += "<td>"+tmpjson.t_czh+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_zzq != undefined){
-        					innerhtml += "<td>"+tmpjson.t_zzq+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_zzh != undefined){
-        					innerhtml += "<td>"+tmpjson.t_zzh+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_wzq != undefined){
-        					innerhtml += "<td>"+tmpjson.t_wzq+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_wzh != undefined){
-        					innerhtml += "<td>"+tmpjson.t_wzh+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_sq != undefined){
-        					innerhtml += "<td>"+tmpjson.t_sq+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_rand1 != undefined){
-        					innerhtml += "<td>"+tmpjson.t_rand1+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_rand2 != undefined){
-        					innerhtml += "<td>"+tmpjson.t_rand2+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_rand3 != undefined){
-        					innerhtml += "<td>"+tmpjson.t_rand3+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_rand4 != undefined){
-        					innerhtml += "<td>"+tmpjson.t_rand4+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.t_rand5 != undefined){
-        					innerhtml += "<td>"+tmpjson.t_rand5+"</td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				if(tmpjson.avg != undefined){
-        					innerhtml += "<td><font color='blue'>"+tmpjson.avg+"</font></td>";
-        				}else{
-        					innerhtml += "<td>--</td>";
-        				}
-        				innerhtml += "</tr>";
-        				index++;
+        			if(_jsono && _jsono.length > 0){
+	        			var index = 1 ; 
+	        			for(var o = 0; o < _jsono.length; o ++){  
+	        				if(index%2 == 1){
+	            				innerhtml += "<tr class='info'>"
+	        				}else{
+	            				innerhtml += "<tr>"
+	        				}
+	        				var tmpjson = JSON.parse(_jsono[o]);
+	        				if(tmpjson.time != undefined){
+	        					innerhtml += "<td>"+tmpjson.time+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_lingcheng != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_lingcheng+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_czq != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_czq+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_czh != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_czh+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_zzq != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_zzq+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_zzh != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_zzh+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_wzq != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_wzq+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_wzh != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_wzh+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_sq != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_sq+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				/**
+	        				if(tmpjson.t_rand1 != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_rand1+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_rand2 != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_rand2+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_rand3 != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_rand3+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_rand4 != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_rand4+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				if(tmpjson.t_rand5 != undefined){
+	        					innerhtml += "<td>"+tmpjson.t_rand5+"</td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}*/
+	        				if(tmpjson.avg != undefined){
+	        					innerhtml += "<td><font color='green'>"+tmpjson.avg.toFixed(2)+"</font></td>";
+	        				}else{
+	        					innerhtml += "<td>--</td>";
+	        				}
+	        				innerhtml += "</tr>";
+	        				index++;
+	        			}
+	        			$("#_tdobyinner").html(innerhtml);
+        			}else{
+        				$("#_tdobyinner").html("<tr><td colspan='15'>暂无数据</td></tr>");
         			}
-        			$("#_tdobyinner").html(innerhtml);
         		}else{
-        			$("#_tdobyinner").innerHTML = "<tr><td colspan='15'>暂无数据</td></tr>";
+        			$("#_tdobyinner").html("<tr><td colspan='15'>暂无数据</td></tr>");
         		}
     		}
     	});
@@ -495,6 +471,9 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
     
         var t2 = year2 + '-' + month2 + '-' + day2;
         return t2;
+    }
+    function gotoHzlist(){
+    	window.location.href = "/HZXX/list";
     }
 </script>
 </html>
