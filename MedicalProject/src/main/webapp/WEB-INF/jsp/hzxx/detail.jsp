@@ -22,8 +22,14 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
     <script type="text/javascript" src="/Js/bootstrap.js"></script>
     <script type="text/javascript" src="/Js/ckform.js"></script>
     <script type="text/javascript" src="/Js/common.js"></script>
+    <script src="/dist/Chart.bundle.min.js"></script>
     <style type="text/css">
-       
+       canvas{
+	        -moz-user-select: none;
+	        -webkit-user-select: none;
+	        -ms-user-select: none;
+	    }
+	    
         @media (max-width: 980px) {
             /* Enable use of floated navbar text */
             .navbar-text.pull-right {
@@ -55,7 +61,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
     	<img src="<%=_realPath %>${result.TEMP2 }" width="35px" height="35px"/>
     </c:if>
     ${result.HZNAME }, ${result.AGE } 
-    <button type="button" class="btn btn-primary" onclick="gotoHzlist();">返回列表</button>
+    <button type="button" class="btn btn-warning" onclick="gotoHzlist();">&nbsp;&nbsp;返回列表&nbsp;&nbsp;</button>
 </div>
 <div class="container">
 	<div class="row clearfix">
@@ -168,6 +174,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 									</tr>
 								</tbody>
 							</table>
+							<button type="button" class="btn btn-success" onclick="toEditHzInfo(${result.ID});">编辑糖宝信息</button>
 						<!-- end -->
 					</div>
 					<div class="tab-pane" id="panel-335159">
@@ -263,7 +270,9 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 					</div>
 					<div class="tab-pane" id="panel-335621">
 						<!-- begin -->
-						
+						<div style="width:90%;">
+					        <canvas id="canvas"></canvas>
+					    </div>
 						<!-- end -->
 					</div>
 				</div>
@@ -281,7 +290,16 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 		$("#inputenddate").val(_date.getFullYear()+"-"+(_date.getMonth()+1)+"-"+_date.getDate());
 	   //这里就需要加载血糖数据出来 , 患者ID， 开始日期， 结止日期
 	   loadxutangdata($("#hzID_hidden").val());
+	   //初始化画图数据
+	   initlineData();
 	});
+
+	//去编辑糖宝信息
+	function  toEditHzInfo(hzid){
+		window.location.href="/HZXX/toedithzinfo/"+hzid;
+	}
+    
+
 	//患者ID ， 第一页， 共多少条
 	/**
 		015001   凌晨
@@ -298,6 +316,9 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 		015006004	随机
 		015006005	随机
 	*/
+	//定义X轴的日期数组
+	var labelarray = new Array();
+	var linedataarray = new Array();
 	function loadxutangdata(_hzid){
 		$.ajax({
     		type: "post",
@@ -321,6 +342,8 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 	            				innerhtml += "<tr>"
 	        				}
 	        				var tmpjson = JSON.parse(_jsono[o]);
+	        				labelarray.push(tmpjson.time);
+	        				linedataarray.push(tmpjson.avg.toFixed(2));
 	        				if(tmpjson.time != undefined){
 	        					innerhtml += "<td>"+tmpjson.time+"</td>";
 	        				}else{
@@ -475,5 +498,90 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
     function gotoHzlist(){
     	window.location.href = "/HZXX/list";
     }
+    
+    //画血糖走势图
+    var config = {
+            type: 'line',
+            data: {
+            	 labels: [],
+                 datasets: []
+            },
+            options: { 
+            	scaleFontSize : 72,
+            	scaleShowGridLines : false,
+                scaleSteps : 15,
+                responsive: true,
+                title:{
+                    display:true,
+                    text:'血糖平均值走势'
+                },
+                tooltips: {
+                    mode: 'label',
+                    callbacks: {
+                       
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            show: true,
+                            labelString: 'Month'
+                        },
+	                    ticks: {
+	                    }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            show: true,
+                            labelString: 'Value'
+                        },
+                        ticks: {
+                            suggestedMin: 3,
+                            suggestedMax: 11,
+                            //max: 3,
+                            //min: 15,
+                            //stepSize: 3
+                        }
+                    }]
+                }
+            }
+        };
+    var randomScalingFactor = function() {
+        return Math.round(Math.random() * 100);
+        //return 0;
+    };
+    var randomColorFactor = function() {
+        return Math.round(Math.random() * 255);
+    };
+    var randomColor = function(opacity) {
+        //return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+        return 'rgba(255, 10, 10 ,' + (opacity || '.3') + ')';
+    };
+    function initlineData(){
+    	//初始化画图数据
+ 	   config.data = {
+ 				labels: labelarray,
+                 datasets: [{
+                     label: "日血糖平均值",
+                     data: linedataarray,
+                     fill: false,
+                 }]
+             };
+ 		   $.each(config.data.datasets, function(i, dataset) {
+ 		        dataset.borderColor = randomColor(0.6);
+ 		        dataset.backgroundColor = randomColor(0.2);
+ 		        dataset.pointBorderColor = randomColor(0.3);
+ 		        dataset.pointBackgroundColor = randomColor(0.5);
+ 		        dataset.pointBorderWidth = 1;
+ 		    });
+             // Update the chart
+             window.myLine.update();
+    }
+    window.onload = function() {
+        var ctx = document.getElementById("canvas").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+    };
 </script>
 </html>

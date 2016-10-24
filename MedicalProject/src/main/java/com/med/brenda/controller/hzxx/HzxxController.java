@@ -1,13 +1,15 @@
 package com.med.brenda.controller.hzxx;
 
 import java.io.UnsupportedEncodingException;
-import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.med.brenda.controller.common.BaseController;
@@ -362,6 +363,7 @@ public class HzxxController extends BaseController {
 		System.out.println("jsonString  = " + jsono.toJSONString());
 		//在java里面解析这个json串
 		JSONArray resultarr = new JSONArray();
+		Map<Date, xuetangVo> treemap = new TreeMap<>();
 		if(jsono != null){
 			String flag = jsono.getString("_st");
 			if("1".equals(flag)){
@@ -428,6 +430,7 @@ public class HzxxController extends BaseController {
 					Set xtkeyset = savetmpxt.keySet();
 					for(Iterator it0 = xtkeyset.iterator(); it0.hasNext();){
 						String itemcode = (String)it0.next();
+						
 						if("015001".equals(itemcode)){
 							xtvo.setT_lingcheng(savetmpxt.get(itemcode));
 						}
@@ -468,7 +471,19 @@ public class HzxxController extends BaseController {
 							xtvo.setT_rand5(savetmpxt.get(itemcode));
 						}
 					}
-					String json = JSONObject.toJSONString(xtvo);
+					
+					try {
+						treemap.put(new Date(CommonUtils.getTimeInMillisByDate(key)), xtvo);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+//					String json = JSONObject.toJSONString(xtvo);
+//					resultarr.add(json);
+				}
+				Iterator it = treemap.keySet().iterator();
+				while(it.hasNext()){
+					xuetangVo _vo  = treemap.get(it.next());
+					String json = JSONObject.toJSONString(_vo);
 					resultarr.add(json);
 				}
 			}
@@ -476,6 +491,37 @@ public class HzxxController extends BaseController {
 		return resultarr.toJSONString();
 	}
 	
+	
+	@RequestMapping(value="/toedithzinfo/{hzid}")
+	public ModelAndView toedithzinfo(HttpServletRequest request, @PathVariable String hzid){
+		Map<String, Object> resultMap = new HashMap<>();
+		Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+		resultMap.put("hzobj", hzxx);
+		return new ModelAndView("hzxx/edithzinfo",resultMap);
+	}
+	
+	@RequestMapping(value="/EditHZ")
+	public ModelAndView EditHZ(HttpServletRequest request, Hzxx hzxx){
+		Hzxx ohz = hzxxService.findHzByHzID(hzxx.getID());
+		if(ohz.getPASSWORD().equals(hzxx.getPASSWORD())){
+			//表明用户没有更换患者的密码，不对密码做更新
+			;
+		}else{
+			//就需要更新密码了
+			String newpassword = hzxx.getPASSWORD();
+			ohz.setPASSWORD(MD5.GetMD5Code(newpassword));
+		}
+		ohz.setLXRNAME(hzxx.getLXRNAME());
+		ohz.setGX(hzxx.getGX());
+		ohz.setPHONE(hzxx.getPHONE());
+		ohz.setHZNAME(hzxx.getHZNAME());
+		ohz.setSFZCODE(hzxx.getSFZCODE());
+		ohz.setDLH(hzxx.getSFZCODE());
+		ohz.setNFMJBMC(hzxx.getNFMJBMC());
+		ohz.setSEX(hzxx.getSEX());
+		ohz.setAGE(AGE);
+		return new ModelAndView("redirect:/HZXX/list?ff="+Math.random());
+	}
 	
 	
 	@RequestMapping(value="/list")
@@ -570,6 +616,7 @@ public class HzxxController extends BaseController {
 				rowid = appService.insert(appl);
 			}
 			return new ModelAndView("redirect:/HZXX/list?ff="+Math.random());
+			._sfzCode.._sfzCode.
 		}else{
 			resultMap.put("message", "新增患者失败！");
 			return new ModelAndView("/HZXX/toAddUser", resultMap);
