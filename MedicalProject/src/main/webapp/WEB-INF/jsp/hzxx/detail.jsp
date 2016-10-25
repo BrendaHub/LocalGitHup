@@ -145,7 +145,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 											<strong>生日：</strong>
 										</td>
 										<td>
-											<fmt:formatDate value="${hzcsrq}" var="date" pattern="yyyy-MM-dd"/>
+											<fmt:formatDate pattern="yyyy-MM-dd" value="${hzcsrq}" />
 										</td>
 									</tr>
 									<tr class="info">
@@ -159,7 +159,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 											<b>确诊时间：</b>
 										</td>
 										<td>
-											<fmt:formatDate value="${hzqcsj}" var="date" pattern="yyyy-MM-dd"/>
+											<fmt:formatDate value="${hzqcsj}"  pattern="yyyy-MM-dd"/>
 										</td>
 									</tr>
 									<tr>

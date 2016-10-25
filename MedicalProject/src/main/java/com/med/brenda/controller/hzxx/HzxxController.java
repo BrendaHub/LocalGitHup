@@ -339,8 +339,8 @@ public class HzxxController extends BaseController {
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("hzId", hzId);
 		resultMap.put("result", hzxx);
-		resultMap.put("hzcsrq", CommonUtils.transferLongToDate(csrq));
-		resultMap.put("hzqcsj", CommonUtils.transferLongToDate(Long.parseLong(qzsj)));
+		resultMap.put("hzcsrq", new Date(csrq));
+		resultMap.put("hzqcsj", new Date(Long.parseLong(qzsj)));
 		return new ModelAndView("hzxx/detail",resultMap);
 	}
 	
