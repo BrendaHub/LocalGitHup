@@ -496,13 +496,22 @@ public class HzxxController extends BaseController {
 	public ModelAndView toedithzinfo(HttpServletRequest request, @PathVariable String hzid){
 		Map<String, Object> resultMap = new HashMap<>();
 		Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzid));
+		Long csrq = hzxx.getCSRQ();
+		String qzsj = hzxx.getNFMQZSJ();
+		String _csrq = CommonUtils.transferLongToDate(csrq);
 		resultMap.put("hzobj", hzxx);
+		String flag = StringUtils.isBlank(request.getParameter("flag"))?"":request.getParameter("flag");
+		resultMap.put("info", flag);
+		resultMap.put("csrq",  _csrq);
+		resultMap.put("NFMQZSJ", CommonUtils.transferLongToDate(Long.parseLong(qzsj)));
 		return new ModelAndView("hzxx/edithzinfo",resultMap);
 	}
 	
-	@RequestMapping(value="/EditHZ")
+	@RequestMapping(value="/EditHZ", method=RequestMethod.POST)
 	public ModelAndView EditHZ(HttpServletRequest request, Hzxx hzxx){
+		logger.debug(">>>>>>>>" + JSONObject.toJSONString(hzxx));
 		Hzxx ohz = hzxxService.findHzByHzID(hzxx.getID());
+		logger.debug("###### "+ JSONObject.toJSONString(ohz));
 		if(ohz.getPASSWORD().equals(hzxx.getPASSWORD())){
 			//表明用户没有更换患者的密码，不对密码做更新
 			;
@@ -519,8 +528,38 @@ public class HzxxController extends BaseController {
 		ohz.setDLH(hzxx.getSFZCODE());
 		ohz.setNFMJBMC(hzxx.getNFMJBMC());
 		ohz.setSEX(hzxx.getSEX());
-		ohz.setAGE(AGE);
-		return new ModelAndView("redirect:/HZXX/list?ff="+Math.random());
+		try{
+			String _age =  StringUtils.isBlank(request.getParameter("tmp_birthday"))?"":request.getParameter("tmp_birthday");
+			if(_age != null && !"".equals(_age)){
+				_age = _age.replace("-", "");
+				_age = _age.replace("/", "");
+			}else{
+				;
+			}
+			ohz.setCSRQ(CommonUtils.getTimeInMillisByDate(_age));//出生日期
+			ohz.setAGE(CommonUtils.getAge(new Date(CommonUtils.getTimeInMillisByDate(_age))));//年龄
+		}catch(Exception e){}
+		try {
+			String _qzsj = hzxx.getNFMQZSJ();
+			if(_qzsj != null && !"".equals(_qzsj)){
+				_qzsj = _qzsj.replace("-", "");
+				_qzsj = _qzsj.replace("/", "");
+			}else{
+				;
+			}
+			ohz.setNFMQZSJ(String.valueOf(CommonUtils.getTimeInMillisByDate(_qzsj)));
+		} catch (Exception e) {}
+		ohz.setMZ(hzxx.getMZ());
+		int rownum = hzxxService.updateByPrimaryKey(ohz);
+		
+		Map<String,String> resultMap = new HashMap<>();
+		if(rownum > 0 ){
+			resultMap.put("info", "修改成功！");
+			return new ModelAndView("redirect:/HZXX/toedithzinfo/"+ohz.getID()+"?flag=修改成功！");
+		}else{
+			resultMap.put("info", "修改失败！");
+			return new ModelAndView("redirect:/HZXX/toedithzinfo/"+ohz.getID()+"?flag=修改失败！");
+		}
 	}
 	
 	
@@ -616,7 +655,6 @@ public class HzxxController extends BaseController {
 				rowid = appService.insert(appl);
 			}
 			return new ModelAndView("redirect:/HZXX/list?ff="+Math.random());
-			._sfzCode.._sfzCode.
 		}else{
 			resultMap.put("message", "新增患者失败！");
 			return new ModelAndView("/HZXX/toAddUser", resultMap);
