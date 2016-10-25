@@ -333,12 +333,14 @@ public class HzxxController extends BaseController {
 	public ModelAndView toDetailByHzxx(HttpServletRequest request , @PathVariable String hzId){
 		
 		Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzId));
+		Long csrq = hzxx.getCSRQ();
+		String qzsj = hzxx.getNFMQZSJ();
 		hzxx = CommonUtils.parseAge(hzxx);
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("hzId", hzId);
 		resultMap.put("result", hzxx);
-		resultMap.put("hzcsrq", CommonUtils.parseByHzxxCSRQ(hzxx));
-		resultMap.put("hzqcsj", CommonUtils.parseByHzxxQZSJ(hzxx));
+		resultMap.put("hzcsrq", CommonUtils.transferLongToDate(csrq));
+		resultMap.put("hzqcsj", CommonUtils.transferLongToDate(Long.parseLong(qzsj)));
 		return new ModelAndView("hzxx/detail",resultMap);
 	}
 	
