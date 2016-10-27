@@ -53,7 +53,7 @@
         <td><input type="number" name="PHONE" maxlength="11" required/></td>
     </tr> 
     <tr>
-        <td class="tableleft">家长身份证号：</td>
+        <td class="tableleft">小朋友身份证号：</td>
         <td><input type="text" name="SFZCODE" maxlength="18" required/></td>
     </tr>   
     <tr>

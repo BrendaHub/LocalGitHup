@@ -300,7 +300,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
 	}
     
 
-	//患者ID ， 第一页， 共多少条
+	//患者ID ， 第一页， 共多少条"/Users/brenda"
 	/**
 		015001   凌晨
 		015002001	早餐前
@@ -335,7 +335,7 @@ String _realPath = "http://api.doctor330.com" + request.getContextPath();
         			var _jsono = JSON.parse(data);
         			if(_jsono && _jsono.length > 0){
 	        			var index = 1 ; 
-	        			for(var o = 0; o < _jsono.length; o ++){  
+	        			for(var o = _jsono.length - 1; o >= 0 ; o --){  
 	        				if(index%2 == 1){
 	            				innerhtml += "<tr class='info'>"
 	        				}else{

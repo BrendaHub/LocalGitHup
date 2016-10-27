@@ -335,12 +335,20 @@ public class HzxxController extends BaseController {
 		Hzxx hzxx = hzxxService.findHzByHzID(Long.parseLong(hzId));
 		Long csrq = hzxx.getCSRQ();
 		String qzsj = hzxx.getNFMQZSJ();
+		Date _csrq = null;
+		Date  _qzrq = null;
+		try{
+			_csrq = new Date(csrq);
+		}catch(Exception e){}
+		try{
+			_qzrq = new Date(Long.parseLong(qzsj));
+		}catch(Exception e){}
 		hzxx = CommonUtils.parseAge(hzxx);
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("hzId", hzId);
 		resultMap.put("result", hzxx);
-		resultMap.put("hzcsrq", new Date(csrq));
-		resultMap.put("hzqcsj", new Date(Long.parseLong(qzsj)));
+		resultMap.put("hzcsrq", _csrq);
+		resultMap.put("hzqcsj", _qzrq);
 		return new ModelAndView("hzxx/detail",resultMap);
 	}
 	
